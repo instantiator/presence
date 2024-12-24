@@ -6,14 +6,25 @@ All code here is distributed under the [MIT](https://github.com/instantiator/pre
 
 ## Prerequisites
 
-* .NET 8.0
+- .NET 8.0
 
 ## Libraries
 
-| Library            | Purpose                                                                                      |
-| ------------------ | -------------------------------------------------------------------------------------------- |
-| `SocialFormat.Lib` | A library for composing posts and threads, formatted to the requirements of social networks. |
-| `Presence.Lib`     | A library for posting cross-network format posts to social networks.                         |
+| Library                | Purpose                                                                                      |
+| ---------------------- | -------------------------------------------------------------------------------------------- |
+| `SocialFormat.Console` | A CLI tool to reformat messages for social networks.                                         |
+| `SocialFormat.Lib`     | A library for composing posts and threads, formatted to the requirements of social networks. |
+| `Presence.Lib`         | A library for posting cross-network format posts to social networks.                         |
+
+## `SocialFormat.Console`
+
+- Run without parameters for help with: `social-console.sh`
+
+`SocialFormat.Console` relies on a number of supporting libraries:
+
+| Dependency                                                            | Creator                                                   | License                                                                        | Usage                             |
+| --------------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------ | --------------------------------- |
+| [CommandLineParser](https://github.com/commandlineparser/commandline) | [commandlineparser](https://github.com/commandlineparser) | [MIT](https://github.com/commandlineparser/commandline/blob/master/License.md) | Interpret command line parameters |
 
 ## `SocialFormat.Lib`
 
