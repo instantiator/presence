@@ -13,10 +13,10 @@ public abstract class AbstractThreadComposer : IThreadComposer
         PostRules = postRules;
     }
 
-    public abstract Snippet CreatePostCounter(int index);
-    public IEnumerable<Post> Compose(IEnumerable<Snippet> message, IEnumerable<Snippet> tags)
+    public abstract SocialSnippet CreatePostCounter(int index);
+    public IEnumerable<CommonPost> Compose(IEnumerable<SocialSnippet> message, IEnumerable<SocialSnippet> tags)
     {
-        var posts = new List<Post>();
+        var posts = new List<CommonPost>();
         foreach (var nextSnippet in message)
         {
             posts.AddRange(AddSnippet(posts.Count(), posts.LastOrDefault(), nextSnippet, tags));
@@ -34,9 +34,9 @@ public abstract class AbstractThreadComposer : IThreadComposer
         }
         return posts;
     }
-    private IEnumerable<Post> AddSnippet(int nextIndex, Post? currentPost, Snippet nextSnippet, IEnumerable<Snippet> tags)
+    private IEnumerable<CommonPost> AddSnippet(int nextIndex, CommonPost? currentPost, SocialSnippet nextSnippet, IEnumerable<SocialSnippet> tags)
     {
-        var newPosts = new List<Post>();
+        var newPosts = new List<CommonPost>();
         if (currentPost == null)
         {
             currentPost = CreateNewPost(newPosts.Count + nextIndex, tags);
@@ -107,19 +107,19 @@ public abstract class AbstractThreadComposer : IThreadComposer
         return newPosts;
     }
 
-    public Post CreateNewPost(int index, IEnumerable<Snippet> tags)
+    public CommonPost CreateNewPost(int index, IEnumerable<SocialSnippet> tags)
     {
-        var prefixSnippets = new IEnumerable<Snippet>[] {
+        var prefixSnippets = new IEnumerable<SocialSnippet>[] {
             ThreadRules.PostCounterPrefix ? new[] { CreatePostCounter(index) } : []
         }.SelectMany(ss => ss);
 
-        var suffixSnippets = new IEnumerable<Snippet>[]
+        var suffixSnippets = new IEnumerable<SocialSnippet>[]
         {
             ThreadRules.PostCounterSuffix ? new[] { CreatePostCounter(index) } : [],
             ThreadRules.TagsOnAllPosts || (ThreadRules.TagsOnFirstPost && index == 0) ? tags : [],
         }.SelectMany(ss => ss);
 
-        var post = new Post(index, PostRules) { Prefix = prefixSnippets, Suffix = suffixSnippets };
+        var post = new CommonPost(index, PostRules) { Prefix = prefixSnippets, Suffix = suffixSnippets };
 
         if (post.MessageSpace <= PostRules.WordSpace.Length + PostRules.MinAcceptableSpace)
         {
@@ -128,7 +128,7 @@ public abstract class AbstractThreadComposer : IThreadComposer
 
         return post;
     }
-    public bool Fits(Post currentPost, Snippet nextSnippet)
+    public bool Fits(CommonPost currentPost, SocialSnippet nextSnippet)
     {
         return currentPost.MessageSpace >= nextSnippet.Compose(PostRules).Length;
     }

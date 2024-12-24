@@ -9,35 +9,35 @@ public enum SnippetType
     Break,
 }
 
-public class Snippet
+public class SocialSnippet
 {
     public string Text { get; set; } = null!;
     public SnippetType SnippetType { get; set; } = SnippetType.Text;
-    public List<PostImage> Images { get; set; } = new List<PostImage>();
+    public List<CommonPostImage> Images { get; set; } = new List<CommonPostImage>();
     public string? Reference { get; set; }
     public bool MayDivide => SnippetType == SnippetType.Text;
     public bool MayTruncate => SnippetType == SnippetType.Text || SnippetType == SnippetType.Link;
 
-    public Tuple<Snippet?, Snippet?> Divide(int space, PostRenderRules rules)
+    public Tuple<SocialSnippet?, SocialSnippet?> Divide(int space, PostRenderRules rules)
     {
         if (!MayDivide) { throw new Exception($"Cannot divide a {SnippetType} snippet"); }
 
         // easy case - if the snippet fits in the current post, add it
         if (Text.Length < space)
         {
-            return new Tuple<Snippet?, Snippet?>(this, null);
+            return new Tuple<SocialSnippet?, SocialSnippet?>(this, null);
         }
 
         var remainingWords = Text.Split(rules.SplitSnippetTextOn).ToList();
 
         if (remainingWords.Count() == 0)
         {
-            return new Tuple<Snippet?, Snippet?>(this, null);
+            return new Tuple<SocialSnippet?, SocialSnippet?>(this, null);
         }
 
         if (remainingWords.First().Length >= space)
         {
-            return new Tuple<Snippet?, Snippet?>(null, this);
+            return new Tuple<SocialSnippet?, SocialSnippet?>(null, this);
         }
 
         var firstWords = new List<string>();
@@ -50,7 +50,7 @@ public class Snippet
         }
 
         // images go on the first snippet
-        var first = new Snippet
+        var first = new SocialSnippet
         {
             SnippetType = SnippetType,
             Reference = Reference,
@@ -58,7 +58,7 @@ public class Snippet
             Images = Images
         };
 
-        var second = new Snippet
+        var second = new SocialSnippet
         {
             SnippetType = SnippetType,
             Reference = Reference,
@@ -71,10 +71,10 @@ public class Snippet
             throw new Exception($"Cannot divide this snippet - the first word '{remainingWords.First()}' of '{string.Join(rules.WordSpace, remainingWords)}' does not fit into space available: {space}");
         }
 
-        return new Tuple<Snippet?, Snippet?>(first, second);
+        return new Tuple<SocialSnippet?, SocialSnippet?>(first, second);
     }
 
-    public Snippet Truncate(int space, PostRenderRules rules)
+    public SocialSnippet Truncate(int space, PostRenderRules rules)
     {
         if (!MayTruncate) { throw new Exception($"Cannot truncate a {SnippetType} snippet"); }
         if (Text.Length <= space)
@@ -94,7 +94,7 @@ public class Snippet
         // TODO: add the option truncated individual words if needed
         if (fittedWords.Count == 0 && remainingWords.Count > 0) { throw new Exception("Cannot truncate this snippet - the first word does not fit"); }
 
-        return new Snippet
+        return new SocialSnippet
         {
             SnippetType = SnippetType,
             Reference = Reference,

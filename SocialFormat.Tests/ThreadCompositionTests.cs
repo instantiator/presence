@@ -9,9 +9,9 @@ public class ThreadCompositionTests
     [TestMethod]
     public void SimpleThreadComposer_GivenSimpleMessage_ComposesSinglePost()
     {
-        var message = new List<Snippet>
+        var message = new List<SocialSnippet>
         {
-            new Snippet
+            new SocialSnippet
             {
                 Text = "Hello, world!",
                 SnippetType = SnippetType.Text
@@ -28,9 +28,9 @@ public class ThreadCompositionTests
     [TestMethod]
     public void SimpleThreadComposer_GivenLongSimpleMessage_ComposesMultiplePosts()
     {
-        var message = new List<Snippet>
+        var message = new List<SocialSnippet>
         {
-            new Snippet
+            new SocialSnippet
             {
                 Text = "This is a very long text snippet that ought to get split across two posts. The split comes around here and this is almost certainly in the next post.",
                 SnippetType = SnippetType.Text
@@ -48,19 +48,19 @@ public class ThreadCompositionTests
     [TestMethod]
     public void SimpleThreadComposer_GivenMultipleSnippets_ComposesSinglePost()
     {
-        var message = new List<Snippet>
+        var message = new List<SocialSnippet>
         {
-            new Snippet
+            new SocialSnippet
             {
                 Text = "Hello, world!",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "This is a multi-snippet message.",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "With 3 snippets.",
                 SnippetType = SnippetType.Text
@@ -77,23 +77,23 @@ public class ThreadCompositionTests
    [TestMethod]
     public void SimpleThreadComposer_GivenMultipleSnippetsAndBreak_ComposesMultiplePosts()
     {
-        var message = new List<Snippet>
+        var message = new List<SocialSnippet>
         {
-            new Snippet
+            new SocialSnippet
             {
                 Text = "Hello, world!",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 SnippetType = SnippetType.Break
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "This is a multi-snippet message.",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "With 3 snippets.",
                 SnippetType = SnippetType.Text
@@ -111,24 +111,24 @@ public class ThreadCompositionTests
     [TestMethod]
     public void SimpleThreadComposer_GivenMultipleSnippets_ComposesMultiplePosts()
     {
-         var message = new List<Snippet>
+         var message = new List<SocialSnippet>
         {
-            new Snippet
+            new SocialSnippet
             {
                 Text = "This is a very long multi-snippet message. It should get split across several posts.",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "Each post is limited to 100 characters, and this includes the post counter.",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "The post counter appears when there is more than 1 post in the thread.",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "This test deals with only text-type posts for now.",
                 SnippetType = SnippetType.Text
@@ -147,24 +147,24 @@ public class ThreadCompositionTests
     [TestMethod]
     public void SimpleThreadComposer_WithoutCounters_GivenMultipleSnippets_ComposesMultiplePostsWithoutCounters()
     {
-         var message = new List<Snippet>
+         var message = new List<SocialSnippet>
         {
-            new Snippet
+            new SocialSnippet
             {
                 Text = "This is a very long multi-snippet message. It should get split across several posts.",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "Each post is limited to 100 characters, and this includes the post counter.",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "The post counter appears when there is more than 1 post in the thread.",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "This test deals with only text-type posts for now.",
                 SnippetType = SnippetType.Text
@@ -183,32 +183,32 @@ public class ThreadCompositionTests
     [TestMethod]
     public void SimpleThreadComposer_GivenMultipleSnippetsAndTags_ComposesSinglePost()
     {
-        var message = new List<Snippet>
+        var message = new List<SocialSnippet>
         {
-            new Snippet
+            new SocialSnippet
             {
                 Text = "Hello, world!",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "This is a multi-snippet message.",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "With 3 snippets.",
                 SnippetType = SnippetType.Text
             }
         };
 
-        var tags = new List<Snippet> {
-            new Snippet
+        var tags = new List<SocialSnippet> {
+            new SocialSnippet
             {
                 Text = "#TagOne",
                 SnippetType = SnippetType.HashTag
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "#TagTwo",
                 SnippetType = SnippetType.HashTag
@@ -226,47 +226,47 @@ public class ThreadCompositionTests
     [TestMethod]
     public void SimpleThreadComposer_GivenMultipleSnippetsAndTags_ComposesMultiplePosts()
     {
-        var message = new List<Snippet>
+        var message = new List<SocialSnippet>
         {
-            new Snippet
+            new SocialSnippet
             {
                 Text = "Hello, world!",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "This is a multi-snippet message.",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "With 6 snippets.",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "This is snippet 4.",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "This is snippet 5.",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "This is snippet 6 (the last snippet).",
                 SnippetType = SnippetType.Text
             }
         };
 
-        var tags = new List<Snippet> {
-            new Snippet
+        var tags = new List<SocialSnippet> {
+            new SocialSnippet
             {
                 Text = "#TagOne",
                 SnippetType = SnippetType.HashTag
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "#TagTwo",
                 SnippetType = SnippetType.HashTag
@@ -286,24 +286,24 @@ public class ThreadCompositionTests
     [TestMethod]
     public void SimpleThreadComposer_WithCounterPrefix_GivenMultipleSnippets_ComposesMultiplePosts()
     {
-         var message = new List<Snippet>
+         var message = new List<SocialSnippet>
         {
-            new Snippet
+            new SocialSnippet
             {
                 Text = "This is a very long multi-snippet message. It should get split across several posts.",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "Each post is limited to 100 characters, and this includes the post counter.",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "The post counter appears when there is more than 1 post in the thread.",
                 SnippetType = SnippetType.Text
             },
-            new Snippet
+            new SocialSnippet
             {
                 Text = "This test deals with only text-type posts for now.",
                 SnippetType = SnippetType.Text

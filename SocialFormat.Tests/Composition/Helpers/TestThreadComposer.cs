@@ -9,9 +9,9 @@ public class TestThreadComposer : AbstractThreadComposer
     {
     }
 
-    public override Snippet CreatePostCounter(int index)
+    public override SocialSnippet CreatePostCounter(int index)
     {
-        return new Snippet()
+        return new SocialSnippet()
         {
             Text = ThreadRules.PostCounterPrefix ? $"{index + 1}." : $"/{index + 1}",
             SnippetType = SnippetType.Counter,

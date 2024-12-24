@@ -1,6 +1,6 @@
 namespace SocialFormat.Lib.Posts;
 
-public class PostImage
+public class CommonPostImage
 {
     public byte[]? SourceBytes { get; set; }
     public string? SourceUrl { get; set; }
