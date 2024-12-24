@@ -2,7 +2,11 @@
 
 Presence is a set of .NET libraries and tools for social sharing.
 
-Run all tests in the solution with `run-tests.sh`
+All code here is distributed under the [MIT](https://github.com/instantiator/presence/blob/main/LICENSE) license.
+
+## Prerequisites
+
+* .NET 8.0
 
 ## Libraries
 
@@ -20,6 +24,10 @@ Run all tests in the solution with `run-tests.sh`
 
 `Presence.Lib` relies on a number of supporting libraries:
 
-| Dependency                                                   | Creator                                           | License | Usage                                                           |
-| ------------------------------------------------------------ | ------------------------------------------------- | ------- | --------------------------------------------------------------- |
-| [SocialFormat.Lib](https://github.com/instantiator/presence) | [Lewis Westbury](https://github.com/instantiator) | MIT     | Common post format, preparing and formatting posts and threads. |
+| Dependency                                                   | Creator                                           | License                                                           | Usage                                                           |
+| ------------------------------------------------------------ | ------------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------- |
+| [SocialFormat.Lib](https://github.com/instantiator/presence) | [Lewis Westbury](https://github.com/instantiator) | [MIT](https://github.com/instantiator/presence/blob/main/LICENSE) | Common post format, preparing and formatting posts and threads. |
+
+## Testing
+
+Run all tests in the solution with `run-tests.sh`
