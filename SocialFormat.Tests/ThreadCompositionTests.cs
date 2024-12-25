@@ -1,4 +1,5 @@
 using SocialFormat.Lib.Composition;
+using SocialFormat.Lib.DTO;
 using SocialFormat.Lib.Posts;
 using SocialFormat.Tests.Composition.Helpers;
 
