@@ -5,7 +5,7 @@ public enum SnippetType
     Counter,
     Text,
     Link,
-    HashTag,
+    Tag,
     Break,
 }
 
@@ -15,6 +15,7 @@ public class SocialSnippet
     public SnippetType SnippetType { get; set; } = SnippetType.Text;
     public List<CommonPostImage> Images { get; set; } = new List<CommonPostImage>();
     public string? Reference { get; set; }
+
     public bool MayDivide => SnippetType == SnippetType.Text;
     public bool MayTruncate => SnippetType == SnippetType.Text || SnippetType == SnippetType.Link;
 
@@ -109,7 +110,7 @@ public class SocialSnippet
         {
             SnippetType.Text => Text,
             SnippetType.Link => rules.ShowLinkUrls ? Reference! : Text,
-            SnippetType.HashTag => Text,
+            SnippetType.Tag => Text,
             SnippetType.Counter => Text,
             SnippetType.Break => string.Empty,
             _ => throw new NotSupportedException($"Unsupported snippet type {SnippetType}")

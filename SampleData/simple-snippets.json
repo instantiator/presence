@@ -1,0 +1,23 @@
+{
+  "message": [
+    {
+      "text": "Hello world!",
+      "snippetType": "text"
+    },
+    {
+      "text": "instantiator",
+      "reference": "https://instantiator.dev",
+      "snippetType": "link"
+    }
+  ],
+  "tags": [
+    {
+      "text": "Sample",
+      "snippetType": "tag"
+    },
+    {
+      "text": "Message",
+      "snippetType": "tag"
+    }
+  ]
+}

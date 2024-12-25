@@ -62,12 +62,12 @@ public class CommonPostTests
             new SocialSnippet
             {
                 Text = "#TagOne",
-                SnippetType = SnippetType.HashTag,
+                SnippetType = SnippetType.Tag,
             },
             new SocialSnippet
             {
                 Text = "#TagTwo",
-                SnippetType = SnippetType.HashTag,
+                SnippetType = SnippetType.Tag,
             }
         };
 

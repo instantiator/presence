@@ -3,23 +3,10 @@ using SocialFormat.Lib.Posts;
 
 namespace SocialFormat.Tests.Composition.Helpers;
 
-public class TestThreadComposer : AbstractThreadComposer
+public class TestThreadComposer
 {
-    public TestThreadComposer(ThreadCompositionRules threadRules, PostRenderRules postRules) : base(threadRules, postRules)
-    {
-    }
-
-    public override SocialSnippet CreatePostCounter(int index)
-    {
-        return new SocialSnippet()
-        {
-            Text = ThreadRules.PostCounterPrefix ? $"{index + 1}." : $"/{index + 1}",
-            SnippetType = SnippetType.Counter,
-        };
-    }
-
-    public static TestThreadComposer Simple() =>
-        new TestThreadComposer(new ThreadCompositionRules
+    public static IThreadComposer Simple() =>
+        new SimpleThreadComposer(new ThreadCompositionRules
         {
             TagsOnFirstPost = false,
             TagsOnAllPosts = true,
@@ -39,8 +26,8 @@ public class TestThreadComposer : AbstractThreadComposer
             TruncationMark = "…",
         });
 
-    public static TestThreadComposer SimpleWithCounterPrefix() =>
-        new TestThreadComposer(new ThreadCompositionRules
+    public static IThreadComposer SimpleWithCounterPrefix() =>
+        new SimpleThreadComposer(new ThreadCompositionRules
         {
             TagsOnFirstPost = false,
             TagsOnAllPosts = true,
@@ -60,8 +47,8 @@ public class TestThreadComposer : AbstractThreadComposer
             TruncationMark = "…",
         });
 
-    public static TestThreadComposer SimpleWithoutCounters() =>
-        new TestThreadComposer(new ThreadCompositionRules
+    public static SimpleThreadComposer SimpleWithoutCounters() =>
+        new SimpleThreadComposer(new ThreadCompositionRules
         {
             TagsOnFirstPost = false,
             TagsOnAllPosts = true,

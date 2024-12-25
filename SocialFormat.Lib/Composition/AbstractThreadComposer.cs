@@ -1,3 +1,4 @@
+using SocialFormat.Lib.DTO;
 using SocialFormat.Lib.Posts;
 
 namespace SocialFormat.Lib.Composition;
@@ -14,12 +15,12 @@ public abstract class AbstractThreadComposer : IThreadComposer
     }
 
     public abstract SocialSnippet CreatePostCounter(int index);
-    public IEnumerable<CommonPost> Compose(IEnumerable<SocialSnippet> message, IEnumerable<SocialSnippet> tags)
+    public IEnumerable<CommonPost> Compose(CompositionRequest request)
     {
         var posts = new List<CommonPost>();
-        foreach (var nextSnippet in message)
+        foreach (var nextSnippet in request.Message)
         {
-            posts.AddRange(AddSnippet(posts.Count(), posts.LastOrDefault(), nextSnippet, tags));
+            posts.AddRange(AddSnippet(posts.Count(), posts.LastOrDefault(), nextSnippet, request.Tags));
         }
 
         // if only 1 post, remove the counter from all posts

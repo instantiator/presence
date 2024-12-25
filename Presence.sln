@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialFormat.Lib", "SocialF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialFormat.Tests", "SocialFormat.Tests\SocialFormat.Tests.csproj", "{C3F41CDC-39A0-4260-87DC-DF6FEA799C69}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialFormat.Console", "SocialFormat.Console\SocialFormat.Console.csproj", "{F8514DF7-88FC-4C45-9F5A-585B3106673E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,5 +40,9 @@ Global
 		{C3F41CDC-39A0-4260-87DC-DF6FEA799C69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3F41CDC-39A0-4260-87DC-DF6FEA799C69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3F41CDC-39A0-4260-87DC-DF6FEA799C69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8514DF7-88FC-4C45-9F5A-585B3106673E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8514DF7-88FC-4C45-9F5A-585B3106673E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8514DF7-88FC-4C45-9F5A-585B3106673E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8514DF7-88FC-4C45-9F5A-585B3106673E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
