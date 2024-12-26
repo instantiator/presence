@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using CommandLine;
@@ -12,22 +13,31 @@ public class Program
 {
     public class Options
     {
-        [Option('i', "input", Required = true, HelpText = "Path to input file containing a composition request.")]
+        [Option('i', "input-file", Required = true, HelpText = "Path to input file containing a composition request.")]
         public string InputPath { get; set; } = null!;
+
+        [Option('o', "output-format", Required = false, Default = OutputFormat.Json, HelpText = $"Set the output format.")]
+        public OutputFormat Format { get; set; } = OutputFormat.Json;
     }
 
     public static void Main(string[] args)
     {
-        Parser.Default
+        var parser = new Parser((with) => {
+            with.AutoHelp = true;
+            with.AutoVersion = true;
+            with.CaseSensitive = false;
+            with.HelpWriter = System.Console.Error;
+        });
+
+        parser
             .ParseArguments<Options>(args)
             .WithParsed(HandleOptions)
             .WithNotParsed(HandleErrors);
     }
 
-    private static void HandleErrors(IEnumerable<Error> enumerable)
+    private static void HandleErrors(IEnumerable<Error> errors)
     {
-        // Help text already shows
-        // TODO: print extra info about errors
+        System.Console.Error.WriteLine("Output formats: " + Helpers.EnumAsCSV(typeof(OutputFormat)));
     }
 
     private static void HandleOptions(Options options)
@@ -84,7 +94,18 @@ public class Program
             ExceptionMessage = exception?.Message,
             ExceptionStackTrace = exception?.StackTrace
         };
-        System.Console.WriteLine(JsonSerializer.Serialize(result, opts));
+
+        switch (options.Format)
+        {
+            case OutputFormat.Json:
+                System.Console.WriteLine(JsonSerializer.Serialize(result, opts));
+                break;
+            case OutputFormat.HumanReadable:
+                System.Console.WriteLine(HumanReadable(result));
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(options.Format), options.Format, "Unknown output format.");
+        }
     }
 
     // strict on unknown properties, relaxed on case sensitivity
@@ -100,4 +121,24 @@ public class Program
         WriteIndented = true
     };
 
+    private static string HumanReadable(CompositionResponse response)
+    {
+        var separator = "---";
+        var lines = new List<string>();
+
+        if (response.Success)
+        {
+            lines.Add(string.Join($"\n{separator}\n", response.Thread!.Select(p => p.ComposeText())));
+        }
+        else
+        {
+            lines.Add("Exception encountered processing thread.");
+            lines.Add(separator);
+            lines.Add($"Exception: {response.ExceptionType}");
+            lines.Add($"Message: {response.ExceptionMessage}");
+            lines.Add($"Stack trace: {response.ExceptionStackTrace}");
+        }
+
+        return string.Join("\n", lines);
+    }
 }
