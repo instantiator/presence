@@ -1,4 +1,4 @@
-namespace SocialFormat.Console;
+namespace Presence.SocialFormat.Console;
 
 public enum OutputFormat
 {

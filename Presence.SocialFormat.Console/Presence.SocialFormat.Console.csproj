@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SocialFormat.Lib\SocialFormat.Lib.csproj" />
+    <ProjectReference Include="..\Presence.SocialFormat.Lib\Presence.SocialFormat.Lib.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-namespace SocialFormat.Lib.Posts;
+namespace Presence.SocialFormat.Lib.Posts;
 
 public readonly struct PostRenderRules
 {

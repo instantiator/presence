@@ -8,12 +8,12 @@ on:
     branches:
       - 'main'
     paths:
-      - SocialFormat.Lib/**
+      - Presence.SocialFormat.Lib/**
   pull_request:
     branches:
       - '*'
     paths:
-      - SocialFormat.Lib/**
+      - Presence.SocialFormat.Lib/**
   release:
     types:
       - published
@@ -40,13 +40,13 @@ jobs:
       uses: actions/setup-dotnet@v4
 
     - name: Build project
-      run: dotnet build SocialFormat.Lib/SocialFormat.Lib.csproj --configuration Release
+      run: dotnet build Presence.SocialFormat.Lib/Presence.SocialFormat.Lib.csproj --configuration Release
 
     - name: Run tests
-      run: dotnet test --verbosity normal --configuration Release --filter SocialFormat.Tests
+      run: dotnet test --verbosity normal --configuration Release --filter Presence.SocialFormat.Tests
 
     # Create the NuGet package in the folder from the environment variable NuGetDirectory
-    - run: dotnet pack SocialFormat.Lib/SocialFormat.Lib.csproj --configuration Release --output ${{ env.NuGetDirectory }}
+    - run: dotnet pack Presence.SocialFormat.Lib/Presence.SocialFormat.Lib.csproj --configuration Release --output ${{ env.NuGetDirectory }}
 
     # Publish the NuGet package as an artifact, so they can be used in the following jobs
     - uses: actions/upload-artifact@v4

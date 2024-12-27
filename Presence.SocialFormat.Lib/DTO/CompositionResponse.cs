@@ -1,6 +1,6 @@
-using SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Posts;
 
-namespace SocialFormat.Lib.DTO;
+namespace Presence.SocialFormat.Lib.DTO;
 
 public class CompositionResponse
 {

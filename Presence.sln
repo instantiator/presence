@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presence.Lib", "Presence.Lib\Presence.Lib.csproj", "{06A0AB0F-9366-4A3E-98C5-AADF5A94386D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presence.Posting.Lib", "Presence.Posting.Lib\Presence.Posting.Lib.csproj", "{06A0AB0F-9366-4A3E-98C5-AADF5A94386D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialFormat.Lib", "SocialFormat.Lib\SocialFormat.Lib.csproj", "{8A778277-FF7F-4FDB-82D9-28A8DA798E3D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presence.SocialFormat.Lib", "Presence.SocialFormat.Lib\Presence.SocialFormat.Lib.csproj", "{8A778277-FF7F-4FDB-82D9-28A8DA798E3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialFormat.Tests", "SocialFormat.Tests\SocialFormat.Tests.csproj", "{C3F41CDC-39A0-4260-87DC-DF6FEA799C69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presence.SocialFormat.Tests", "Presence.SocialFormat.Tests\Presence.SocialFormat.Tests.csproj", "{C3F41CDC-39A0-4260-87DC-DF6FEA799C69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialFormat.Console", "SocialFormat.Console\SocialFormat.Console.csproj", "{F8514DF7-88FC-4C45-9F5A-585B3106673E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presence.SocialFormat.Console", "Presence.SocialFormat.Console\Presence.SocialFormat.Console.csproj", "{F8514DF7-88FC-4C45-9F5A-585B3106673E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

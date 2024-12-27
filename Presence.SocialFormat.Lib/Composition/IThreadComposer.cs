@@ -1,7 +1,7 @@
-using SocialFormat.Lib.DTO;
-using SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.DTO;
+using Presence.SocialFormat.Lib.Posts;
 
-namespace SocialFormat.Lib.Composition;
+namespace Presence.SocialFormat.Lib.Composition;
 
 public interface IThreadComposer
 {

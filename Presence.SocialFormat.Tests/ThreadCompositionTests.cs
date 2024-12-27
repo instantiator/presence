@@ -1,9 +1,9 @@
-using SocialFormat.Lib.Composition;
-using SocialFormat.Lib.DTO;
-using SocialFormat.Lib.Posts;
-using SocialFormat.Tests.Composition.Helpers;
+using Presence.SocialFormat.Lib.Composition;
+using Presence.SocialFormat.Lib.DTO;
+using Presence.SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Tests.Composition.Helpers;
 
-namespace SocialFormat.Tests;
+namespace Presence.SocialFormat.Tests;
 
 [TestClass]
 public class ThreadCompositionTests

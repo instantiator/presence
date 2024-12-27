@@ -1,4 +1,4 @@
-namespace SocialFormat.Lib.Helpers;
+namespace Presence.SocialFormat.Lib.Helpers;
 
 public static class IListExtension
 {

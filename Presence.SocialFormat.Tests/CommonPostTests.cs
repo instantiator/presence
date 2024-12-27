@@ -1,6 +1,6 @@
-using SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Posts;
 
-namespace SocialFormat.Tests;
+namespace Presence.SocialFormat.Tests;
 
 [TestClass]
 public class CommonPostTests

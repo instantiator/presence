@@ -1,4 +1,4 @@
-namespace SocialFormat.Lib.Composition;
+namespace Presence.SocialFormat.Lib.Composition;
 
 public readonly record struct ThreadCompositionRules
 {

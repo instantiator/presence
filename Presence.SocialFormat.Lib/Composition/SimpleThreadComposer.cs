@@ -1,6 +1,6 @@
-using SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Posts;
 
-namespace SocialFormat.Lib.Composition;
+namespace Presence.SocialFormat.Lib.Composition;
 
 public class SimpleThreadComposer : AbstractThreadComposer
 {

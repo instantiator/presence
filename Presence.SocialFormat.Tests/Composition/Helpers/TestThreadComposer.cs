@@ -1,7 +1,7 @@
-using SocialFormat.Lib.Composition;
-using SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Composition;
+using Presence.SocialFormat.Lib.Posts;
 
-namespace SocialFormat.Tests.Composition.Helpers;
+namespace Presence.SocialFormat.Tests.Composition.Helpers;
 
 public class TestThreadComposer
 {

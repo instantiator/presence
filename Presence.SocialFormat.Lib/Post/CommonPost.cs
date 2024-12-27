@@ -1,5 +1,4 @@
-﻿namespace SocialFormat.Lib.Posts;
-
+﻿namespace Presence.SocialFormat.Lib.Posts;
 
 public class CommonPost
 {

@@ -3,11 +3,11 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using CommandLine;
-using SocialFormat.Lib.Composition;
-using SocialFormat.Lib.DTO;
-using SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Composition;
+using Presence.SocialFormat.Lib.DTO;
+using Presence.SocialFormat.Lib.Posts;
 
-namespace SocialFormat.Console;
+namespace Presence.SocialFormat.Console;
 
 public class Program
 {
