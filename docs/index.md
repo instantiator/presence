@@ -10,7 +10,7 @@ All code here is distributed under the [MIT](https://github.com/instantiator/pre
 
 ## Projects
 
-| Project                | Purpose                                                                                      | Docs                                                                              |
+| Project                | Purpose                                                                                      | Project README                                                                    |
 | ---------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
 | `SocialFormat.Lib`     | A library for composing posts and threads, formatted to the requirements of social networks. | [README](https://github.com/instantiator/presence/SocialFormat.Lib/README.md)     |
 | `SocialFormat.Console` | A command line tool to reformat messages for social networks.                                | [README](https://github.com/instantiator/presence/SocialFormat.Console/README.md) |
