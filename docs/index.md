@@ -10,6 +10,11 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 
 - [.NET 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) (download link)
 
+## Users guide
+
+- [Install packages from Nuget](guides/install-packages.md)
+- [Create a thread with SocialFormat.Lib](guides/create-thread.md)
+
 ## Projects
 
 | Project                | Purpose                                                                                      | Project README                                                                    |
