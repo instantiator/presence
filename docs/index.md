@@ -13,7 +13,7 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 ## User guide
 
 - [Install packages from Nuget](guides/install-packages.md)
-- [Create a thread with SocialFormat.Lib](guides/create-thread.md)
+- [Create a thread with Presence.SocialFormat.Lib](guides/create-thread.md)
 
 ## Developer notes
 
@@ -21,16 +21,16 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 
 ## Projects
 
-| Project                | Purpose                                                                                      | Project README                                                                    |
-| ---------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `SocialFormat.Lib`     | A library for composing posts and threads, formatted to the requirements of social networks. | [README](https://github.com/instantiator/presence/SocialFormat.Lib/README.md)     |
-| `SocialFormat.Console` | A command line tool to reformat messages for social networks.                                | [README](https://github.com/instantiator/presence/SocialFormat.Console/README.md) |
-| `Presence.Lib`         | A library for posting cross-network format posts to social networks.                         | [README](https://github.com/instantiator/presence/Presence.Lib/README.md)         |
-| `SocialFormat.Tests`   | Unit tests for the composition and formatting library.                                       | [README](https://github.com/instantiator/presence/SocialFormat.Tests/README.md)   |
+| Project                         | Purpose                                                                            | Project README                                                                    |
+| ------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `Presence.SocialFormat.Lib`     | A library for composing threads, formatted to the requirements of social networks. | [README](https://github.com/instantiator/presence/SocialFormat.Lib/README.md)     |
+| `Presence.SocialFormat.Console` | A command line tool to reformat messages for social networks.                      | [README](https://github.com/instantiator/presence/SocialFormat.Console/README.md) |
+| `Presence.Posting.Lib`          | A library for posting cross-network format posts to social networks.               | [README](https://github.com/instantiator/presence/Presence.Lib/README.md)         |
+| `Presence.SocialFormat.Tests`   | Unit tests for the composition and formatting library.                             | [README](https://github.com/instantiator/presence/SocialFormat.Tests/README.md)   |
 
 _Dependencies for each project are listed in each project's `README`._
 
 ## Acknowledgements
 
-* Post icon from [icons8.com](https://icons8.com)
-* Huge thanks to [Gérald Barré](https://bsky.app/profile/meziantou.net) ([meziantou](https://github.com/meziantou)) for this excellent article: [Publishing a Nuget Package](https://www.meziantou.net/publishing-a-nuget-package-following-best-practices-using-github.htm)
+- Post icon from [icons8.com](https://icons8.com)
+- Huge thanks to [Gérald Barré](https://bsky.app/profile/meziantou.net) ([meziantou](https://github.com/meziantou)) for this excellent article: [Publishing a Nuget Package](https://www.meziantou.net/publishing-a-nuget-package-following-best-practices-using-github.htm)

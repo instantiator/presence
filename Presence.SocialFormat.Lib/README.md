@@ -1,9 +1,6 @@
-# SocialFormat.Lib
+# Presence.SocialFormat.Lib
 
 This library will format a thread of posts for a given social network from a set of snippets (text, links, hashtags, breaks).
-
-- Provides the `CommonPost` and `SocialSnippet` classes - used to assemble messages that can be formatted for distribution across any social network.
-- Provides thread composition classes, and the `IThreadComposer` interface for interacting with them. Threads are formatted into `CommonPosts` from `SocialSnippets`.
 
 ## Getting started
 

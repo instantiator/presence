@@ -1,4 +1,4 @@
-# SocialFormat.Console
+# Presence.SocialFormat.Console
 
 This is a command line tool to reformat text, images, links, and hashtags into a usable thread for one or more social networks. It will:
 
@@ -18,4 +18,4 @@ This is a command line tool to reformat text, images, links, and hashtags into a
 | Dependency                                                            | Creator                                                   | License                                                                        | Usage                                                           |
 | --------------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------- |
 | [CommandLineParser](https://github.com/commandlineparser/commandline) | [commandlineparser](https://github.com/commandlineparser) | [MIT](https://github.com/commandlineparser/commandline/blob/master/License.md) | Interpret command line parameters.                              |
-| [SocialFormat.Lib](https://github.com/instantiator/presence)          | [Lewis Westbury](https://github.com/instantiator)         | [MIT](https://github.com/instantiator/presence/blob/main/LICENSE)              | Common post format, preparing and formatting posts and threads. |
+| [Presence.SocialFormat.Lib](https://github.com/instantiator/presence)          | [Lewis Westbury](https://github.com/instantiator)         | [MIT](https://github.com/instantiator/presence/blob/main/LICENSE)              | Common post format, preparing and formatting posts and threads. |
