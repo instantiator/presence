@@ -48,6 +48,7 @@
   <PropertyGroup>
     <MinVerTagPrefix>social-format-lib-</MinVerTagPrefix>
     <MinVerVerbosity>normal</MinVerVerbosity>
+    <MinVerDefaultPreReleaseIdentifiers>rc.0</MinVerDefaultPreReleaseIdentifiers>
   </PropertyGroup>
 
   <PropertyGroup>
