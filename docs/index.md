@@ -4,6 +4,8 @@ Presence is a set of .NET libraries and tools for social sharing.
 
 All code here is distributed under the [MIT](https://github.com/instantiator/presence/blob/main/LICENSE) license.
 
+Source code is at: [instantiator/presence](https://github.com/instantiator/presence)
+
 ## Prerequisites
 
 - [.NET 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) (download link)

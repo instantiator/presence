@@ -12,15 +12,10 @@
       Presence is a set of .NET libraries and tools for social sharing. SocialFormat.Lib
       formats text, links, hashtags and links for social network requirements.
     </Description>
-
-    <!-- Needn't be the repository URL. -->
-    <PackageProjectUrl>https://github.com/instantiator/presence</PackageProjectUrl>
-
+    <PackageProjectUrl>https://instantiator.dev/presence/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-
-    <!-- Tags for the search engine -->
     <PackageTags>library, social, posting, formatting, threads, posts</PackageTags>
   </PropertyGroup>
 
