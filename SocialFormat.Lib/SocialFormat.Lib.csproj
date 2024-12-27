@@ -8,25 +8,25 @@
 
   <PropertyGroup>
     <Authors>Lewis Westbury</Authors>
-    <Description>Presence is a set of .NET libraries and tools for social sharing. SocialFormat.Lib
-      formats text, links, hashtags and links for social network requirements.</Description>
-
-    <!-- PackageProjectUrl is different from the repository URL.
-         It can be a documentation website or a website explaining the project -->
+    <Description>
+      Presence is a set of .NET libraries and tools for social sharing. SocialFormat.Lib
+      formats text, links, hashtags and links for social network requirements.
+    </Description>
+    
+    <!-- Needn't be the repository URL. -->
     <PackageProjectUrl>https://github.com/instantiator/presence</PackageProjectUrl>
-    <PackageReadme>README.md</PackageReadme>
-    <!-- A list of tags to help the search engine to understand the content of the package -->
-    <PackageTags>library, social, posting, formatting, threads, posts</PackageTags>
+    
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+
+        <!-- Tags for the search engine -->
+    <PackageTags>library, social, posting, formatting, threads, posts</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
-    <None
-        Include="icon.png"
-        Pack="true"
-        PackagePath="" />
+    <None Include="icon.png" Pack="true" PackagePath="" />
+    <None Include="README.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
