@@ -13,8 +13,8 @@
 
     <!-- PackageProjectUrl is different from the repository URL.
          It can be a documentation website or a website explaining the project -->
-    <!-- <PackageProjectUrl>https://instantiator.dev</PackageProjectUrl> -->
-
+    <PackageProjectUrl>https://github.com/instantiator/presence</PackageProjectUrl>
+    <PackageReadme>README.md</PackageReadme>
     <!-- A list of tags to help the search engine to understand the content of the package -->
     <PackageTags>library, social, posting, formatting, threads, posts</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -46,4 +46,17 @@
     <!-- If all members are not documented, you can disable the compiler warnings -->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+        Add an icon.png next to the csproj:
+        - Supported format: png, jpg
+        - Recommended dimensions: 128x128
+        - Maximum size: 1MB
+    -->
+    <None
+        Include="icon.png"
+        Pack="true"
+        PackagePath="" />
+  </ItemGroup>
 </Project>

@@ -43,6 +43,11 @@ Run all tests in the solution with `run-tests.sh`
 
 ## Dependencies
 
+### `SocialFormat.Lib`
+
+| Dependency                                                            | Creator                                                   | License                                                                        | Usage                                                           |
+| --------------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------- |
+
 ### `SocialFormat.Console`
 
 | Dependency                                                            | Creator                                                   | License                                                                        | Usage                                                           |
