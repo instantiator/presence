@@ -2,6 +2,9 @@
 
 This library will format a thread of posts for a given social network from a set of snippets (text, links, hashtags, breaks).
 
+> [!WARNING]
+> NB. This project is currently under development - libraries are not production ready yet.
+
 ## Getting started
 
 See: [Presence documentation](https://instantiator.dev/presence)

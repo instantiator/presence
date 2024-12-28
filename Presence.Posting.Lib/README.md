@@ -1,6 +1,7 @@
 # Presence.Posting.Lib
 
-**TODO**
+> [!WARNING]
+> NB. This project is currently under development - libraries are not production ready yet.
 
 ## Dependencies
 
