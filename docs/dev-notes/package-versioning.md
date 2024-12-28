@@ -15,6 +15,15 @@ git push --tags
 | `Presence.SocialFormat.Lib`     | `social-format-lib-`     | [Presence.SocialFormat.Lib](https://www.nuget.org/packages/Presence.SocialFormat.Lib/) |
 | `Presence.SocialFormat.Console` | `social-format-console-` |                                                                                        |
 
+## Preparing binaries
+
+Test the binary build process with provided scripts:
+
+| Script                      | Purpose                                                                       | Output directory |
+| --------------------------- | ----------------------------------------------------------------------------- | ---------------- |
+| `prepare-cli-tools.sh`      | Build binaries for the CLI tools. Currently: `Presence.SocialFormat.Console`  | `release`        |
+| `prepare-nuget-packages.sh` | Build binaries for the Nuget packages. Currently: `Presence.SocialFormat.Lib` | `nuget`          |
+
 ## Publication to Nuget
 
 Library packages are published to Nuget.
