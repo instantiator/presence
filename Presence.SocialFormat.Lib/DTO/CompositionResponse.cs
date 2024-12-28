@@ -1,3 +1,4 @@
+using Presence.SocialFormat.Lib.Composition;
 using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Posts;
 

@@ -15,6 +15,11 @@ public class ThreadBuilder
     {
     }
 
+    public ThreadBuilder(SocialNetwork network)
+    {
+        Composers.Add(ComposerFactory.ForNetwork(network));
+    }
+
     public ThreadBuilder(IThreadComposer composer)
     {
         Composers.Add(composer);
@@ -28,6 +33,12 @@ public class ThreadBuilder
     public ThreadBuilder(SocialNetwork network, ThreadCompositionRules threadRules, PostRenderRules postRules, ICounterCreator? counterCreator = null)
     {
         Composers.Add(new SimpleThreadComposer(network, threadRules, postRules, counterCreator));
+    }
+
+    public ThreadBuilder WithComposer(SocialNetwork network)
+    {
+        Composers.Add(ComposerFactory.ForNetwork(network));
+        return this;
     }
 
     public ThreadBuilder WithComposer(IThreadComposer composer)

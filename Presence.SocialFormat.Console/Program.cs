@@ -51,7 +51,7 @@ public class Program
     {
         var inputPath = options.InputPath;
 
-        IDictionary<SocialNetwork, IEnumerable<CommonPost>>? threads = null;
+        IDictionary<IThreadComposer, IEnumerable<CommonPost>>? threads = null;
         Exception? exception = null;
 
         try
@@ -65,7 +65,7 @@ public class Program
             var request = JsonSerializer.Deserialize<CompositionRequest>(input, opts)!;
 
             var composers = options.Network.Select(ComposerFactory.ForNetwork);
-            threads = composers.ToDictionary(composer => composer.Network, composer => composer.Compose(request));
+            threads = composers.ToDictionary(composer => composer, composer => composer.Compose(request));
         }
         catch (Exception e)
         {
@@ -74,7 +74,7 @@ public class Program
 
         var result = new CompositionResponse
         {
-            Threads = threads,
+            Threads = threads?.ToDictionary(kvp => kvp.Key.Network, kvp => kvp.Value),
             Success = threads != null && threads.Count() == options.Network.Count() && exception == null,
             ExceptionType = exception?.GetType().ToString(),
             ExceptionMessage = exception?.Message,
