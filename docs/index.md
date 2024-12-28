@@ -18,6 +18,12 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 - [Install packages from Nuget](guides/install-packages.md)
 - [Create a thread with Presence.SocialFormat.Lib](guides/create-thread.md)
 
+##  Nuget packages
+
+| Package                                                                               | Latest source code                                                                                                                                                                                                                        | Latest Nuget publication                                                                                                                                                                                                                     |
+| ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Presence.SocialFormat.Lib](https://www.nuget.org/packages/Presence.SocialFormat.Lib) | [![publish-social-format-lib](https://github.com/instantiator/presence/actions/workflows/publish-social-format-lib.yaml/badge.svg?event=push)](https://github.com/instantiator/presence/actions/workflows/publish-social-format-lib.yaml) | [![publish-social-format-lib](https://github.com/instantiator/presence/actions/workflows/publish-social-format-lib.yaml/badge.svg?event=release)](https://github.com/instantiator/presence/actions/workflows/publish-social-format-lib.yaml) |
+
 ## Developer notes
 
 - [Presence](https://github.com/users/instantiator/projects/1/views/1) (GitHub project)
