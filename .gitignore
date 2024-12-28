@@ -3,5 +3,6 @@ bin/
 obj/
 .DS_Store
 TestResults/
-nuget/
 TestResults/
+nuget/
+release/

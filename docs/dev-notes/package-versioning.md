@@ -7,10 +7,16 @@ git tag social-format-lib-0.1.0
 git push --tags
 ```
 
-NB. `Presence.SocialFormat.Lib` version tags are prefixed with: `social-format-lib-`
+> [!NOTE]
+> Each published project relies on versioning tags prefixed with a unique identifier, as shown here.
 
-Create a [release](https://github.com/instantiator/presence/releases) from the main branch to trigger build and publication of the package to Nuget.
+| Package                         | Tag prefix               | Nuget location                                                                         |
+| ------------------------------- | ------------------------ | -------------------------------------------------------------------------------------- |
+| `Presence.SocialFormat.Lib`     | `social-format-lib-`     | [Presence.SocialFormat.Lib](https://www.nuget.org/packages/Presence.SocialFormat.Lib/) |
+| `Presence.SocialFormat.Console` | `social-format-console-` |                                                                                        |
 
-| Package            | Tag prefix           | Nuget location                                                       |
-| ------------------ | -------------------- | -------------------------------------------------------------------- |
-| `Presence.SocialFormat.Lib` | `social-format-lib-` | [Presence.SocialFormat.Lib](https://www.nuget.org/packages/Presence.SocialFormat.Lib/) |
+## Publication to Nuget
+
+Library packages are published to Nuget.
+
+Create a [release](https://github.com/instantiator/presence/releases) from the main branch, specifying the latest tag you have applied, to trigger build and publication of packages to Nuget.
