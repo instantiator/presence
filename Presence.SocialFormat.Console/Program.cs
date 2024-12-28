@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using CommandLine;
 using Presence.SocialFormat.Lib.Composition;
 using Presence.SocialFormat.Lib.DTO;
+using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Posts;
 
 namespace Presence.SocialFormat.Console;
@@ -16,13 +17,17 @@ public class Program
         [Option('i', "input-file", Required = true, HelpText = "Path to input file containing a composition request.")]
         public string InputPath { get; set; } = null!;
 
+        [Option('n', "networks", Required = true, HelpText = "Social networks to generate for, a comma-separated list.", Separator = ',', Min = 1)]
+        public IEnumerable<SocialNetwork> Network { get; set; } = null!;
+
         [Option('o', "output-format", Required = false, Default = OutputFormat.Json, HelpText = $"Set the output format.")]
         public OutputFormat Format { get; set; } = OutputFormat.Json;
     }
 
     public static void Main(string[] args)
     {
-        var parser = new Parser((with) => {
+        var parser = new Parser((with) =>
+        {
             with.AutoHelp = true;
             with.AutoVersion = true;
             with.CaseSensitive = false;
@@ -37,14 +42,16 @@ public class Program
 
     private static void HandleErrors(IEnumerable<Error> errors)
     {
-        System.Console.Error.WriteLine("Output formats: " + Helpers.EnumAsCSV(typeof(OutputFormat)));
+        System.Console.Error.WriteLine("Supported constants:");
+        System.Console.Error.WriteLine("  Output formats:  " + Helpers.EnumAsCSV(typeof(OutputFormat)));
+        System.Console.Error.WriteLine("  Social networks: " + Helpers.EnumAsCSV(typeof(SocialNetwork)));
     }
 
     private static void HandleOptions(Options options)
     {
         var inputPath = options.InputPath;
 
-        IEnumerable<CommonPost>? thread = null;
+        IDictionary<SocialNetwork, IEnumerable<CommonPost>>? threads = null;
         Exception? exception = null;
 
         try
@@ -57,29 +64,8 @@ public class Program
             var input = File.ReadAllText(inputPath);
             var request = JsonSerializer.Deserialize<CompositionRequest>(input, opts)!;
 
-            var simpleThreadRules = new ThreadCompositionRules
-            {
-                OnlyCountThreads = true,
-                TagsOnAllPosts = true,
-                TagsOnFirstPost = false,
-                PostCounterPrefix = true,
-                PostCounterSuffix = false
-            };
-
-            var simplePostRules = new PostRenderRules
-            {
-                MaxLength = 100,
-                WordSpace = " ",
-                PrefixToMainJoin = " ",
-                MainToSuffixJoin = "\n",
-                MinAcceptableSpace = 10,
-                ShowLinkUrls = false,
-                SplitSnippetTextOn = new[] { ' ', '\n' },
-                TruncationMark = "…"
-            };
-
-            var composer = new SimpleThreadComposer(simpleThreadRules, simplePostRules);
-            thread = composer.Compose(request).ToList();
+            var composers = options.Network.Select(ComposerFactory.ForNetwork);
+            threads = composers.ToDictionary(composer => composer.Network, composer => composer.Compose(request));
         }
         catch (Exception e)
         {
@@ -88,8 +74,8 @@ public class Program
 
         var result = new CompositionResponse
         {
-            Thread = thread,
-            Success = thread != null && exception == null,
+            Threads = threads,
+            Success = threads != null && threads.Count() == options.Network.Count() && exception == null,
             ExceptionType = exception?.GetType().ToString(),
             ExceptionMessage = exception?.Message,
             ExceptionStackTrace = exception?.StackTrace
@@ -128,7 +114,11 @@ public class Program
 
         if (response.Success)
         {
-            lines.Add(string.Join($"\n{separator}\n", response.Thread!.Select(p => p.ComposeText())));
+            foreach (var network in response.Threads!.Keys)
+            {
+                lines.Add($"Network: {network}");
+                lines.Add(string.Join($"\n  {separator}\n", response.Threads![network].Select(p => "✉️ " + p.ComposeText())));
+            }
         }
         else
         {

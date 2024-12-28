@@ -11,7 +11,19 @@ public enum SnippetType
 
 public class SocialSnippet
 {
-    public string Text { get; set; } = null!;
+    public SocialSnippet()
+    {
+    }
+
+    public SocialSnippet(string text, SnippetType snippetType = SnippetType.Text, string? reference = null, IEnumerable<CommonPostImage>? images = null)
+    {
+        Text = text;
+        SnippetType = snippetType;
+        Reference = reference;
+        if (images != null) { Images.AddRange(images); }
+    }
+
+    public string Text { get; init; } = null!;
     public SnippetType SnippetType { get; set; } = SnippetType.Text;
     public List<CommonPostImage> Images { get; set; } = new List<CommonPostImage>();
     public string? Reference { get; set; }

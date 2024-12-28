@@ -1,4 +1,5 @@
 using Presence.SocialFormat.Lib.DTO;
+using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Posts;
 
 namespace Presence.SocialFormat.Lib.Composition;
@@ -7,11 +8,13 @@ public abstract class AbstractThreadComposer : IThreadComposer
 {
     public PostRenderRules PostRules { get; protected set; }
     public ThreadCompositionRules ThreadRules { get; protected set; }
+    public SocialNetwork Network { get; protected set; }
 
-    protected AbstractThreadComposer(ThreadCompositionRules threadRules, PostRenderRules postRules)
+    protected AbstractThreadComposer(SocialNetwork network, ThreadCompositionRules threadRules, PostRenderRules postRules)
     {
         ThreadRules = threadRules;
         PostRules = postRules;
+        Network = network;
     }
 
     public abstract SocialSnippet CreatePostCounter(int index);
