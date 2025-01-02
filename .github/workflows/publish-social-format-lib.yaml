@@ -9,11 +9,17 @@ on:
       - "main"
     paths:
       - Presence.SocialFormat.Lib/**
+      - Presence.SocialFormat.Console/**
+      - Presence.SocialFormat.Tests/**
+      - Presence.Posting.Lib/**
   pull_request:
     branches:
       - "*"
     paths:
       - Presence.SocialFormat.Lib/**
+      - Presence.SocialFormat.Console/**
+      - Presence.SocialFormat.Tests/**
+      - Presence.Posting.Lib/**
   release:
     types:
       - published
