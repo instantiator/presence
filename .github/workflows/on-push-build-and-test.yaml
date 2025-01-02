@@ -11,6 +11,7 @@ on:
       - Presence.SocialFormat.Console/**
       - Presence.SocialFormat.Tests/**
       - Presence.Posting.Lib/**
+      - Presence.Posting.Tests/**
   pull_request:
     branches:
       - "*"
@@ -19,6 +20,7 @@ on:
       - Presence.SocialFormat.Console/**
       - Presence.SocialFormat.Tests/**
       - Presence.Posting.Lib/**
+      - Presence.Posting.Tests/**
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
