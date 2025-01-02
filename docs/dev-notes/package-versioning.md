@@ -1,19 +1,14 @@
 # Package versioning
 
-To version a package, first push an appropriate tag, eg.
+To version a package, first attach an appropriate tag to the current commit, and push with tags, eg.
 
 ```bash
-git tag social-format-lib-0.1.0
+git tag 0.2.1
 git push --tags
 ```
 
 > [!NOTE]
-> Each published project relies on versioning tags prefixed with a unique identifier, as shown here.
-
-| Package                         | Tag prefix               | Nuget location                                                                         |
-| ------------------------------- | ------------------------ | -------------------------------------------------------------------------------------- |
-| `Presence.SocialFormat.Lib`     | `social-format-lib-`     | [Presence.SocialFormat.Lib](https://www.nuget.org/packages/Presence.SocialFormat.Lib/) |
-| `Presence.SocialFormat.Console` | `social-format-console-` |                                                                                        |
+> For now, all packages share a common version.
 
 ## Preparing binaries
 
@@ -21,7 +16,7 @@ Test the binary build process with provided scripts:
 
 | Script                      | Purpose                                                                       | Output directory |
 | --------------------------- | ----------------------------------------------------------------------------- | ---------------- |
-| `prepare-cli-tools.sh`      | Build binaries for the CLI tools. Currently: `Presence.SocialFormat.Console`  | `release`        |
+| `prepare-cli-binaries.sh`   | Build binaries for the CLI tools. Currently: `Presence.SocialFormat.Console`  | `release`        |
 | `prepare-nuget-packages.sh` | Build binaries for the Nuget packages. Currently: `Presence.SocialFormat.Lib` | `nuget`          |
 
 ## Publication to Nuget

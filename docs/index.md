@@ -9,6 +9,14 @@ All code here is distributed under the [MIT](https://github.com/instantiator/pre
 
 Source code is at: [instantiator/presence](https://github.com/instantiator/presence)
 
+## Status
+
+[![on-push-build-and-test](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml/badge.svg?branch=main&event=push)](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml)
+
+| Package                     | NuGet version                                                              |
+| --------------------------- | -------------------------------------------------------------------------- |
+| `Presence.SocialFormat.Lib` | ![NuGet Version](https://img.shields.io/nuget/v/Presence.SocialFormat.Lib) |
+
 ## Prerequisites
 
 - [.NET 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) (download link)
@@ -18,12 +26,6 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 - [Install packages from Nuget](guides/install-packages.md)
 - [Create a thread with Presence.SocialFormat.Lib](guides/create-thread.md)
 
-##  Nuget packages
-
-| Package                                                                               | Latest source code                                                                                                                                                                                                                        | Latest Nuget publication                                                                                                                                                                                                                     |
-| ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Presence.SocialFormat.Lib](https://www.nuget.org/packages/Presence.SocialFormat.Lib) | [![publish-social-format-lib](https://github.com/instantiator/presence/actions/workflows/publish-social-format-lib.yaml/badge.svg?event=push)](https://github.com/instantiator/presence/actions/workflows/publish-social-format-lib.yaml) | [![publish-social-format-lib](https://github.com/instantiator/presence/actions/workflows/publish-social-format-lib.yaml/badge.svg?event=release)](https://github.com/instantiator/presence/actions/workflows/publish-social-format-lib.yaml) |
-
 ## Developer notes
 
 - [Presence](https://github.com/users/instantiator/projects/1/views/1) (GitHub project)
@@ -32,11 +34,11 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 
 ## Projects
 
-| Project                         | Purpose                                                                            | Project README                                                                    |
-| ------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Project                         | Purpose                                                                            | Project README                                                                             |
+| ------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
 | `Presence.SocialFormat.Lib`     | A library for composing threads, formatted to the requirements of social networks. | [README](https://github.com/instantiator/presence/Presence.SocialFormat.Lib/README.md)     |
 | `Presence.SocialFormat.Console` | A command line tool to reformat messages for social networks.                      | [README](https://github.com/instantiator/presence/Presence.SocialFormat.Console/README.md) |
-| `Presence.Posting.Lib`          | A library for posting cross-network format posts to social networks.               | [README](https://github.com/instantiator/presence/Presence.Posting.Lib/README.md)         |
+| `Presence.Posting.Lib`          | A library for posting cross-network format posts to social networks.               | [README](https://github.com/instantiator/presence/Presence.Posting.Lib/README.md)          |
 | `Presence.SocialFormat.Tests`   | Unit tests for the composition and formatting library.                             | [README](https://github.com/instantiator/presence/Presence.SocialFormat.Tests/README.md)   |
 
 _Dependencies for each project are listed in each project's `README`._

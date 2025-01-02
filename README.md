@@ -9,10 +9,12 @@ All code here is distributed under the [MIT](https://github.com/instantiator/pre
 
 See: [Documentation](https://instantiator.dev/presence)
 
-## Nuget packages
+## Status
+
+[![on-push-build-and-test](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml/badge.svg?branch=main&event=push)](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml)
+
+| Package                     | NuGet version                                                              |
+| --------------------------- | -------------------------------------------------------------------------- |
+| `Presence.SocialFormat.Lib` | ![NuGet Version](https://img.shields.io/nuget/v/Presence.SocialFormat.Lib) |
 
 See: [Install packages from Nuget](docs/guides/install-packages.md)
-
-| Package                                                                               | Latest source code                                                                                                                                                                                                                        | Latest release                                                                                                                                                                                                                               |
-| ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Presence.SocialFormat.Lib](https://www.nuget.org/packages/Presence.SocialFormat.Lib) | [![publish-social-format-lib](https://github.com/instantiator/presence/actions/workflows/publish-social-format-lib.yaml/badge.svg?event=push)](https://github.com/instantiator/presence/actions/workflows/publish-social-format-lib.yaml) | [![publish-social-format-lib](https://github.com/instantiator/presence/actions/workflows/publish-social-format-lib.yaml/badge.svg?event=release)](https://github.com/instantiator/presence/actions/workflows/publish-social-format-lib.yaml) |
