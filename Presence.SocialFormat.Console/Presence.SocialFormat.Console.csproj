@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <MinVerTagPrefix>social-format-console-</MinVerTagPrefix>
+    <!-- <MinVerTagPrefix>social-format-console-</MinVerTagPrefix> -->
     <MinVerVerbosity>normal</MinVerVerbosity>
     <MinVerDefaultPreReleaseIdentifiers>rc</MinVerDefaultPreReleaseIdentifiers>
   </PropertyGroup>
