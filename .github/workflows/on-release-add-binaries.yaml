@@ -1,0 +1,28 @@
+name: on-release-add-binaries
+on:
+  release:
+    types: [created]
+jobs:
+  create-release-artifacts:
+    name: Create release artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Get all history to allow automatic versioning using MinVer
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+      - name: Build project
+        run: ./build-sln.sh
+      - name: Run tests
+        run: ./run-tests.sh
+      - name: Create binaries
+        run: ./prepare-cli-binaries.sh
+      - name: Add binaries to release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p upload
+          zip -r upload/Presence.zip release/*
+          gh release upload ${{ github.event.release.tag_name }} Presence.zip
