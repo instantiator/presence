@@ -32,4 +32,4 @@ jobs:
         run: |
           mkdir -p upload
           zip -r upload/Presence.zip release/*
-          gh release upload ${{ github.event.release.tag_name }} Presence.zip
+          gh release upload ${{ github.event.release.tag_name }} upload/Presence.zip
