@@ -3,7 +3,8 @@
 name: on-release-add-binaries
 on:
   release:
-    types: [created]
+    types: 
+      - created
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
@@ -16,7 +17,7 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Get all history to allow automatic versioning using MinVer
+          fetch-depth: 0 # for MinVer
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
       - name: Build project

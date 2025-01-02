@@ -1,45 +1,27 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
-# See: https://www.meziantou.net/publishing-a-nuget-package-following-best-practices-using-github.htm
-name: publish-social-format-lib
+name: on-release-publish-nuget
 on:
-  workflow_dispatch:
-  push:
-    branches:
-      - "main"
-    paths:
-      - Presence.SocialFormat.Lib/**
-      - Presence.SocialFormat.Console/**
-      - Presence.SocialFormat.Tests/**
-      - Presence.Posting.Lib/**
-  pull_request:
-    branches:
-      - "*"
-    paths:
-      - Presence.SocialFormat.Lib/**
-      - Presence.SocialFormat.Console/**
-      - Presence.SocialFormat.Tests/**
-      - Presence.Posting.Lib/**
   release:
     types:
       - published
+
+defaults:
+  run:
+    shell: pwsh
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
   NuGetDirectory: ${{ github.workspace }}/nuget
 
-defaults:
-  run:
-    shell: pwsh
-
 jobs:
-  build_package:
+  build-and-package:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Get all history to allow automatic versioning using MinVer
+          fetch-depth: 0 # for MinVer
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
       - name: Build project
@@ -57,7 +39,7 @@ jobs:
 
   validate_nuget:
     runs-on: ubuntu-latest
-    needs: [build_package]
+    needs: [build-and-package]
     steps:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4

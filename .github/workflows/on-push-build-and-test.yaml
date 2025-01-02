@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: on-push-build-and-test
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+    paths:
+      - Presence.SocialFormat.Lib/**
+      - Presence.SocialFormat.Console/**
+      - Presence.SocialFormat.Tests/**
+      - Presence.Posting.Lib/**
+  pull_request:
+    branches:
+      - "*"
+    paths:
+      - Presence.SocialFormat.Lib/**
+      - Presence.SocialFormat.Console/**
+      - Presence.SocialFormat.Tests/**
+      - Presence.Posting.Lib/**
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  # NuGetDirectory: ${{ github.workspace }}/nuget
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # for MinVer
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+      - name: Build project
+        run: ./build-sln.sh
+      - name: Run tests
+        run: ./run-tests.sh
