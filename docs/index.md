@@ -26,6 +26,11 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 - [Install packages from Nuget](guides/install-packages.md)
 - [Create a thread with Presence.SocialFormat.Lib](guides/create-thread.md)
 
+## CLI tools
+
+- [Downloading binaries](cli/download-binaries.md)
+- [Using `Presence.SocialFormat.Console`](cli/presence-social-format-console.md)
+
 ## Developer notes
 
 - [Presence](https://github.com/users/instantiator/projects/1/views/1) (GitHub project)

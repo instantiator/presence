@@ -14,8 +14,8 @@ public class Program
 {
     public class Options
     {
-        [Option('i', "input-file", Required = true, HelpText = "Path to input file containing a composition request.")]
-        public string InputPath { get; set; } = null!;
+        [Option('i', "input-file", Required = false, HelpText = "Path to input file containing a composition request.")]
+        public string? InputPath { get; set; } = null;
 
         [Option('n', "networks", Required = true, HelpText = "Social networks to generate for, a comma-separated list.", Separator = ',', Min = 1)]
         public IEnumerable<SocialNetwork> Network { get; set; } = null!;
@@ -56,14 +56,7 @@ public class Program
 
         try
         {
-            if (!File.Exists(inputPath))
-            {
-                throw new FileNotFoundException($"Input file not found: {inputPath}", inputPath);
-            }
-
-            var input = File.ReadAllText(inputPath);
-            var request = JsonSerializer.Deserialize<CompositionRequest>(input, opts)!;
-
+            var request = string.IsNullOrWhiteSpace(inputPath) ? ReadStdIn() : ReadInputFile(inputPath);
             var composers = options.Network.Select(ComposerFactory.ForNetwork);
             threads = composers.ToDictionary(composer => composer, composer => composer.Compose(request));
         }
@@ -92,6 +85,29 @@ public class Program
             default:
                 throw new ArgumentOutOfRangeException(nameof(options.Format), options.Format, "Unknown output format.");
         }
+    }
+
+    private static CompositionRequest ReadInputFile(string path)
+    {
+        if (!File.Exists(path))
+        {
+            throw new FileNotFoundException($"Input file not found: {path}", path);
+        }
+
+        var input = File.ReadAllText(path);
+        return JsonSerializer.Deserialize<CompositionRequest>(input, opts)!;
+    }
+
+    private static CompositionRequest ReadStdIn()
+    {
+        var input = new StringBuilder();
+        string? line;
+        while ((line = System.Console.ReadLine()) != null)
+        {
+            input.AppendLine(line);
+        }
+
+        return JsonSerializer.Deserialize<CompositionRequest>(input.ToString(), opts)!;
     }
 
     // strict on unknown properties, relaxed on case sensitivity
