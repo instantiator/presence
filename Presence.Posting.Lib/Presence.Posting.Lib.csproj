@@ -6,8 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);CS1998</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="FishyFlip" Version="3.1.2" />
+    <PackageReference
+        Include="FishyFlip"
+        Version="3.1.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -69,6 +75,6 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <!-- If all members are not documented, you can disable the compiler warnings -->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
-  </PropertyGroup>  
+  </PropertyGroup>
 
 </Project>

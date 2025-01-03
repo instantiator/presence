@@ -33,7 +33,7 @@ var snippet3 = new SocialSnippet()
 Here's a the simplest possible example - add a single Message snippet (of `SnippetType.Text` by default), and build the thread.
 
 ```csharp
-var posts = new ThreadBuilder(SocialNetwork.BlueSky)
+var posts = new ThreadBuilder(SocialNetwork.AT)
     .WithMessage(new SocialSnippet("Hello, world!"))
     .Build();
 ```
@@ -45,16 +45,16 @@ You could add any number of additional snippets, together as an `IEnumerable<Soc
 Set tags for the thread, too - similarly, individually or together as an `IEnumerable<SocialSnippet>`:
 
 ```csharp
-var posts = new ThreadBuilder(SocialNetwork.BlueSky)
+var posts = new ThreadBuilder(SocialNetwork.AT)
     .WithMessages(messageSnippets)
     .WithTag(new SocialSnippet("#Example1", SnippetType.Tag))
     .WithTag(new SocialSnippet("#Example2", SnippetType.Tag))
     .Build();
 ```
 
-By default, the `BlueSkyThreadComposer` will
+By default, the `ATThreadComposer` will
 
 - limit text to `300` characters per post (including counters, hashtags)
-- render links as text rather than URLs (as BlueSky can specify link regions in posts)
+- render links as text rather than URLs (as AT/BlueSky can specify link regions in posts)
 - apply hashtags to the first post only
 - apply a counter to the beginning of each post, if there is more than 1 post in the thread

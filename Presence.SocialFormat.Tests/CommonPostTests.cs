@@ -3,6 +3,7 @@ using Presence.SocialFormat.Lib.Posts;
 namespace Presence.SocialFormat.Tests;
 
 [TestClass]
+[TestCategory("Unit")]
 public class CommonPostTests
 {
     public static PostRenderRules SimpleRules = new PostRenderRules()

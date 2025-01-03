@@ -38,5 +38,7 @@ jobs:
         uses: actions/setup-dotnet@v4
       - name: Build project
         run: ./build-sln.sh
-      - name: Run tests
-        run: ./run-tests.sh
+      - name: Run unit tests
+        run: ./run-unit-tests.sh
+      - name: Run integration tests
+        run: ./run-integration-tests.sh

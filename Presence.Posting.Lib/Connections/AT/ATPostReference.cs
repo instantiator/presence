@@ -18,6 +18,6 @@ public class ATPostReference : INetworkPostReference
     public CommonPost? Origin { get; private set; }
     public Post? AtOrigin { get; private set; }
     public string ReferenceKey => this.Uri.Rkey;
-    public SocialNetwork Network => SocialNetwork.BlueSky;
+    public SocialNetwork Network => SocialNetwork.AT;
 
 }

@@ -6,3 +6,4 @@ TestResults/
 TestResults/
 nuget/
 release/
+.env*

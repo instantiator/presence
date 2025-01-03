@@ -9,35 +9,27 @@ using FishyFlip.Tools;
 using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Posts;
 
-namespace Presence.Posting.Lib.Connections.BlueSky;
+namespace Presence.Posting.Lib.Connections.AT;
 
 public class ATConnection : INetworkConnection
 {
     private const int RATE_ms = 1000;
     private static DateTime lastAction = DateTime.MinValue;
 
-    public string Server { get; private set; }
-    public string Account { get; private set; }
-    private string password;
+    public INetworkCredentials? Credentials { get; private set; }
+    public Uri Server => Credentials?.ContainsKey(NetworkCredentialType.Server) == true ? new Uri("https://" + Credentials[NetworkCredentialType.Server]) : new Uri("https://bsky.social");
+    private string? account => Credentials?[NetworkCredentialType.AccountName];
+    private string? password => Credentials?[NetworkCredentialType.AppPassword];
 
-    private ATProtocol protocol;
+    private ATProtocol? protocol;
     private Session? session;
 
-    public ATConnection(string server, string account, string password)
+    public ATConnection()
     {
-        this.Server = server;
-        this.Account = account;
-        this.password = password;
-
-        this.protocol = new ATProtocolBuilder()
-            .EnableAutoRenewSession(true)
-            .WithInstanceUrl(new Uri("https://" + server))
-            .Build();
     }
 
-    public bool Authenticated => session != null;
-
-    public SocialNetwork Network => throw new NotImplementedException();
+    public bool Connected => session != null;
+    public SocialNetwork Network => SocialNetwork.AT;
 
     private static async Task RateLimit()
     {
@@ -51,21 +43,33 @@ public class ATConnection : INetworkConnection
         lastAction = now;
     }
 
-    public async Task<bool> ConnectAsync()
+    public async Task<bool> ConnectAsync(INetworkCredentials? credentials)
     {
+        if (credentials == null) throw new NullReferenceException($"Credentials are required.");
+        var (valid, errors) = credentials.Validate();
+        if (!valid) { throw new ArgumentException(string.Join(", ", errors)); }
+
+        this.Credentials = credentials;
+        this.protocol = new ATProtocolBuilder()
+            .EnableAutoRenewSession(true)
+            .WithInstanceUrl(Server)
+            .Build();
+
         await RateLimit();
-        var (session, error) = await protocol.AuthenticateWithPasswordResultAsync(Account, password);
+        var (session, error) = await protocol.AuthenticateWithPasswordResultAsync(account!, password!);
         if (error != null)
         {
             throw new Exception($"{error.StatusCode}: {error.Detail}");
         }
         this.session = session;
-        return Authenticated;
+        return Connected;
     }
 
     public void Disconnect()
     {
         session = null;
+        protocol?.Dispose();
+        protocol = null;
     }
 
     public void Dispose()
@@ -73,9 +77,11 @@ public class ATConnection : INetworkConnection
         Disconnect();
     }
 
+    [MemberNotNull(nameof(protocol))]
     [MemberNotNull(nameof(session))]
     private void RequireAuthenticated()
     {
+        if (protocol == null) throw new NullReferenceException("protocol is null");
         if (session == null) throw new NullReferenceException("session is null");
     }
 

@@ -27,7 +27,7 @@ jobs:
       - name: Build project
         run: ./build-sln.sh
       - name: Run tests
-        run: ./run-tests.sh
+        run: ./run-unit-tests.sh
       - name: Create NuGet packages
         run: ./prepare-nuget-packages.sh
       - uses: actions/upload-artifact@v4
