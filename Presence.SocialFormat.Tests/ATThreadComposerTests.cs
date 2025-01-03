@@ -4,12 +4,13 @@ using Presence.SocialFormat.Lib.Posts;
 namespace Presence.SocialFormat.Tests;
 
 [TestClass]
-public class BlueSkyThreadComposerTests
+[TestCategory("Unit")]
+public class ATThreadComposerTests
 {
     [TestMethod]
-    public void BlueSkyThreadComposer_PostsHave_300CharLimit_and_Counters()
+    public void ATThreadComposer_PostsHave_300CharLimit_and_Counters()
     {
-        var composer = new BlueSkyThreadComposer();
+        var composer = new ATThreadComposer();
 
         for (int i = 1; i < 100; i++)
         {

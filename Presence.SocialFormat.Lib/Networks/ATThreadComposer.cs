@@ -3,9 +3,9 @@ using Presence.SocialFormat.Lib.Posts;
 
 namespace Presence.SocialFormat.Lib.Networks;
 
-public class BlueSkyThreadComposer : SimpleThreadComposer
+public class ATThreadComposer : SimpleThreadComposer
 {
-    public static ThreadCompositionRules BLUESKY_THREAD_COMPOSITION_RULES = new()
+    public static ThreadCompositionRules AT_THREAD_COMPOSITION_RULES = new()
     {
         TagsOnAllPosts = false,
         TagsOnFirstPost = true,
@@ -14,7 +14,7 @@ public class BlueSkyThreadComposer : SimpleThreadComposer
         PostCounterSuffix = false,
     };
 
-    public static PostRenderRules BLUESKY_POST_RENDER_RULES = new()
+    public static PostRenderRules AT_POST_RENDER_RULES = new()
     {
         MaxLength = 300,
         MaxImagesPerPost = 4,
@@ -27,10 +27,10 @@ public class BlueSkyThreadComposer : SimpleThreadComposer
         MinAcceptableSpace = 10,
     };
 
-    public BlueSkyThreadComposer(ThreadCompositionRules? threadRules = null, PostRenderRules? postRules = null, ICounterCreator? counterCreator = null) : base(
-            SocialNetwork.BlueSky,
-            threadRules ?? BLUESKY_THREAD_COMPOSITION_RULES,
-            postRules ?? BLUESKY_POST_RENDER_RULES,
+    public ATThreadComposer(ThreadCompositionRules? threadRules = null, PostRenderRules? postRules = null, ICounterCreator? counterCreator = null) : base(
+            SocialNetwork.AT,
+            threadRules ?? AT_THREAD_COMPOSITION_RULES,
+            postRules ?? AT_POST_RENDER_RULES,
             counterCreator)
     {
     }
