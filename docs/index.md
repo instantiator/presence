@@ -36,7 +36,7 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 
 ## Developer notes
 
-- [Presence](https://github.com/users/instantiator/projects/1/views/1) (GitHub project)
+- [Presence project](https://github.com/users/instantiator/projects/1/views/1)
 - [Contributing guidelines](CONTRIBUTING)
 - [Package versioning](dev-notes/package-versioning.md)
 - [Testing](dev-notes/testing.md)
