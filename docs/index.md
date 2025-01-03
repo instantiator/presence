@@ -24,7 +24,8 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 ## User guide
 
 - [Install packages from Nuget](guides/install-packages.md)
-- [Create a thread with Presence.SocialFormat.Lib](guides/create-thread.md)
+- [Create a thread with `Presence.SocialFormat.Lib`](guides/create-thread.md)
+= [Post to a social network with `Presence.Posting.Lib`](guides/send-post.md)
 
 ## CLI tools
 
@@ -42,9 +43,10 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 | Project                         | Purpose                                                                            | Project README                                                                             |
 | ------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
 | `Presence.SocialFormat.Lib`     | A library for composing threads, formatted to the requirements of social networks. | [README](https://github.com/instantiator/presence/Presence.SocialFormat.Lib/README.md)     |
-| `Presence.SocialFormat.Console` | A command line tool to reformat messages for social networks.                      | [README](https://github.com/instantiator/presence/Presence.SocialFormat.Console/README.md) |
-| `Presence.Posting.Lib`          | A library for posting cross-network format posts to social networks.               | [README](https://github.com/instantiator/presence/Presence.Posting.Lib/README.md)          |
 | `Presence.SocialFormat.Tests`   | Unit tests for the composition and formatting library.                             | [README](https://github.com/instantiator/presence/Presence.SocialFormat.Tests/README.md)   |
+| `Presence.SocialFormat.Console` | A command line tool to reformat messages for social networks.                      | [README](https://github.com/instantiator/presence/Presence.SocialFormat.Console/README.md) |
+| `Presence.Posting.Lib`          | A library for posting to social networks.                                          | [README](https://github.com/instantiator/presence/Presence.Posting.Lib/README.md)          |
+| `Presence.Posting.Tests`        | Unit and integration tests for the posting library.                                | [README](https://github.com/instantiator/presence/Presence.Posting.Tests/README.md)        |
 
 _Dependencies for each project are listed in each project's `README`._
 
