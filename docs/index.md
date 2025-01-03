@@ -25,7 +25,8 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 
 - [Install packages from Nuget](guides/install-packages.md)
 - [Create a thread with `Presence.SocialFormat.Lib`](guides/create-thread.md)
-= [Post to a social network with `Presence.Posting.Lib`](guides/send-post.md)
+- [Post to a social network with `Presence.Posting.Lib`](guides/send-post.md)
+- [Network specific configuration](guides/network-specifics.md)
 
 ## CLI tools
 
@@ -37,6 +38,7 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 - [Presence](https://github.com/users/instantiator/projects/1/views/1) (GitHub project)
 - [Contributing guidelines](CONTRIBUTING)
 - [Package versioning](dev-notes/package-versioning.md)
+- [Testing](dev-notes/testing.md)
 
 ## Projects
 

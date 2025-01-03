@@ -27,10 +27,4 @@ In the example above, configuration is provided in the `env` dictionary. It coul
 var env = Environment.GetEnvironmentVariables();
 ```
 
-## AT/BlueSky specifics
-
-* Create an application password in **Privacy & Security** settings in BlueSky.
-* A connection to an AT network (eg. BlueSky) uses the following environment/configuration keys:
-  * `AT_AccountName` (required) - your account name, eg. `instantiator.bsky.social`
-  * `AT_AppPassword` (required) - an application password created in your account
-  * `AT_Server` (optional) - the AT network server to connect to, if not `bsky.social`
+For information about configuration key/value pairs, see: [Network specifics](network-specifics.md)

@@ -1,7 +1,13 @@
 # Presence.Posting.Lib
 
+This library will send posts and threads to social networks.
+
 > [!WARNING]
 > NB. This project is currently under development - libraries are not production ready yet.
+
+## Getting started
+
+See: [Presence documentation](https://instantiator.dev/presence)
 
 ## Dependencies
 
