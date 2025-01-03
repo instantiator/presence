@@ -9,7 +9,7 @@
   <PropertyGroup>
     <Authors>Lewis Westbury</Authors>
     <Description>
-      Presence is a set of .NET libraries and tools for social sharing. SocialFormat.Lib
+      Presence is a set of .NET libraries and tools for social sharing. Presence.SocialFormat.Lib
       formats text, links, hashtags and links for social network requirements.
     </Description>
     <PackageProjectUrl>https://instantiator.dev/presence/</PackageProjectUrl>

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presence.SocialFormat.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presence.SocialFormat.Console", "Presence.SocialFormat.Console\Presence.SocialFormat.Console.csproj", "{F8514DF7-88FC-4C45-9F5A-585B3106673E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presence.Posting.Tests", "Presence.Posting.Tests\Presence.Posting.Tests.csproj", "{BB56E413-9E7A-43EF-80D0-CDEA6CC06D9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,9 @@ Global
 		{F8514DF7-88FC-4C45-9F5A-585B3106673E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8514DF7-88FC-4C45-9F5A-585B3106673E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8514DF7-88FC-4C45-9F5A-585B3106673E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB56E413-9E7A-43EF-80D0-CDEA6CC06D9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB56E413-9E7A-43EF-80D0-CDEA6CC06D9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB56E413-9E7A-43EF-80D0-CDEA6CC06D9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB56E413-9E7A-43EF-80D0-CDEA6CC06D9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

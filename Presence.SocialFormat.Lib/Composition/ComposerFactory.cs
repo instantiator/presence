@@ -10,8 +10,8 @@ namespace Presence.SocialFormat.Lib.Composition
             {
                 case SocialNetwork.Test:
                     return new SimpleThreadComposer();
-                case SocialNetwork.BlueSky:
-                    return new BlueSkyThreadComposer();
+                case SocialNetwork.AT:
+                    return new ATThreadComposer();
                 default:
                     throw new NotImplementedException($"No composer implemented for network: {network}");
             }

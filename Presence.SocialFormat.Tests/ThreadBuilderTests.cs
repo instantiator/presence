@@ -7,6 +7,7 @@ using Presence.SocialFormat.Tests.Composition.Helpers;
 namespace Presence.SocialFormat.Tests;
 
 [TestClass]
+[TestCategory("Unit")]
 public class ThreadBuilderTests
 {
     [TestMethod]
@@ -32,14 +33,14 @@ public class ThreadBuilderTests
     }
 
     [TestMethod]
-    public void ThreadBuilder_CanBuildBlueSkyThread()
+    public void ThreadBuilder_CanBuildATThread()
     {
-        var posts = new ThreadBuilder(SocialNetwork.BlueSky)
+        var posts = new ThreadBuilder(SocialNetwork.AT)
             .WithMessage(new SocialSnippet("Hello, world!"))
             .Build();
 
         Assert.AreEqual(1, posts.Count());
-        Assert.AreEqual(typeof(BlueSkyThreadComposer), posts.Single().Key.GetType());
+        Assert.AreEqual(typeof(ATThreadComposer), posts.Single().Key.GetType());
         Assert.AreEqual(1, posts.Single().Value.Count());
         Assert.AreEqual("Hello, world!", posts.Single().Value.Single().Message.Single().Text);
         Assert.AreEqual(SnippetType.Text, posts.Single().Value.Single().Message.Single().SnippetType);

@@ -9,6 +9,9 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
 
+permissions:
+  contents: write
+
 jobs:
   create-release-artifacts:
     name: Create release artifacts
@@ -23,7 +26,7 @@ jobs:
       - name: Build project
         run: ./build-sln.sh
       - name: Run tests
-        run: ./run-tests.sh
+        run: ./run-unit-tests.sh
       - name: Create binaries
         run: ./prepare-cli-binaries.sh
       - name: Add binaries to release

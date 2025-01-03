@@ -1,4 +1,3 @@
-using Presence.SocialFormat.Lib.Composition;
 using Presence.SocialFormat.Lib.DTO;
 using Presence.SocialFormat.Lib.Posts;
 using Presence.SocialFormat.Tests.Composition.Helpers;
@@ -6,6 +5,7 @@ using Presence.SocialFormat.Tests.Composition.Helpers;
 namespace Presence.SocialFormat.Tests;
 
 [TestClass]
+[TestCategory("Unit")]
 public class ThreadCompositionTests
 {
     [TestMethod]

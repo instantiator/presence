@@ -11,6 +11,7 @@ on:
       - Presence.SocialFormat.Console/**
       - Presence.SocialFormat.Tests/**
       - Presence.Posting.Lib/**
+      - Presence.Posting.Tests/**
   pull_request:
     branches:
       - "*"
@@ -19,11 +20,13 @@ on:
       - Presence.SocialFormat.Console/**
       - Presence.SocialFormat.Tests/**
       - Presence.Posting.Lib/**
+      - Presence.Posting.Tests/**
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
-  # NuGetDirectory: ${{ github.workspace }}/nuget
+  AT_AccountName: ${{ secrets.AT_AccountName }}
+  AT_AppPassword: ${{ secrets.AT_AppPassword }}
 
 jobs:
   build-and-test:
@@ -36,5 +39,7 @@ jobs:
         uses: actions/setup-dotnet@v4
       - name: Build project
         run: ./build-sln.sh
-      - name: Run tests
-        run: ./run-tests.sh
+      - name: Run unit tests
+        run: ./run-unit-tests.sh
+      - name: Run integration tests
+        run: ./run-integration-tests.sh
