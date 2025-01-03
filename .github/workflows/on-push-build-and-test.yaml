@@ -25,7 +25,8 @@ on:
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
-  # NuGetDirectory: ${{ github.workspace }}/nuget
+  AT_AccountName: ${{ secrets.AT_AccountName }}
+  AT_AppPassword: ${{ secrets.AT_AppPassword }}
 
 jobs:
   build-and-test:
