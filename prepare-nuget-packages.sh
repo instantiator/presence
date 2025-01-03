@@ -1,5 +1,4 @@
 #!/bin/bash
 
-PACKAGE_NAME=Presence.SocialFormat.Lib
-
-dotnet pack ${PACKAGE_NAME}/${PACKAGE_NAME}.csproj --configuration Release --output nuget
+dotnet pack Presence.SocialFormat.Lib/Presence.SocialFormat.Lib.csproj --configuration Release --output nuget
+dotnet pack Presence.Posting.Lib/Presence.Posting.Lib.csproj --configuration Release --output nuget
