@@ -1,5 +1,8 @@
 # Presence.SocialFormat.Console
 
+> [!WARNING]
+> NB. This project is currently under development - libraries are not production ready yet.
+
 This is a command line tool to reformat text, images, links, and hashtags into a usable thread for one or more social networks. It will:
 
 - Number each post in the thread, if specified.
@@ -10,6 +13,10 @@ This is a command line tool to reformat text, images, links, and hashtags into a
 
 - Run without parameters for help information: `./format.sh`
 - The input is a path to a JSON file containing a [`CompositionRequest`](https://github.com/instantiator/presence/blob/main/SocialFormat.Lib/DTO/CompositionRequest.cs).
+
+## Getting started
+
+See: [Presence documentation](https://instantiator.dev/presence)
 
 ## Dependencies
 

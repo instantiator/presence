@@ -13,9 +13,10 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 
 [![on-push-build-and-test](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml/badge.svg?branch=main&event=push)](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml)
 
-| Package                     | NuGet version                                                              |
-| --------------------------- | -------------------------------------------------------------------------- |
-| `Presence.SocialFormat.Lib` | ![NuGet Version](https://img.shields.io/nuget/v/Presence.SocialFormat.Lib) |
+| Package                                                                                  | NuGet version                                                              |
+| ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [`Presence.SocialFormat.Lib`](https://www.nuget.org/packages/Presence.SocialFormat.Lib/) | ![NuGet Version](https://img.shields.io/nuget/v/Presence.SocialFormat.Lib) |
+| [`Presence.Posting.Lib`](https://www.nuget.org/packages/Presence.Posting.Lib/)           | ![NuGet Version](https://img.shields.io/nuget/v/Presence.Posting.Lib)      |
 
 ## Prerequisites
 
@@ -42,8 +43,8 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 
 ## Projects
 
-| Project                         | Purpose                                                                            | Project README                                                                             |
-| ------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Project                         | Purpose                                                                            | Project README                                                                                       |
+| ------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | `Presence.SocialFormat.Lib`     | A library for composing threads, formatted to the requirements of social networks. | [README](https://github.com/instantiator/presence/blob/main/Presence.SocialFormat.Lib/README.md)     |
 | `Presence.SocialFormat.Tests`   | Unit tests for the composition and formatting library.                             | [README](https://github.com/instantiator/presence/blob/main/Presence.SocialFormat.Tests/README.md)   |
 | `Presence.SocialFormat.Console` | A command line tool to reformat messages for social networks.                      | [README](https://github.com/instantiator/presence/blob/main/Presence.SocialFormat.Console/README.md) |
