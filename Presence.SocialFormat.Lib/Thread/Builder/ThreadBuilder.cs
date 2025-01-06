@@ -1,9 +1,9 @@
-using Presence.SocialFormat.Lib.Composition;
 using Presence.SocialFormat.Lib.DTO;
 using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Thread.Composition;
 
-namespace Presence.SocialFormat.Lib.Builder;
+namespace Presence.SocialFormat.Lib.Thread.Builder;
 
 public class ThreadBuilder
 {
@@ -80,6 +80,13 @@ public class ThreadBuilder
     public ThreadBuilder WithTags(IEnumerable<SocialSnippet> snippets)
     {
         Tags.AddRange(snippets);
+        return this;
+    }
+
+    public ThreadBuilder WithRequest(ThreadCompositionRequest request)
+    {
+        Message = request.Message.ToList();
+        Tags = request.Tags.ToList();
         return this;
     }
 

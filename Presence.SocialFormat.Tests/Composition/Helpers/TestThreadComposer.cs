@@ -1,6 +1,6 @@
-using Presence.SocialFormat.Lib.Composition;
 using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Thread.Composition;
 
 namespace Presence.SocialFormat.Tests.Composition.Helpers;
 

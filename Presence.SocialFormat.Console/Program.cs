@@ -1,12 +1,11 @@
-﻿using System.IO;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using CommandLine;
-using Presence.SocialFormat.Lib.Composition;
+﻿using CommandLine;
+using Presence.SocialFormat.Lib.Constants;
 using Presence.SocialFormat.Lib.DTO;
+using Presence.SocialFormat.Lib.IO;
 using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Thread.Builder;
+using Presence.SocialFormat.Lib.Thread.Composition;
 
 namespace Presence.SocialFormat.Console;
 
@@ -56,9 +55,9 @@ public class Program
 
         try
         {
-            var request = string.IsNullOrWhiteSpace(inputPath) ? ReadStdIn() : ReadInputFile(inputPath);
+            var request = string.IsNullOrWhiteSpace(inputPath) ? InputReader.ReadStdIn() : InputReader.ReadInputFile(inputPath);
             var composers = options.Network.Select(ComposerFactory.ForNetwork);
-            threads = composers.ToDictionary(composer => composer, composer => composer.Compose(request));
+            threads = new ThreadBuilder(composers).WithRequest(request).Build();
         }
         catch (Exception e)
         {
@@ -74,77 +73,6 @@ public class Program
             ExceptionStackTrace = exception?.StackTrace
         };
 
-        switch (options.Format)
-        {
-            case OutputFormat.Json:
-                System.Console.WriteLine(JsonSerializer.Serialize(result, opts));
-                break;
-            case OutputFormat.HumanReadable:
-                System.Console.WriteLine(HumanReadable(result));
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(options.Format), options.Format, "Unknown output format.");
-        }
-    }
-
-    private static ThreadCompositionRequest ReadInputFile(string path)
-    {
-        if (!File.Exists(path))
-        {
-            throw new FileNotFoundException($"Input file not found: {path}", path);
-        }
-
-        var input = File.ReadAllText(path);
-        return JsonSerializer.Deserialize<ThreadCompositionRequest>(input, opts)!;
-    }
-
-    private static ThreadCompositionRequest ReadStdIn()
-    {
-        var input = new StringBuilder();
-        string? line;
-        while ((line = System.Console.ReadLine()) != null)
-        {
-            input.AppendLine(line);
-        }
-
-        return JsonSerializer.Deserialize<ThreadCompositionRequest>(input.ToString(), opts)!;
-    }
-
-    // strict on unknown properties, relaxed on case sensitivity
-    private static JsonSerializerOptions opts = new JsonSerializerOptions()
-    {
-        PropertyNameCaseInsensitive = true,
-        UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow,
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        Converters =
-        {
-            new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
-        },
-        WriteIndented = true
-    };
-
-    private static string HumanReadable(ThreadCompositionResponse response)
-    {
-        var separator = "---";
-        var lines = new List<string>();
-
-        if (response.Success)
-        {
-            foreach (var network in response.Threads!.Keys)
-            {
-                lines.Add($"Network: {network}");
-                lines.Add(string.Join($"\n  {separator}\n", response.Threads![network].Select(p => "✉️ " + p.ComposeText())));
-            }
-        }
-        else
-        {
-            lines.Add("Exception encountered processing thread.");
-            lines.Add(separator);
-            lines.Add($"Exception: {response.ExceptionType}");
-            lines.Add($"Message: {response.ExceptionMessage}");
-            lines.Add($"Stack trace: {response.ExceptionStackTrace}");
-        }
-
-        return string.Join("\n", lines);
+        System.Console.WriteLine(OutputWriter.Encode(options.Format, result));
     }
 }

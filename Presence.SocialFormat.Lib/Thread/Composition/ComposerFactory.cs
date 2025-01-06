@@ -1,6 +1,6 @@
 using Presence.SocialFormat.Lib.Networks;
 
-namespace Presence.SocialFormat.Lib.Composition
+namespace Presence.SocialFormat.Lib.Thread.Composition
 {
     public class ComposerFactory
     {

@@ -2,7 +2,7 @@ using System.Reflection.Metadata;
 using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Posts;
 
-namespace Presence.SocialFormat.Lib.Composition;
+namespace Presence.SocialFormat.Lib.Thread.Composition;
 
 public class SimpleThreadComposer : AbstractThreadComposer
 {
