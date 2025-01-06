@@ -97,6 +97,6 @@ public class ThreadBuilder
 
     public IEnumerable<CommonPost> Build(IThreadComposer composer)
     {
-        return composer.Compose(new CompositionRequest() { Message = Message, Tags = Tags });
+        return composer.Compose(new ThreadCompositionRequest() { Message = Message, Tags = Tags });
     }
 }

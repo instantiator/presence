@@ -9,5 +9,5 @@ public interface IThreadComposer
     SocialNetwork Network { get; }
     PostRenderRules PostRules { get; }
     ThreadCompositionRules ThreadRules { get; }
-    IEnumerable<CommonPost> Compose(CompositionRequest request);
+    IEnumerable<CommonPost> Compose(ThreadCompositionRequest request);
 }

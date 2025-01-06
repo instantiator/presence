@@ -21,7 +21,7 @@ public class ATThreadComposerTests
                 SnippetType = SnippetType.Text
             };
 
-            var posts = composer.Compose(new Lib.DTO.CompositionRequest()
+            var posts = composer.Compose(new Lib.DTO.ThreadCompositionRequest()
             {
                 Message = [snippet],
                 Tags = []

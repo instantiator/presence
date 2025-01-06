@@ -1,10 +1,9 @@
-using Presence.SocialFormat.Lib.Composition;
 using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Posts;
 
 namespace Presence.SocialFormat.Lib.DTO;
 
-public class CompositionResponse
+public class ThreadCompositionResponse
 {
     public required bool Success { get; init; }
     public required IDictionary<SocialNetwork, IEnumerable<CommonPost>>? Threads { get; init; }

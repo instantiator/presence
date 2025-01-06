@@ -65,7 +65,7 @@ public class Program
             exception = e;
         }
 
-        var result = new CompositionResponse
+        var result = new ThreadCompositionResponse
         {
             Threads = threads?.ToDictionary(kvp => kvp.Key.Network, kvp => kvp.Value),
             Success = threads != null && threads.Count() == options.Network.Count() && exception == null,
@@ -87,7 +87,7 @@ public class Program
         }
     }
 
-    private static CompositionRequest ReadInputFile(string path)
+    private static ThreadCompositionRequest ReadInputFile(string path)
     {
         if (!File.Exists(path))
         {
@@ -95,10 +95,10 @@ public class Program
         }
 
         var input = File.ReadAllText(path);
-        return JsonSerializer.Deserialize<CompositionRequest>(input, opts)!;
+        return JsonSerializer.Deserialize<ThreadCompositionRequest>(input, opts)!;
     }
 
-    private static CompositionRequest ReadStdIn()
+    private static ThreadCompositionRequest ReadStdIn()
     {
         var input = new StringBuilder();
         string? line;
@@ -107,7 +107,7 @@ public class Program
             input.AppendLine(line);
         }
 
-        return JsonSerializer.Deserialize<CompositionRequest>(input.ToString(), opts)!;
+        return JsonSerializer.Deserialize<ThreadCompositionRequest>(input.ToString(), opts)!;
     }
 
     // strict on unknown properties, relaxed on case sensitivity
@@ -123,7 +123,7 @@ public class Program
         WriteIndented = true
     };
 
-    private static string HumanReadable(CompositionResponse response)
+    private static string HumanReadable(ThreadCompositionResponse response)
     {
         var separator = "---";
         var lines = new List<string>();

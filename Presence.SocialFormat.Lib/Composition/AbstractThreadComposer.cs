@@ -18,7 +18,7 @@ public abstract class AbstractThreadComposer : IThreadComposer
     }
 
     public abstract SocialSnippet CreatePostCounter(int index);
-    public IEnumerable<CommonPost> Compose(CompositionRequest request)
+    public IEnumerable<CommonPost> Compose(ThreadCompositionRequest request)
     {
         var posts = new List<CommonPost>();
         foreach (var nextSnippet in request.Message)

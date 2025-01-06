@@ -21,7 +21,7 @@ public class ThreadCompositionTests
         };
 
         var composer = TestThreadComposer.Simple();
-        var posts = composer.Compose(new CompositionRequest { Message = message });
+        var posts = composer.Compose(new ThreadCompositionRequest { Message = message });
         Assert.IsTrue(posts.All(p => p.ComposeText().Length <= composer.PostRules.MaxLength));
         Assert.AreEqual(1, posts.Count());
         Assert.AreEqual("Hello, world!", posts.Single().ComposeText());
@@ -40,7 +40,7 @@ public class ThreadCompositionTests
         };
 
         var composer = TestThreadComposer.Simple();
-        var posts = composer.Compose(new CompositionRequest { Message = message });
+        var posts = composer.Compose(new ThreadCompositionRequest { Message = message });
         Assert.IsTrue(posts.All(p => p.ComposeText().Length <= composer.PostRules.MaxLength));
         Assert.AreEqual(2, posts.Count());
         Assert.AreEqual("This is a very long text snippet that ought to get split across two posts. The split comes\n/1", posts.ElementAt(0).ComposeText());
@@ -70,7 +70,7 @@ public class ThreadCompositionTests
         };
 
         var composer = TestThreadComposer.Simple();
-        var posts = composer.Compose(new CompositionRequest { Message = message });
+        var posts = composer.Compose(new ThreadCompositionRequest { Message = message });
         Assert.IsTrue(posts.All(p => p.ComposeText().Length <= composer.PostRules.MaxLength));
         Assert.AreEqual(1, posts.Count());
         Assert.AreEqual("Hello, world! This is a multi-snippet message. With 3 snippets.", posts.Single().ComposeText());
@@ -103,7 +103,7 @@ public class ThreadCompositionTests
         };
 
         var composer = TestThreadComposer.Simple();
-        var posts = composer.Compose(new CompositionRequest { Message = message });
+        var posts = composer.Compose(new ThreadCompositionRequest { Message = message });
         Assert.IsTrue(posts.All(p => p.ComposeText().Length <= composer.PostRules.MaxLength));
         Assert.AreEqual(2, posts.Count());
         Assert.AreEqual("Hello, world!\n/1", posts.ElementAt(0).ComposeText());
@@ -138,7 +138,7 @@ public class ThreadCompositionTests
         };
 
         var composer = TestThreadComposer.Simple();
-        var posts = composer.Compose(new CompositionRequest { Message = message });
+        var posts = composer.Compose(new ThreadCompositionRequest { Message = message });
         Assert.AreEqual(3, posts.Count());
         Assert.IsTrue(posts.All(p => p.ComposeText().Length <= composer.PostRules.MaxLength));
         Assert.AreEqual("This is a very long multi-snippet message. It should get split across several posts. Each post is\n/1", posts.ElementAt(0).ComposeText());
@@ -174,7 +174,7 @@ public class ThreadCompositionTests
         };
 
         var composer = TestThreadComposer.SimpleWithoutCounters();
-        var posts = composer.Compose(new CompositionRequest { Message = message });
+        var posts = composer.Compose(new ThreadCompositionRequest { Message = message });
         Assert.AreEqual(3, posts.Count());
         Assert.IsTrue(posts.All(p => p.ComposeText().Length <= composer.PostRules.MaxLength));
         Assert.AreEqual("This is a very long multi-snippet message. It should get split across several posts. Each post is", posts.ElementAt(0).ComposeText());
@@ -218,7 +218,7 @@ public class ThreadCompositionTests
         };
 
         var composer = TestThreadComposer.Simple();
-        var posts = composer.Compose(new CompositionRequest { Message = message, Tags = tags });
+        var posts = composer.Compose(new ThreadCompositionRequest { Message = message, Tags = tags });
         Assert.IsTrue(posts.All(p => p.ComposeText().Length <= composer.PostRules.MaxLength));
         Assert.AreEqual(1, posts.Count());
         Assert.AreEqual(2, posts.Single().Suffix.Count());
@@ -276,7 +276,7 @@ public class ThreadCompositionTests
         };
 
         var composer = TestThreadComposer.Simple();
-        var posts = composer.Compose(new CompositionRequest { Message = message, Tags = tags });
+        var posts = composer.Compose(new ThreadCompositionRequest { Message = message, Tags = tags });
         Assert.IsTrue(posts.All(p => p.ComposeText().Length <= composer.PostRules.MaxLength));
         Assert.AreEqual(2, posts.Count());
         Assert.IsTrue(posts.All(p => p.Suffix.Count(s => s.SnippetType == SnippetType.Tag) == 2));
@@ -313,7 +313,7 @@ public class ThreadCompositionTests
         };
 
         var composer = TestThreadComposer.SimpleWithCounterPrefix();
-        var posts = composer.Compose(new CompositionRequest { Message = message });
+        var posts = composer.Compose(new ThreadCompositionRequest { Message = message });
         Assert.AreEqual(3, posts.Count());
         Assert.IsTrue(posts.All(p => p.ComposeText().Length <= composer.PostRules.MaxLength));
         Assert.AreEqual("1. This is a very long multi-snippet message. It should get split across several posts. Each post is", posts.ElementAt(0).ComposeText());

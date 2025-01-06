@@ -12,7 +12,7 @@ This is a command line tool to reformat text, images, links, and hashtags into a
 ## Usage
 
 - Run without parameters for help information: `./format.sh`
-- The input is a path to a JSON file containing a [`CompositionRequest`](https://github.com/instantiator/presence/blob/main/SocialFormat.Lib/DTO/CompositionRequest.cs).
+- The input is a path to a JSON file containing a [`ThreadCompositionRequest`](https://github.com/instantiator/presence/blob/main/SocialFormat.Lib/DTO/ThreadCompositionRequest.cs).
 
 ## Getting started
 
