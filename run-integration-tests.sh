@@ -34,24 +34,19 @@ while [ -n "$1" ]; do
   shift
 done
 
-if [ -z "$ENV_PATH" ]; then
-  echo "Please provide a path to an environment file with configuration."
-  usage
-  exit 1
-fi
-
-# if CONFIG_PATH is provided - source environment variables from it
-if [ ! -f "$ENV_PATH" ]; then
+# if ENV_PATH is provided - source environment variables from it
+if [ ! -z "$ENV_PATH" ]; then
+  if [ ! -f "$ENV_PATH" ]; then
     echo "Environment file not found: $ENV_PATH"
     usage
     exit 1
+  else
+    echo "Environment config path: $ENV_PATH"
+    echo
+    set -o allexport
+    source $ENV_PATH
+    set +o allexport
+  fi
 fi
-
-echo "Environment config path: $ENV_PATH"
-echo
-
-set -o allexport
-source $ENV_PATH
-set +o allexport
 
 dotnet test --verbosity normal --filter TestCategory=Integration
