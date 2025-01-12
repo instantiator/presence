@@ -11,4 +11,5 @@ public interface INetworkConnection : IDisposable
     public Task<bool> ConnectAsync(INetworkCredentials? credentials);
     public void Disconnect();
     public Task<INetworkPostReference> PostAsync(CommonPost post, INetworkPostReference? replyTo = null);
+    public Task<bool> DeletePostAsync(INetworkPostReference uri);
 }

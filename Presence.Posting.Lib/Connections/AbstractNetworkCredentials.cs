@@ -3,16 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using Org.BouncyCastle.Crypto.Operators;
 using System.Linq;
+using Presence.SocialFormat.Lib.Networks;
 
 namespace Presence.Posting.Lib.Connections;
 
 public abstract class AbstractNetworkCredentials : Dictionary<NetworkCredentialType, string>, INetworkCredentials
 {
-    protected AbstractNetworkCredentials()
+    protected AbstractNetworkCredentials(SocialNetwork network)
     {
     }
 
-    protected AbstractNetworkCredentials(IDictionary<NetworkCredentialType, string> credentials)
+    protected AbstractNetworkCredentials(SocialNetwork network, IDictionary<NetworkCredentialType, string> credentials)
     {
         foreach (var (key, value) in credentials)
         {
@@ -37,6 +38,7 @@ public abstract class AbstractNetworkCredentials : Dictionary<NetworkCredentialT
     }
 
     public abstract string Prefix { get; }
+    public SocialNetwork SocialNetwork { get; init; }
 
     public abstract (bool, IEnumerable<string>) Validate();
 

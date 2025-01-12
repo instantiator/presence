@@ -28,11 +28,18 @@ public class ConsoleConnection : INetworkConnection
     public async Task<INetworkPostReference> PostAsync(CommonPost post, INetworkPostReference? replyTo = null)
     {
         var key = Guid.NewGuid().ToString();
-        System.Console.WriteLine($"{key}: {(replyTo != null ? $"(reply to: {replyTo.ReferenceKey}) " : "")}{post.ComposeText()}");
+        System.Console.WriteLine($"Post ({key}): {(replyTo != null ? $"(reply to: {replyTo.ReferenceKey}) " : "")}{post.ComposeText()}");
         return new ConsolePostReference
         {
             ReferenceKey = key,
             Origin = post
         };
     }
+
+    public async Task<bool> DeletePostAsync(INetworkPostReference uri)
+    {
+        System.Console.WriteLine($"Deletion: ({uri.ReferenceKey})");
+        return true;
+    }
+
 }

@@ -11,15 +11,15 @@ using Presence.SocialFormat.Lib.Posts;
 
 namespace Presence.Posting.Lib.Connections.AT;
 
-public class ATConnection : INetworkConnection
+public class ATConnection : AbstractNetworkConnection
 {
     private const int RATE_ms = 1000;
     private static DateTime lastAction = DateTime.MinValue;
 
-    public INetworkCredentials? Credentials { get; private set; }
-    public Uri Server => Credentials?.ContainsKey(NetworkCredentialType.Server) == true ? new Uri("https://" + Credentials[NetworkCredentialType.Server]) : new Uri("https://bsky.social");
-    private string? account => Credentials?[NetworkCredentialType.AccountName];
-    private string? password => Credentials?[NetworkCredentialType.AppPassword];
+    public Uri Server(INetworkCredentials? credentials) 
+        => credentials?.ContainsKey(NetworkCredentialType.Server) == true 
+            ? new Uri("https://" + credentials[NetworkCredentialType.Server]) 
+            : new Uri("https://bsky.social");
 
     private ATProtocol? protocol;
     private Session? session;
@@ -28,35 +28,33 @@ public class ATConnection : INetworkConnection
     {
     }
 
-    public bool Connected => session != null;
-    public SocialNetwork Network => SocialNetwork.AT;
+    public override bool Connected => session != null;
+    public override SocialNetwork Network => SocialNetwork.AT;
 
-    private static async Task RateLimit()
+    protected override async Task RateLimitImplementationAsync(DateTime? lastAction)
     {
+        if (lastAction == null) { return; }
         var now = DateTime.Now;
-        var elapsed = now - lastAction;
+        var elapsed = (TimeSpan)(now - lastAction!);
         if (elapsed.TotalMilliseconds < RATE_ms)
         {
             var delay = RATE_ms - elapsed.TotalMilliseconds;
             await Task.Delay((int)delay);
         }
-        lastAction = now;
     }
 
-    public async Task<bool> ConnectAsync(INetworkCredentials? credentials)
+    protected override async Task<bool> ConnectImplementationAsync(INetworkCredentials? credentials)
     {
-        if (credentials == null) throw new NullReferenceException($"Credentials are required.");
-        var (valid, errors) = credentials.Validate();
-        if (!valid) { throw new ArgumentException(string.Join(", ", errors)); }
-
-        this.Credentials = credentials;
         this.protocol = new ATProtocolBuilder()
             .EnableAutoRenewSession(true)
-            .WithInstanceUrl(Server)
+            .WithInstanceUrl(Server(credentials))
             .Build();
 
-        await RateLimit();
-        var (session, error) = await protocol.AuthenticateWithPasswordResultAsync(account!, password!);
+        await RateLimitAsync();
+        var (session, error) = await protocol.AuthenticateWithPasswordResultAsync(
+            credentials![NetworkCredentialType.AccountName], 
+            credentials![NetworkCredentialType.AppPassword]);
+
         if (error != null)
         {
             throw new Exception($"{error.StatusCode}: {error.Detail}");
@@ -65,16 +63,11 @@ public class ATConnection : INetworkConnection
         return Connected;
     }
 
-    public void Disconnect()
+    protected override async Task DisconnectImplementationAsync()
     {
         session = null;
         protocol?.Dispose();
         protocol = null;
-    }
-
-    public void Dispose()
-    {
-        Disconnect();
     }
 
     [MemberNotNull(nameof(protocol))]
@@ -85,7 +78,7 @@ public class ATConnection : INetworkConnection
         if (session == null) throw new NullReferenceException("session is null");
     }
 
-    public async Task<INetworkPostReference> PostAsync(CommonPost post, INetworkPostReference? replyTo = null)
+    public override async Task<INetworkPostReference> PostAsync(CommonPost post, INetworkPostReference? replyTo = null)
     {
         var atPost = new Post
         {
@@ -100,17 +93,18 @@ public class ATConnection : INetworkConnection
     private async Task<CreateRecordOutput> AtPostAsync(Post post, string? replyKey = null)
     {
         RequireAuthenticated();
-        await RateLimit();
+        await RateLimitAsync();
         var result = await protocol.Feed.CreatePostAsync(post, rkey: replyKey, validate: true);
         return result.HandleResult()!;
     }
 
-    private async Task<DeleteRecordOutput> DeletePostAsync(ATUri uri)
+    public override async Task<bool> DeletePostAsync(INetworkPostReference reference)
     {
         RequireAuthenticated();
-        await RateLimit();
-        var result = await protocol.Feed.DeletePostAsync(uri.Rkey);
-        return result.HandleResult()!;
+        await RateLimitAsync();
+        var result = await protocol.Feed.DeletePostAsync(reference.ReferenceKey);
+        var output = result.HandleResult()!;
+        return output != null;
     }
 
 }

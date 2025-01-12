@@ -1,14 +1,15 @@
 using System.Collections;
+using Presence.SocialFormat.Lib.Networks;
 
 namespace Presence.Posting.Lib.Connections;
 
 public class ATCredentials : AbstractNetworkCredentials
 {
-    public ATCredentials() : base()
+    public ATCredentials() : base(SocialNetwork.AT)
     {
     }
 
-    public ATCredentials(IDictionary<NetworkCredentialType, string> credentials) : base(credentials)
+    public ATCredentials(IDictionary<NetworkCredentialType, string> credentials) : base(SocialNetwork.AT, credentials)
     {
     }
 
