@@ -7,14 +7,6 @@ Tests are categorised across all projects using the `TestCategory` attribute - w
 - `Unit`
 - `Integration`
 
-## Configuration
-
-The integration tests connect to third party social network services, and require configuration.
-
-Configuration can be provided through a `.env` file or through environment variables. Either method requires the same key/value pairs.
-
-For config values, see: [Network specifics](../guides/network-specifics.md)
-
 ## Test scripts
 
 Use the test scripts to run tests locally.
@@ -31,3 +23,25 @@ Optionally, provide the path to a configuration file as the first parameter to `
 ```
 
 If this path is not provided, configuration is expected to be made available through environment variables.
+
+## Integration testing
+
+The integration tests connect to third party social network services, and test the ability to connect and post.
+
+### Configuration
+
+The integration tests require configuration containing account credentials for the various social network accounts they must connect to.
+
+Configuration can be provided through a `.env` file or through environment variables. Either method requires the same key/value pairs.
+
+Configuration parameters are stored in GitHub Secrets and provided to the GitHub Actions integration tests as environment variables.
+
+For config values, see: [Network specifics](../guides/network-specifics.md)
+
+### Accounts
+
+A number of accounts exist for integration testing across social networks.
+
+| Social network | Account                                                                                 |
+| -------------- | --------------------------------------------------------------------------------------- |
+| BlueSky        | [presence-lib-test.bsky.social](https://bsky.app/profile/presence-lib-test.bsky.social) |
