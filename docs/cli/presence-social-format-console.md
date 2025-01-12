@@ -20,3 +20,4 @@ Or pipe it in through `stdin`:
 
 ```bash
 cat SampleData/simple-snippets.json | ./format.sh -n AT
+```
