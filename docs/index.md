@@ -11,7 +11,7 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 
 ## Status
 
-[![on-push-build-and-test](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml/badge.svg?branch=main&event=push)](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml)
+[![on-push-build-and-test](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml/badge.svg?branch=main)](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml)
 
 | Package                                                                                  | NuGet version                                                              |
 | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
