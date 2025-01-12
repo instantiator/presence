@@ -1,9 +1,9 @@
 using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Posts;
 
-namespace Presence.Posting.Lib.Connections.Test;
+namespace Presence.Posting.Lib.Connections.Console;
 
-public class TestPostReference : INetworkPostReference
+public class ConsolePostReference : INetworkPostReference
 {
     public string ReferenceKey { get; init; } = Guid.NewGuid().ToString();
 

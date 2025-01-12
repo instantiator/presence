@@ -1,6 +1,6 @@
 using System.Collections;
 using Presence.Posting.Lib.Connections.AT;
-using Presence.Posting.Lib.Connections.Test;
+using Presence.Posting.Lib.Connections.Console;
 using Presence.SocialFormat.Lib.Networks;
 
 namespace Presence.Posting.Lib.Connections;
@@ -19,7 +19,7 @@ public class ConnectionFactory
 
     public static async Task<INetworkConnection> ConnectTest()
     {
-        var connection = new TestConnection();
+        var connection = new ConsoleConnection();
         var ok = await connection.ConnectAsync(null);
         return ok ? connection : throw new Exception("Failed to connect to Test.");
     }
