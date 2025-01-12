@@ -3,29 +3,13 @@ using Presence.SocialFormat.Lib.Posts;
 
 namespace Presence.Posting.Lib.Connections.Console;
 
-public class ConsoleConnection : INetworkConnection
+public class ConsoleConnection : AbstractNetworkConnection
 {
-    public SocialNetwork Network => SocialNetwork.Console;
+    public override SocialNetwork Network => SocialNetwork.Console;
 
-    public INetworkCredentials? Credentials => null;
+    public override bool Connected => true;
 
-    public bool Connected => true;
-
-    public async Task<bool> ConnectAsync(INetworkCredentials? credentials)
-    {
-        return true;
-    }
-
-    public void Disconnect()
-    {
-    }
-
-    public void Dispose()
-    {
-        Disconnect();
-    }
-
-    public async Task<INetworkPostReference> PostAsync(CommonPost post, INetworkPostReference? replyTo = null)
+    public override async Task<INetworkPostReference> PostAsync(CommonPost post, INetworkPostReference? replyTo = null)
     {
         var key = Guid.NewGuid().ToString();
         System.Console.WriteLine($"Post ({key}): {(replyTo != null ? $"(reply to: {replyTo.ReferenceKey}) " : "")}{post.ComposeText()}");
@@ -36,10 +20,21 @@ public class ConsoleConnection : INetworkConnection
         };
     }
 
-    public async Task<bool> DeletePostAsync(INetworkPostReference uri)
+    public override async Task<bool> DeletePostAsync(INetworkPostReference uri)
     {
-        System.Console.WriteLine($"Deletion: ({uri.ReferenceKey})");
+        System.Console.WriteLine($"Deletion ({uri.ReferenceKey})");
         return true;
+    }
+
+    protected override async Task<bool> ConnectImplementationAsync(INetworkCredentials? credentials)
+    {
+        System.Console.WriteLine($"Connect");
+        return true;
+    }
+
+    protected override async Task DisconnectImplementationAsync()
+    {
+        System.Console.WriteLine($"Disconnect");
     }
 
 }
