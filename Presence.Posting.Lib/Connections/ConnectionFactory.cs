@@ -11,7 +11,7 @@ public class ConnectionFactory
     {
         return network switch
         {
-            SocialNetwork.Test => await ConnectTest(),
+            SocialNetwork.Console => await ConnectTest(),
             SocialNetwork.AT => await ConnectAT(env),
             _ => throw new NotImplementedException($"Network {network} is not supported.")
         };

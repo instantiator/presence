@@ -30,7 +30,7 @@ public class SimpleThreadComposer : AbstractThreadComposer
 
     public ICounterCreator? CounterCreator { get; protected set; }
 
-    public SimpleThreadComposer(SocialNetwork network = SocialNetwork.Test, ThreadCompositionRules? threadRules = null, PostRenderRules? postRules = null, ICounterCreator? counterCreator = null)
+    public SimpleThreadComposer(SocialNetwork network = SocialNetwork.Console, ThreadCompositionRules? threadRules = null, PostRenderRules? postRules = null, ICounterCreator? counterCreator = null)
         : base(network, threadRules ?? SIMPLE_THREAD_COMPOSITION_RULES, postRules ?? SIMPLE_POST_RENDER_RULES)
     {
         CounterCreator = counterCreator;

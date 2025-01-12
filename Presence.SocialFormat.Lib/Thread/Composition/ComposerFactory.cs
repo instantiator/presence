@@ -8,8 +8,8 @@ namespace Presence.SocialFormat.Lib.Thread.Composition
         {
             switch (network)
             {
-                case SocialNetwork.Test:
-                    return new SimpleThreadComposer();
+                case SocialNetwork.Console:
+                    return new ConsoleThreadComposer();
                 case SocialNetwork.AT:
                     return new ATThreadComposer();
                 default:

@@ -5,7 +5,7 @@ namespace Presence.Posting.Lib.Connections.Test;
 
 public class TestConnection : INetworkConnection
 {
-    public SocialNetwork Network => SocialNetwork.Test;
+    public SocialNetwork Network => SocialNetwork.Console;
 
     public INetworkCredentials? Credentials => null;
 

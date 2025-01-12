@@ -8,7 +8,7 @@ public class TestThreadComposer
 {
     public static IThreadComposer Simple() =>
         new SimpleThreadComposer(
-            SocialNetwork.Test,
+            SocialNetwork.Console,
             new ThreadCompositionRules
             {
                 TagsOnFirstPost = false,
@@ -32,7 +32,7 @@ public class TestThreadComposer
 
     public static IThreadComposer SimpleWithCounterPrefix() =>
         new SimpleThreadComposer(
-            SocialNetwork.Test,
+            SocialNetwork.Console,
             new ThreadCompositionRules
             {
                 TagsOnFirstPost = false,
@@ -56,7 +56,7 @@ public class TestThreadComposer
 
     public static SimpleThreadComposer SimpleWithoutCounters() =>
         new SimpleThreadComposer(
-            SocialNetwork.Test,
+            SocialNetwork.Console,
             new ThreadCompositionRules
             {
                 TagsOnFirstPost = false,

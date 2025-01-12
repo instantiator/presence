@@ -46,4 +46,22 @@ public class ThreadBuilderTests
         Assert.AreEqual(SnippetType.Text, posts.Single().Value.Single().Message.Single().SnippetType);
     }
 
+    [TestMethod]
+    public void ThreadBuilder_CanBuildMultipleThreads()
+    {
+        var threads = new ThreadBuilder()
+            .WithComposer(SocialNetwork.AT)
+            .WithComposer(SocialNetwork.Console)
+            .WithMessage(new SocialSnippet("Hello, world!"))
+            .Build();
+
+        Assert.AreEqual(2, threads.Count());
+        Assert.IsTrue(threads.Keys.Any(c => c.GetType() == typeof(ATThreadComposer)));
+        Assert.IsTrue(threads.Keys.Any(c => c.GetType() == typeof(ConsoleThreadComposer)));
+        Assert.IsTrue(threads.Values.All(p => p.Count() == 1));
+
+        Assert.IsTrue(threads.Values.All(posts => posts.Single().Message.Single().Text == "Hello, world!"));
+        Assert.IsTrue(threads.Values.All(posts => posts.Single().Message.Single().SnippetType == SnippetType.Text));
+    }
+
 }
