@@ -8,12 +8,12 @@ namespace Presence.SocialFormat.Lib.IO;
 
 public class OutputWriter
 {
-    public static string Encode(OutputFormat format, ThreadCompositionResponse result)
+    public static string Encode(OutputFormat format, ThreadCompositionResponse response)
     {
         return format switch
         {
-            OutputFormat.Json => JsonSerializer.Serialize(result, opts),
-            OutputFormat.HumanReadable => HumanReadable(result),
+            OutputFormat.Json => JsonSerializer.Serialize(response, opts),
+            OutputFormat.HumanReadable => HumanReadable(response),
             _ => throw new ArgumentOutOfRangeException(nameof(format), format, "Unknown output format.")
         };
     }
@@ -23,23 +23,19 @@ public class OutputWriter
         var separator = "---";
         var lines = new List<string>();
 
-        if (response.Success)
+        foreach (var network in response.Threads!.Keys)
         {
-            foreach (var network in response.Threads!.Keys)
-            {
-                lines.Add($"Network: {network}");
-                lines.Add(string.Join($"\n  {separator}\n", response.Threads![network].Select(p => "✉️ " + p.ComposeText())));
-            }
-        }
-        else
-        {
-            lines.Add("Exception encountered processing thread.");
+            var thread = response.Threads![network];
+            lines.Add($"Network: {network} {(thread.Success ? "✅" : "❌")}");
             lines.Add(separator);
-            lines.Add($"Exception: {response.ExceptionType}");
-            lines.Add($"Message: {response.ExceptionMessage}");
-            lines.Add($"Stack trace: {response.ExceptionStackTrace}");
+            lines.Add(string.Join($"\n   {separator}\n", thread.Posts.Select(p => " ⏩ " + p.ComposeText())));
+            if (thread.ExceptionType != null)
+            {
+                lines.Add($"   {separator}");
+                lines.Add($" ❌ {thread.ExceptionType}: {thread.ExceptionMessage}");
+            }
+            lines.Add(""); // break
         }
-
         return string.Join("\n", lines);
     }
 

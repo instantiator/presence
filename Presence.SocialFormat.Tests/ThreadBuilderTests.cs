@@ -20,48 +20,49 @@ public class ThreadBuilderTests
     [TestMethod]
     public void ThreadBuilder_CanBuildSimpleThread()
     {
-        var posts = new ThreadBuilder()
+        var response = new ThreadBuilder()
             .WithComposer(TestThreadComposer.Simple())
             .WithMessage(new SocialSnippet("Hello, world!"))
             .Build();
 
-        Assert.AreEqual(1, posts.Count());
-        Assert.AreEqual(typeof(SimpleThreadComposer), posts.Single().Key.GetType());
-        Assert.AreEqual(1, posts.Single().Value.Count());
-        Assert.AreEqual("Hello, world!", posts.Single().Value.Single().Message.Single().Text);
-        Assert.AreEqual(SnippetType.Text, posts.Single().Value.Single().Message.Single().SnippetType);
+        Assert.AreEqual(1, response.Threads.Count());
+        Assert.AreEqual(SocialNetwork.Console, response.Threads.Single().Value.Identity.Network);
+
+        Assert.AreEqual(1, response.Threads.Single().Value.Posts.Count());
+        Assert.AreEqual("Hello, world!", response.Threads.Single().Value.Posts.Single().Message.Single().Text);
+        Assert.AreEqual(SnippetType.Text, response.Threads.Single().Value.Posts.Single().Message.Single().SnippetType);
     }
 
     [TestMethod]
     public void ThreadBuilder_CanBuildATThread()
     {
-        var posts = new ThreadBuilder(SocialNetwork.AT)
+        var response = new ThreadBuilder(SocialNetwork.AT)
             .WithMessage(new SocialSnippet("Hello, world!"))
             .Build();
 
-        Assert.AreEqual(1, posts.Count());
-        Assert.AreEqual(typeof(ATThreadComposer), posts.Single().Key.GetType());
-        Assert.AreEqual(1, posts.Single().Value.Count());
-        Assert.AreEqual("Hello, world!", posts.Single().Value.Single().Message.Single().Text);
-        Assert.AreEqual(SnippetType.Text, posts.Single().Value.Single().Message.Single().SnippetType);
+        Assert.AreEqual(1, response.Threads.Count());
+        Assert.AreEqual(SocialNetwork.AT, response.Threads.Single().Value.Identity.Network);
+        Assert.AreEqual(1, response.Threads.Single().Value.Posts.Count());
+        Assert.AreEqual("Hello, world!", response.Threads.Single().Value.Posts.Single().Message.Single().Text);
+        Assert.AreEqual(SnippetType.Text, response.Threads.Single().Value.Posts.Single().Message.Single().SnippetType);
     }
 
     [TestMethod]
     public void ThreadBuilder_CanBuildMultipleThreads()
     {
-        var threads = new ThreadBuilder()
+        var response = new ThreadBuilder()
             .WithComposer(SocialNetwork.AT)
             .WithComposer(SocialNetwork.Console)
             .WithMessage(new SocialSnippet("Hello, world!"))
             .Build();
 
-        Assert.AreEqual(2, threads.Count());
-        Assert.IsTrue(threads.Keys.Any(c => c.GetType() == typeof(ATThreadComposer)));
-        Assert.IsTrue(threads.Keys.Any(c => c.GetType() == typeof(ConsoleThreadComposer)));
-        Assert.IsTrue(threads.Values.All(p => p.Count() == 1));
+        Assert.AreEqual(2, response.Threads.Count());
+        Assert.IsTrue(response.Threads.Values.Any(thread => thread.Identity.Network == SocialNetwork.AT));
+        Assert.IsTrue(response.Threads.Values.Any(thread => thread.Identity.Network == SocialNetwork.Console));
+        Assert.IsTrue(response.Threads.Values.All(thread => thread.Posts.Count() == 1));
 
-        Assert.IsTrue(threads.Values.All(posts => posts.Single().Message.Single().Text == "Hello, world!"));
-        Assert.IsTrue(threads.Values.All(posts => posts.Single().Message.Single().SnippetType == SnippetType.Text));
+        Assert.IsTrue(response.Threads.Values.All(thread => thread.Posts.Single().Message.Single().Text == "Hello, world!"));
+        Assert.IsTrue(response.Threads.Values.All(thread => thread.Posts.Single().Message.Single().SnippetType == SnippetType.Text));
     }
 
 }

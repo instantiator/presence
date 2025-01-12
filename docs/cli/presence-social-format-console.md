@@ -13,7 +13,7 @@ Examples in this document use `format.sh` - you can substitute this for a path t
 To format the sample thread for BlueSky (AT), you can pass in the request json as a file:
 
 ```bash
-./format.sh -i SampleData/simple-snippets.json -n AT
+./format.sh -f SampleData/simple-snippets.json -n AT
 ```
 
 Or pipe it in through `stdin`:

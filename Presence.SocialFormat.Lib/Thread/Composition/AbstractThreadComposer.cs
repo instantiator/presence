@@ -6,39 +6,63 @@ namespace Presence.SocialFormat.Lib.Thread.Composition;
 
 public abstract class AbstractThreadComposer : IThreadComposer
 {
+    private static Dictionary<SocialNetwork, int> _counters = new Dictionary<SocialNetwork, int>();
+
+    public ThreadComposerIdentity Identity { get; protected set;}
     public PostRenderRules PostRules { get; protected set; }
     public ThreadCompositionRules ThreadRules { get; protected set; }
-    public SocialNetwork Network { get; protected set; }
 
     protected AbstractThreadComposer(SocialNetwork network, ThreadCompositionRules threadRules, PostRenderRules postRules)
     {
         ThreadRules = threadRules;
         PostRules = postRules;
-        Network = network;
+        Identity = new ThreadComposerIdentity() { Network = network, Index = GetCounter(network) };
+    }
+
+    public int GetCounter(SocialNetwork network)
+    {
+        if (!_counters.ContainsKey(network))
+        {
+            _counters[network] = 0;
+        }
+        return _counters[network]++;
     }
 
     public abstract SocialSnippet CreatePostCounter(int index);
-    public IEnumerable<CommonPost> Compose(ThreadCompositionRequest request)
+    public ComposedThread Compose(ThreadCompositionRequest request)
     {
+        var success = false;
         var posts = new List<CommonPost>();
-        foreach (var nextSnippet in request.Message)
+        Exception? exception = null;
+        try
         {
-            posts.AddRange(AddSnippet(posts.Count(), posts.LastOrDefault(), nextSnippet, request.Tags));
-        }
-
-        // if only 1 post, remove the counter from all posts
-        if (posts.Count < 2 && ThreadRules.OnlyCountThreads)
-        {
-            posts = posts.Select(post =>
+            foreach (var nextSnippet in request.Message)
             {
-                post.Prefix = post.Prefix.Where(s => s.SnippetType != SnippetType.Counter);
-                post.Suffix = post.Suffix.Where(s => s.SnippetType != SnippetType.Counter);
-                return post;
-            }).ToList();
+                posts.AddRange(AddSnippet(posts.Count(), posts.LastOrDefault(), nextSnippet, request.Tags));
+            }
+
+            // if only 1 post, remove the counter from all posts
+            if (posts.Count < 2 && ThreadRules.OnlyCountThreads)
+            {
+                posts = posts.Select(post =>
+                {
+                    post.Prefix = post.Prefix.Where(s => s.SnippetType != SnippetType.Counter);
+                    post.Suffix = post.Suffix.Where(s => s.SnippetType != SnippetType.Counter);
+                    return post;
+                }).ToList();
+            }
+
+            success = true;
         }
-        return posts;
+        catch (Exception e)
+        {
+            exception = e;
+            success = false;
+        }
+        return new ComposedThread(Identity, posts, success, exception);
     }
-    private IEnumerable<CommonPost> AddSnippet(int nextIndex, CommonPost? currentPost, SocialSnippet nextSnippet, IEnumerable<SocialSnippet> tags)
+
+    protected IEnumerable<CommonPost> AddSnippet(int nextIndex, CommonPost? currentPost, SocialSnippet nextSnippet, IEnumerable<SocialSnippet> tags)
     {
         var newPosts = new List<CommonPost>();
         if (currentPost == null)
@@ -111,7 +135,7 @@ public abstract class AbstractThreadComposer : IThreadComposer
         return newPosts;
     }
 
-    public CommonPost CreateNewPost(int index, IEnumerable<SocialSnippet> tags)
+    protected CommonPost CreateNewPost(int index, IEnumerable<SocialSnippet> tags)
     {
         var prefixSnippets = new IEnumerable<SocialSnippet>[] {
             ThreadRules.PostCounterPrefix ? new[] { CreatePostCounter(index) } : []
@@ -132,12 +156,8 @@ public abstract class AbstractThreadComposer : IThreadComposer
 
         return post;
     }
-    public bool Fits(CommonPost currentPost, SocialSnippet nextSnippet)
+    protected bool Fits(CommonPost currentPost, SocialSnippet nextSnippet)
     {
         return currentPost.MessageSpace >= nextSnippet.Compose(PostRules).Length;
     }
 }
-
-/*
-Hello, world! This is a multi-snippet message. With 6 snippets. This is snippet 4. /1 #TagOne #TagTwo
-*/

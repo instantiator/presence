@@ -21,22 +21,22 @@ public class ATThreadComposerTests
                 SnippetType = SnippetType.Text
             };
 
-            var posts = composer.Compose(new Lib.DTO.ThreadCompositionRequest()
+            var thread = composer.Compose(new Lib.DTO.ThreadCompositionRequest()
             {
                 Message = [snippet],
                 Tags = []
             });
 
-            Assert.IsTrue(posts.Count() > 0);
-            Assert.IsTrue(posts.All(p => p.ComposeText().Length <= 300));
-            if (posts.Count() > 1)
+            Assert.IsTrue(thread.Posts.Count() > 0);
+            Assert.IsTrue(thread.Posts.All(p => p.ComposeText().Length <= 300));
+            if (thread.Posts.Count() > 1)
             {
-                Assert.IsTrue(posts.All(p => p.Prefix.Count() == 1));
-                Assert.IsTrue(posts.All(p => p.Prefix.Single().SnippetType == SnippetType.Counter));
+                Assert.IsTrue(thread.Posts.All(p => p.Prefix.Count() == 1));
+                Assert.IsTrue(thread.Posts.All(p => p.Prefix.Single().SnippetType == SnippetType.Counter));
             }
             else
             {
-                Assert.IsTrue(posts.All(p => p.Prefix.Count() == 0));
+                Assert.IsTrue(thread.Posts.All(p => p.Prefix.Count() == 0));
             }
         }
     }

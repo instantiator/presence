@@ -90,20 +90,39 @@ public class ThreadBuilder
         return this;
     }
 
-    public IDictionary<IThreadComposer, IEnumerable<CommonPost>> Build()
+    public ThreadCompositionResponse Build()
     {
         if (Composers.Count == 0) { throw new ArgumentException("No composers specified.", "Composers"); }
-        return Composers.ToDictionary(composer => composer, Build);
+        return new ThreadCompositionResponse
+        {
+            Threads = Composers.ToDictionary(
+                composer => composer.Identity.Value,
+                composer => composer.Compose(new ThreadCompositionRequest() { Message = Message, Tags = Tags }))
+        };
     }
 
-    public IDictionary<IThreadComposer, IEnumerable<CommonPost>> Build(IEnumerable<IThreadComposer> composers)
+    public ThreadCompositionResponse Build(IEnumerable<IThreadComposer> composers)
     {
         if (composers.Count() == 0) { throw new ArgumentException("No composers specified.", "composers"); }
-        return composers.ToDictionary(composer => composer, Build);
+        return new ThreadCompositionResponse
+        {
+            Threads = composers.ToDictionary(
+                composer => composer.Identity.Value,
+                composer => composer.Compose(new ThreadCompositionRequest() { Message = Message, Tags = Tags }))
+        };
     }
 
-    public IEnumerable<CommonPost> Build(IThreadComposer composer)
+    public ThreadCompositionResponse Build(IThreadComposer composer)
     {
-        return composer.Compose(new ThreadCompositionRequest() { Message = Message, Tags = Tags });
+        return new ThreadCompositionResponse
+        {
+            Threads = new Dictionary<string, ComposedThread>()
+            {
+                {
+                    composer.Identity.Value,
+                    composer.Compose(new ThreadCompositionRequest() { Message = Message, Tags = Tags })
+                }
+            }
+        };
     }
 }

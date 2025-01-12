@@ -1,14 +1,10 @@
 using Presence.SocialFormat.Lib.Networks;
-using Presence.SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Thread.Composition;
 
 namespace Presence.SocialFormat.Lib.DTO;
 
 public class ThreadCompositionResponse
 {
-    public required bool Success { get; init; }
-    public required IDictionary<SocialNetwork, IEnumerable<CommonPost>>? Threads { get; init; }
-
-    public string? ExceptionType { get; init; }
-    public string? ExceptionMessage { get; init; }
-    public string? ExceptionStackTrace { get; init; }
+    public bool FullSuccess => Threads != null && Threads.All(t => t.Value.Success);
+    public required Dictionary<string, ComposedThread> Threads { get; init; }
 }

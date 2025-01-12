@@ -6,8 +6,8 @@ namespace Presence.SocialFormat.Lib.Thread.Composition;
 
 public interface IThreadComposer
 {
-    SocialNetwork Network { get; }
+    ThreadComposerIdentity Identity { get; }
     PostRenderRules PostRules { get; }
     ThreadCompositionRules ThreadRules { get; }
-    IEnumerable<CommonPost> Compose(ThreadCompositionRequest request);
+    ComposedThread Compose(ThreadCompositionRequest request);
 }
