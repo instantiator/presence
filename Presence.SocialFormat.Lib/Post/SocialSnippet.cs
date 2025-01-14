@@ -5,6 +5,7 @@ public enum SnippetType
     Counter,
     Text,
     Link,
+    Image,
     Tag,
     Break,
 }
@@ -23,20 +24,20 @@ public class SocialSnippet
         if (images != null) { Images.AddRange(images); }
     }
 
-    public string Text { get; init; } = null!;
+    public string? Text { get; init; } = null!;
     public SnippetType SnippetType { get; set; } = SnippetType.Text;
     public List<CommonPostImage> Images { get; set; } = new List<CommonPostImage>();
     public string? Reference { get; set; }
 
     public bool MayDivide => SnippetType == SnippetType.Text;
-    public bool MayTruncate => SnippetType == SnippetType.Text || SnippetType == SnippetType.Link;
+    public bool MayTruncate => SnippetType == SnippetType.Text;
 
     public Tuple<SocialSnippet?, SocialSnippet?> Divide(int space, PostRenderRules rules)
     {
         if (!MayDivide) { throw new Exception($"Cannot divide a {SnippetType} snippet"); }
 
         // easy case - if the snippet fits in the current post, add it
-        if (Text.Length < space)
+        if (string.IsNullOrWhiteSpace(Text) || Text.Length < space)
         {
             return new Tuple<SocialSnippet?, SocialSnippet?>(this, null);
         }
@@ -87,10 +88,10 @@ public class SocialSnippet
         return new Tuple<SocialSnippet?, SocialSnippet?>(first, second);
     }
 
-    public SocialSnippet Truncate(int space, PostRenderRules rules)
+    public SocialSnippet? Truncate(int space, PostRenderRules rules)
     {
         if (!MayTruncate) { throw new Exception($"Cannot truncate a {SnippetType} snippet"); }
-        if (Text.Length <= space)
+        if (string.IsNullOrWhiteSpace(Text) || Text.Length <= space)
         {
             return this;
         }
@@ -104,8 +105,12 @@ public class SocialSnippet
             remainingWords.RemoveAt(0);
         }
 
-        // TODO: add the option truncated individual words if needed
-        if (fittedWords.Count == 0 && remainingWords.Count > 0) { throw new Exception("Cannot truncate this snippet - the first word does not fit"); }
+        // TODO: add the option to truncate individual words if needed
+        if (fittedWords.Count == 0 && remainingWords.Count > 0) 
+        { 
+            // throw new Exception($"Cannot truncate this snippet to {space} characters - the first word does not fit. Words: {string.Join(" ", remainingWords)}"); 
+            return null;
+        }
 
         return new SocialSnippet
         {
@@ -118,14 +123,24 @@ public class SocialSnippet
 
     public string Compose(PostRenderRules rules)
     {
-        return SnippetType switch
+        var output = SnippetType switch
         {
             SnippetType.Text => Text,
             SnippetType.Link => rules.ShowLinkUrls ? Reference! : Text,
-            SnippetType.Tag => Text,
+            SnippetType.Tag => ComposeTag(Text),
+            SnippetType.Image => null,
             SnippetType.Counter => Text,
-            SnippetType.Break => string.Empty,
+            SnippetType.Break => null,
             _ => throw new NotSupportedException($"Unsupported snippet type {SnippetType}")
         };
+
+        return output ?? string.Empty;
+    }
+
+    public static string? ComposeTag(string? tag)
+    {
+        if (string.IsNullOrWhiteSpace(tag)) { return tag; }
+        if (tag.StartsWith("#")) { return tag; }
+        return "#" + tag;
     }
 }

@@ -8,7 +8,7 @@ public abstract class AbstractThreadComposer : IThreadComposer
 {
     private static Dictionary<SocialNetwork, int> _counters = new Dictionary<SocialNetwork, int>();
 
-    public ThreadComposerIdentity Identity { get; protected set;}
+    public ThreadComposerIdentity Identity { get; protected set; }
     public PostRenderRules PostRules { get; protected set; }
     public ThreadCompositionRules ThreadRules { get; protected set; }
 
@@ -116,9 +116,23 @@ public abstract class AbstractThreadComposer : IThreadComposer
             else if (nextSnippet.MayTruncate)
             {
                 // truncate the snippet and add to the current post
-                var snipped = nextSnippet.Truncate(currentPost.MessageSpace, PostRules);
-                var additionalPosts = AddSnippet(newPosts.Count + nextIndex, currentPost, snipped, tags);
-                newPosts.AddRange(additionalPosts);
+                var truncated = nextSnippet.Truncate(currentPost.MessageSpace, PostRules);
+                if (truncated != null)
+                {
+                    var additionalPosts = AddSnippet(newPosts.Count + nextIndex, currentPost, truncated, tags);
+                    newPosts.AddRange(additionalPosts);
+                }
+                else
+                {
+                    // snippet truncation didn't work - push the current post and try with a fresh one
+                    currentPost = CreateNewPost(newPosts.Count + nextIndex, tags);
+                    newPosts.Add(currentPost);
+
+                    // if the new post can't fit the snippet, throw an exception - this is a fresh blank post and the snippet won't resize
+                    if (!currentPost.Fits(nextSnippet)) { throw new Exception("Snippet too large for blank post, cannot resize"); }
+                    var additionalPosts = AddSnippet(newPosts.Count + nextIndex, currentPost, nextSnippet, tags);
+                    newPosts.AddRange(additionalPosts);
+                }
             }
             else
             {

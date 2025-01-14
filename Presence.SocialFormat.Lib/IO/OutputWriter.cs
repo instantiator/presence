@@ -13,7 +13,7 @@ public class OutputWriter
         return format switch
         {
             OutputFormat.Json => JsonSerializer.Serialize(response, opts),
-            OutputFormat.HumanReadable => HumanReadable(response),
+            OutputFormat.HR => HumanReadable(response),
             _ => throw new ArgumentOutOfRangeException(nameof(format), format, "Unknown output format.")
         };
     }

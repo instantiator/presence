@@ -3,11 +3,24 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Presence.SocialFormat.Lib.Constants;
 using Presence.SocialFormat.Lib.DTO;
+using Presence.SocialFormat.Lib.IO.Text;
 
 namespace Presence.SocialFormat.Lib.IO;
 
 public class InputReader
 {
+    public static InputFormat? DetectFormat(string? path)
+    {
+        var ext = path?.Split('.').LastOrDefault()?.Trim().ToLower();
+        return ext switch
+        {
+            null => null,
+            "json" => InputFormat.Json,
+            "md" => InputFormat.Markdown,
+            _ => throw new NotSupportedException($"Input format not recognised: {ext}")
+        };
+    }
+
     public static ThreadCompositionRequest Decode(InputFormat format, string? path)
     {
         return string.IsNullOrWhiteSpace(path)
@@ -20,6 +33,7 @@ public class InputReader
         return format switch
         {
             InputFormat.Json => ReadInputFileJson<ThreadCompositionRequest>(path),
+            InputFormat.Markdown => ReadInputFile(path, new MarkdownFormatParser()),
             _ => throw new NotSupportedException($"Input format not supported: {format}")
         };
     }
@@ -29,8 +43,23 @@ public class InputReader
         return format switch
         {
             InputFormat.Json => ReadStdInJson<ThreadCompositionRequest>(),
+            InputFormat.Markdown => ReadStdIn(new MarkdownFormatParser()),
             _ => throw new NotSupportedException($"Input format not supported: {format}")
         };
+    }
+
+    public static ThreadCompositionRequest ReadInputFile(string path, IFormatParser parser)
+    {
+        var content = File.ReadAllText(path);
+        return parser.ToRequest(content);
+    }
+
+    public static ThreadCompositionRequest ReadStdIn(IFormatParser parser)
+    {
+        var input = new List<string>();
+        string? line;
+        while ((line = Console.ReadLine()) != null) input.Add(line);
+        return parser.ToRequest(string.Join("\n", input));
     }
 
     public static T ReadInputFileJson<T>(string path)
@@ -48,11 +77,7 @@ public class InputReader
     {
         var input = new StringBuilder();
         string? line;
-        while ((line = Console.ReadLine()) != null)
-        {
-            input.AppendLine(line);
-        }
-
+        while ((line = Console.ReadLine()) != null) input.AppendLine(line);
         return JsonSerializer.Deserialize<T>(input.ToString(), opts)!;
     }
 
