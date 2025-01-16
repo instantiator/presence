@@ -1,15 +1,17 @@
+<img src="images/icon.png" style="float: right;" />
+
 # Presence
 
 Presence is a set of .NET libraries and tools for social sharing.
 
-> [!WARNING]
-> NB. This project is currently under development - libraries are not production ready yet.
 
 All code here is distributed under the [MIT](https://github.com/instantiator/presence/blob/main/LICENSE) license.
 
 Source code is at: [instantiator/presence](https://github.com/instantiator/presence)
 
 ## Status
+
+> **Warning.** This project is currently under development - libraries are not production-ready yet.
 
 [![on-push-build-and-test](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml/badge.svg?branch=main)](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml)
 

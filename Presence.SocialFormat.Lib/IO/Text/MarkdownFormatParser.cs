@@ -127,14 +127,4 @@ public class MarkdownFormatParser : IFormatParser
             }
         }
     }
-
-    public string ToString(ThreadCompositionRequest request)
-    {
-        throw new NotImplementedException();
-    }
-
-    public string ToString(SocialSnippet snippet)
-    {
-        throw new NotImplementedException();
-    }
 }

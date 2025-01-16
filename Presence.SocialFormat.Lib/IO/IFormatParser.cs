@@ -6,6 +6,4 @@ namespace Presence.SocialFormat.Lib.IO;
 public interface IFormatParser
 {
     ThreadCompositionRequest ToRequest(string str);
-    string ToString(ThreadCompositionRequest request);
-    string ToString(SocialSnippet snippet);
 }
