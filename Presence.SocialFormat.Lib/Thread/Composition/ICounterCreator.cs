@@ -1,4 +1,4 @@
-using Presence.SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Post;
 
 namespace Presence.SocialFormat.Lib.Thread.Composition;
 

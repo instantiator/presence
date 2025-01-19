@@ -1,5 +1,5 @@
 using Presence.SocialFormat.Lib.DTO;
-using Presence.SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Post;
 using Presence.SocialFormat.Tests.Composition.Helpers;
 
 namespace Presence.SocialFormat.Tests;

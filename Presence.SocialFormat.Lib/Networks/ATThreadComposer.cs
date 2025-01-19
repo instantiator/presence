@@ -1,4 +1,4 @@
-using Presence.SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Post;
 using Presence.SocialFormat.Lib.Thread.Composition;
 
 namespace Presence.SocialFormat.Lib.Networks;
@@ -12,12 +12,14 @@ public class ATThreadComposer : SimpleThreadComposer
         OnlyCountThreads = true,
         PostCounterPrefix = true,
         PostCounterSuffix = false,
+        MaxImagesPerPost = 4,
+        ImageOverflowRule = ImageOverflowRule.OverflowIntoNextPost,
+        ImageOverflowText = "(continued...)",
     };
 
     public static PostRenderRules AT_POST_RENDER_RULES = new()
     {
         MaxLength = 300,
-        MaxImagesPerPost = 4,
         ShowLinkUrls = false, // link text can be shown
         WordSpace = " ",
         SplitSnippetTextOn = [' ', '\n'],

@@ -1,13 +1,13 @@
-namespace Presence.SocialFormat.Lib.Posts;
+namespace Presence.SocialFormat.Lib.Post;
 
 public enum SnippetType
 {
     Counter,
     Text,
     Link,
-    Image,
     Tag,
     Break,
+    Image, // reserved
 }
 
 public class SocialSnippet
@@ -16,7 +16,7 @@ public class SocialSnippet
     {
     }
 
-    public SocialSnippet(string text, SnippetType snippetType = SnippetType.Text, string? reference = null, IEnumerable<CommonPostImage>? images = null)
+    public SocialSnippet(string text, SnippetType snippetType = SnippetType.Text, string? reference = null, IEnumerable<SocialSnippetImage>? images = null)
     {
         Text = text;
         SnippetType = snippetType;
@@ -26,7 +26,7 @@ public class SocialSnippet
 
     public string? Text { get; init; } = null!;
     public SnippetType SnippetType { get; set; } = SnippetType.Text;
-    public List<CommonPostImage> Images { get; set; } = new List<CommonPostImage>();
+    public List<SocialSnippetImage> Images { get; set; } = new List<SocialSnippetImage>();
     public string? Reference { get; set; }
 
     public bool MayDivide => SnippetType == SnippetType.Text;

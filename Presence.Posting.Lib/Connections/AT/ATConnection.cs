@@ -7,7 +7,7 @@ using FishyFlip.Lexicon.Com.Atproto.Repo;
 using FishyFlip.Models;
 using FishyFlip.Tools;
 using Presence.SocialFormat.Lib.Networks;
-using Presence.SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Post;
 
 namespace Presence.Posting.Lib.Connections.AT;
 

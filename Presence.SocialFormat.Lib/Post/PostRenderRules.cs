@@ -1,10 +1,9 @@
-namespace Presence.SocialFormat.Lib.Posts;
+namespace Presence.SocialFormat.Lib.Post;
 
 public readonly struct PostRenderRules
 {
     public required int MinAcceptableSpace { get; init; }
     public required int MaxLength { get; init; }
-    public required int MaxImagesPerPost { get; init; }
     public required bool ShowLinkUrls { get; init; }
     public required string WordSpace { get; init; }
     public required char[]? SplitSnippetTextOn { get; init; }

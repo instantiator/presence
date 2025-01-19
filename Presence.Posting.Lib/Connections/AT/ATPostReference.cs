@@ -1,7 +1,7 @@
 using FishyFlip.Lexicon.App.Bsky.Feed;
 using FishyFlip.Models;
 using Presence.SocialFormat.Lib.Networks;
-using Presence.SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Post;
 
 namespace Presence.Posting.Lib.Connections;
 

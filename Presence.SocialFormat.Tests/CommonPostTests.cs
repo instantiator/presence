@@ -1,4 +1,4 @@
-using Presence.SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Post;
 
 namespace Presence.SocialFormat.Tests;
 
@@ -10,7 +10,6 @@ public class CommonPostTests
     {
         MinAcceptableSpace = 10,
         MaxLength = 100,
-        MaxImagesPerPost = 4,
         ShowLinkUrls = false,
         WordSpace = " ",
         SplitSnippetTextOn = [' ', '\n'],
@@ -23,7 +22,6 @@ public class CommonPostTests
     {
         MinAcceptableSpace = 10,
         MaxLength = 100,
-        MaxImagesPerPost = 4,
         ShowLinkUrls = true,
         WordSpace = " ",
         SplitSnippetTextOn = [' ', '\n'],

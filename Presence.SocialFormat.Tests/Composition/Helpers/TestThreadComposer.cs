@@ -1,5 +1,5 @@
 using Presence.SocialFormat.Lib.Networks;
-using Presence.SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Post;
 using Presence.SocialFormat.Lib.Thread.Composition;
 
 namespace Presence.SocialFormat.Tests.Composition.Helpers;
@@ -16,11 +16,13 @@ public class TestThreadComposer
                 PostCounterPrefix = false,
                 PostCounterSuffix = true,
                 OnlyCountThreads = true,
+                MaxImagesPerPost = 4,
+                ImageOverflowRule = ImageOverflowRule.OverflowIntoNextPost,
+                ImageOverflowText = "(continued...)",
             },
         new PostRenderRules
         {
             MaxLength = 100,
-            MaxImagesPerPost = 4,
             WordSpace = " ",
             PrefixToMainJoin = " ",
             MainToSuffixJoin = "\n",
@@ -40,11 +42,13 @@ public class TestThreadComposer
                 PostCounterPrefix = true,
                 PostCounterSuffix = false,
                 OnlyCountThreads = true,
+                MaxImagesPerPost = 4,
+                ImageOverflowRule = ImageOverflowRule.OverflowIntoNextPost,
+                ImageOverflowText = "(continued...)",
             },
         new PostRenderRules
         {
             MaxLength = 100,
-            MaxImagesPerPost = 4,
             WordSpace = " ",
             PrefixToMainJoin = " ",
             MainToSuffixJoin = "\n",
@@ -64,11 +68,13 @@ public class TestThreadComposer
                 PostCounterPrefix = false,
                 PostCounterSuffix = false,
                 OnlyCountThreads = false,
+                MaxImagesPerPost = 4,
+                ImageOverflowRule = ImageOverflowRule.OverflowIntoNextPost,
+                ImageOverflowText = "(continued...)",
             },
         new PostRenderRules
         {
             MaxLength = 100,
-            MaxImagesPerPost = 4,
             WordSpace = " ",
             PrefixToMainJoin = " ",
             MainToSuffixJoin = "\n",

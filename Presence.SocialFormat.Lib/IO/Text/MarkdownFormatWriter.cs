@@ -21,7 +21,7 @@ public class MarkdownFormatWriter : IFormatWriter
                 {
                     lines.Add("| " + string.Join(" | ", new string[post.Images.Count()].Select((_, i) => $"Image {i + 1}")) + " |");
                     lines.Add("|" + string.Join("|", new string[post.Images.Count()].Select((_, i) => $"-")) + "|");
-                    lines.Add("|" + string.Join(" | ", post.Images.Select(img => $"![{img.Text}]({img.Reference})")) + " |");
+                    lines.Add("|" + string.Join(" | ", post.Images.Select(img => $"![{img.AltText}]({img.SourceUrl})")) + " |");
                     lines.Add(string.Empty);
                 }
             }

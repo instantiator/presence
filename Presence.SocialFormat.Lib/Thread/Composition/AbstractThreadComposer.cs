@@ -1,6 +1,7 @@
 using Presence.SocialFormat.Lib.DTO;
+using Presence.SocialFormat.Lib.Helpers;
 using Presence.SocialFormat.Lib.Networks;
-using Presence.SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Post;
 
 namespace Presence.SocialFormat.Lib.Thread.Composition;
 
@@ -40,6 +41,8 @@ public abstract class AbstractThreadComposer : IThreadComposer
             {
                 posts.AddRange(AddSnippet(posts.Count(), posts.LastOrDefault(), nextSnippet, request.Tags));
             }
+            UpliftPostImages(posts);
+            ArrangePostImages(posts);
 
             // if only 1 post, remove the counter from all posts
             if (posts.Count < 2 && ThreadRules.OnlyCountThreads)
@@ -51,7 +54,6 @@ public abstract class AbstractThreadComposer : IThreadComposer
                     return post;
                 }).ToList();
             }
-
             success = true;
         }
         catch (Exception e)
@@ -60,6 +62,58 @@ public abstract class AbstractThreadComposer : IThreadComposer
             success = false;
         }
         return new ComposedThread(Identity, posts, success, exception);
+    }
+
+    protected void UpliftPostImages(IEnumerable<CommonPost> posts)
+    {
+        foreach (var (post, index) in posts.Select((p, i) => (p, i)))
+        {
+            var snippet_images = post.Message.Where(snippet => snippet.SnippetType == SnippetType.Image);
+            var snippets_with_images = post.Message.Where(snippet => snippet.Images.Any());
+
+            // append images to post
+            post.Images.AddRange(snippet_images.Select(snippet => CommonPostImage.From(snippet)));
+            post.Images.AddRange(snippets_with_images.SelectMany(snippet => snippet.Images.Select(image => CommonPostImage.From(image))));
+
+            // remove snippet images
+            post.Message = post.Message.Where(s => s.SnippetType != SnippetType.Image);
+            snippets_with_images.ToList().ForEach(s => s.Images.Clear());
+        }
+    }
+
+    protected void ArrangePostImages(List<CommonPost> posts)
+    {
+        int index = 0;
+        while (index < posts.Count())
+        {
+            var post = posts[index];
+            if (post.Images.Count() > ThreadRules.MaxImagesPerPost)
+            {
+                switch (ThreadRules.ImageOverflowRule)
+                {
+                    case ImageOverflowRule.DropImages:
+                        post.Images = post.Images.Take(ThreadRules.MaxImagesPerPost).ToList();
+                        break;
+                    case ImageOverflowRule.OverflowIntoNextPost:
+                        var overflowIntoNext = post.Images.Skip(ThreadRules.MaxImagesPerPost).ToList();
+                        post.Images = post.Images.Take(ThreadRules.MaxImagesPerPost).ToList();
+                        if (index + 1 < posts.Count)
+                            posts[index + 1].Images.AddRange(overflowIntoNext);
+                        else
+                            posts.Insert(index+1, CommonPost.ImageOverflowPost(index + 1, PostRules, overflowIntoNext, ThreadRules.ImageOverflowText, post.Prefix, post.Suffix));
+                        break;
+                    case ImageOverflowRule.OverflowInsertNewPost:
+                        var overflowInsert = post.Images.Skip(ThreadRules.MaxImagesPerPost).ToList();
+                        post.Images = post.Images.Take(ThreadRules.MaxImagesPerPost).ToList();
+                        posts.Insert(index + 1, CommonPost.ImageOverflowPost(index + 1, PostRules, overflowInsert, ThreadRules.ImageOverflowText, post.Prefix, post.Suffix));
+                        break;
+                }
+            }
+            index++;
+        }
+
+        // renumber
+        posts.Select((p, i) => (p, i)).ToList().ForEach((pi) => pi.p.Index = pi.i);
     }
 
     protected IEnumerable<CommonPost> AddSnippet(int nextIndex, CommonPost? currentPost, SocialSnippet nextSnippet, IEnumerable<SocialSnippet> tags)

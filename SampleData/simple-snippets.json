@@ -7,7 +7,13 @@
     {
       "text": "instantiator",
       "reference": "https://instantiator.dev",
-      "snippetType": "link"
+      "snippetType": "link",
+      "images": [
+        {
+          "src": "https://instantiator.dev/lewis/profile.jpg",
+          "alt": "A photo of Lewis"
+        }
+      ]
     }
   ],
   "tags": [

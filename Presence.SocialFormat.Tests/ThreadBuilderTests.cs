@@ -1,5 +1,5 @@
 using Presence.SocialFormat.Lib.Networks;
-using Presence.SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Post;
 using Presence.SocialFormat.Lib.Thread.Builder;
 using Presence.SocialFormat.Lib.Thread.Composition;
 using Presence.SocialFormat.Tests.Composition.Helpers;

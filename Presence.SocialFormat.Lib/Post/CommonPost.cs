@@ -1,4 +1,4 @@
-﻿namespace Presence.SocialFormat.Lib.Posts;
+﻿namespace Presence.SocialFormat.Lib.Post;
 
 public class CommonPost
 {
@@ -8,13 +8,13 @@ public class CommonPost
         Rules = rules;
     }
 
-    public int Index { get; private set; }
+    public int Index { get; set; }
     public PostRenderRules Rules { get; private set; }
 
     public IEnumerable<SocialSnippet> Prefix { get; set; } = new List<SocialSnippet>();
     public IEnumerable<SocialSnippet> Message { get; set; } = new List<SocialSnippet>();
     public IEnumerable<SocialSnippet> Suffix { get; set; } = new List<SocialSnippet>();
-    public IList<SocialSnippet> Images { get; set; } = new List<SocialSnippet>();
+    public IList<CommonPostImage> Images { get; set; } = new List<CommonPostImage>();
     public int Length => ComposeText(Rules, Prefix, Message, Suffix).Length;
     public bool MarkedComplete { get; set; }
 
@@ -38,5 +38,16 @@ public class CommonPost
             string.Join(rules.WordSpace, message.Select(s => s.Compose(rules))) +
             (message.Count() > 0 && suffix.Count() > 0 ? rules.MainToSuffixJoin : string.Empty) +
             string.Join(rules.WordSpace, suffix.Select(s => s.Compose(rules)));
+    }
+
+    public static CommonPost ImageOverflowPost(int index, PostRenderRules rules, IEnumerable<CommonPostImage> images, string text, IEnumerable<SocialSnippet> prefix, IEnumerable<SocialSnippet> suffix)
+    {
+        return new CommonPost(index, rules) 
+        { 
+            Prefix = prefix.ToList(),
+            Message = [ new SocialSnippet(text) ], 
+            Suffix = suffix.ToList(),
+            Images = images.ToList()
+        };
     }
 }

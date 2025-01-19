@@ -1,6 +1,6 @@
 using System.Text.Json;
 using Presence.SocialFormat.Lib.IO.Text;
-using Presence.SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Post;
 
 namespace Presence.SocialFormat.Tests;
 

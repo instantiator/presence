@@ -1,6 +1,6 @@
 using System.Reflection.Metadata;
 using Presence.SocialFormat.Lib.Networks;
-using Presence.SocialFormat.Lib.Posts;
+using Presence.SocialFormat.Lib.Post;
 
 namespace Presence.SocialFormat.Lib.Thread.Composition;
 
@@ -12,13 +12,15 @@ public class SimpleThreadComposer : AbstractThreadComposer
         TagsOnAllPosts = true,
         TagsOnFirstPost = false,
         PostCounterPrefix = true,
-        PostCounterSuffix = false
+        PostCounterSuffix = false,
+        MaxImagesPerPost = 4,
+        ImageOverflowRule = ImageOverflowRule.OverflowIntoNextPost,
+        ImageOverflowText = "(continued...)",
     };
 
     public static PostRenderRules SIMPLE_POST_RENDER_RULES = new PostRenderRules
     {
         MaxLength = 100,
-        MaxImagesPerPost = 4,
         WordSpace = " ",
         PrefixToMainJoin = " ",
         MainToSuffixJoin = "\n",
