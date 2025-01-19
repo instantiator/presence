@@ -61,6 +61,11 @@ public abstract class AbstractThreadComposer : IThreadComposer
             exception = e;
             success = false;
         }
+        // if the last post is empty - remove it
+        if (posts.Last().Message.Count() == 0 && posts.Last().Images.Count() == 0)
+        {
+            posts.Remove(posts.Last());
+        }
         return new ComposedThread(Identity, posts, success, exception);
     }
 

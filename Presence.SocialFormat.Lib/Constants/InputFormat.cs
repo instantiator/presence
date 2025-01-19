@@ -2,6 +2,6 @@ namespace Presence.SocialFormat.Lib.Constants;
 
 public enum InputFormat
 {
-    Json,
-    Markdown
+    JSON,
+    MD
 }

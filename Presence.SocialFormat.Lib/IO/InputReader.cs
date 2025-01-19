@@ -15,8 +15,8 @@ public class InputReader
         return ext switch
         {
             null => null,
-            "json" => InputFormat.Json,
-            "md" => InputFormat.Markdown,
+            "json" => InputFormat.JSON,
+            "md" => InputFormat.MD,
             _ => throw new NotSupportedException($"Input format not recognised: {ext}")
         };
     }
@@ -32,8 +32,8 @@ public class InputReader
     {
         return format switch
         {
-            InputFormat.Json => ReadInputFileJson<ThreadCompositionRequest>(path),
-            InputFormat.Markdown => ReadInputFile(path, new MarkdownFormatParser()),
+            InputFormat.JSON => ReadInputFileJson<ThreadCompositionRequest>(path),
+            InputFormat.MD => ReadInputFile(path, new MarkdownFormatParser()),
             _ => throw new NotSupportedException($"Input format not supported: {format}")
         };
     }
@@ -42,8 +42,8 @@ public class InputReader
     {
         return format switch
         {
-            InputFormat.Json => ReadStdInJson<ThreadCompositionRequest>(),
-            InputFormat.Markdown => ReadStdIn(new MarkdownFormatParser()),
+            InputFormat.JSON => ReadStdInJson<ThreadCompositionRequest>(),
+            InputFormat.MD => ReadStdIn(new MarkdownFormatParser()),
             _ => throw new NotSupportedException($"Input format not supported: {format}")
         };
     }

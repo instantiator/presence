@@ -15,6 +15,7 @@ A `SocialSnippet` is a piece of a post. `SnippetType` is an `enum` with several 
 - `Tag` - a HashTag (place the tag in the `.Text` value)
 - `Break` - a special snippet to indicate that the thread composer must start a new post
 - `Counter` - a special text snippet created by the thread composer as a post number indicator
+- `Image` - this is _one way_ to represent an image (see: [Images in threads](create-images.md))
 
 Initialse a `SocialSnippet` with a simple constructor or the initialisation syntax:
 

@@ -13,9 +13,9 @@ public class OutputWriter
     {
         return format switch
         {
-            OutputFormat.Json => JsonSerializer.Serialize(response, opts),
+            OutputFormat.JSON => JsonSerializer.Serialize(response, opts),
             OutputFormat.HR => new HumanReadableWriter().ToString(response),
-            OutputFormat.Markdown => new MarkdownFormatWriter().ToString(response),
+            OutputFormat.MD => new MarkdownFormatWriter().ToString(response),
             _ => throw new ArgumentOutOfRangeException(nameof(format), format, "Unknown output format.")
         };
     }

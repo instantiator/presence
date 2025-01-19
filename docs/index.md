@@ -4,6 +4,10 @@
 
 Presence is a set of .NET libraries and tools for social sharing.
 
+You can:
+
+- Format threads for multiple social networks, from a single source
+- Post threads, messages, and images (coming soon!) to social networks
 
 All code here is distributed under the [MIT](https://github.com/instantiator/presence/blob/main/LICENSE) license.
 
@@ -20,6 +24,12 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 | [`Presence.SocialFormat.Lib`](https://www.nuget.org/packages/Presence.SocialFormat.Lib/) | ![NuGet Version](https://img.shields.io/nuget/v/Presence.SocialFormat.Lib) |
 | [`Presence.Posting.Lib`](https://www.nuget.org/packages/Presence.Posting.Lib/)           | ![NuGet Version](https://img.shields.io/nuget/v/Presence.Posting.Lib)      |
 
+## Network support
+
+| Network      | Thread composition | Thread posting | Image posting |
+| ------------ | ------------------ | -------------- | ------------- |
+| AT (BlueSky) | ✅                 | ✅             |               |
+
 ## Prerequisites
 
 - [.NET 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) (download link)
@@ -28,6 +38,8 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 
 - [Install packages from Nuget](guides/install-packages.md)
 - [Create a thread with `Presence.SocialFormat.Lib`](guides/create-thread.md)
+- [Create posts with images](guides/create-images.md)
+- [Create threads with markdown](guides/create-with-markdown.md)
 - [Post to a social network with `Presence.Posting.Lib`](guides/send-post.md)
 - [Network specific configuration](guides/network-specifics.md)
 

@@ -8,7 +8,7 @@ To build and run from the repository, clone the repository (if you haven't alrea
 
 Examples in this document use `format.sh` - you can substitute this for a path to the appropriate binary, eg. `Presence.SocialFormat.Console`
 
-## Options
+## Options (help)
 
 Run with no parameters, or the `--help` option to see the help information:
 
@@ -32,7 +32,13 @@ cat SampleData/simple-snippets.json | ./format.sh -n AT
 
 ## Input formats
 
-Presence can parse a `ThreadCompositionRequest` formatted as JSON, or a markdown-like representation of content. The `SampleData/` directory contains some examples of each.
+Presence can parse a `ThreadCompositionRequest` formatted as JSON, or a markdown-like representation of content.
+
+See: [Create threads with markdown](../guides/create-with-markdown.md)
+
+### Example
+
+The `SampleData/` directory contains some examples of each.
 
 ```bash
 ./format.sh -f SampleData/SimpleThread.md -n Console,AT -o HR

@@ -21,8 +21,8 @@ public class Program
         [Option('i', "input-format", Required = false, Default = null, HelpText = $"Specify the input format. (Leave blank to detect from the input filename extension.)")]
         public InputFormat? InputFormat { get; set; }
 
-        [Option('o', "output-format", Required = false, Default = OutputFormat.Json, HelpText = $"Set the output format.")]
-        public OutputFormat OutputFormat { get; set; } = OutputFormat.Json;
+        [Option('o', "output-format", Required = false, Default = OutputFormat.JSON, HelpText = $"Set the output format.")]
+        public OutputFormat OutputFormat { get; set; } = OutputFormat.JSON;
     }
 
     public static void Main(string[] args)
