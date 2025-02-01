@@ -55,6 +55,7 @@ public class ATConnectionTests
             [
                 new SocialSnippet($"ATConnection_Posts_WithLinkAndTagFacets: {DateTime.Now:O}"),
                 new SocialSnippet($"instantiator", SnippetType.Link, "https://instantiator.dev"),
+                new SocialSnippet($"test", SnippetType.Tag),
             ]
         };
         var result = await connection.PostAsync(post);
@@ -72,18 +73,28 @@ public class ATConnectionTests
             [
                 new SocialSnippet($"ATConnection_Posts_WithLinkAndTagFacets: {DateTime.Now:O}"),
                 new SocialSnippet($"instantiator", SnippetType.Link, "https://instantiator.dev"),
-            ]
+                new SocialSnippet($"test", SnippetType.Tag),
+            ],
         };
         var facets = await connection.GetFacetsAsync(post);
+        Assert.AreEqual(2, facets.Count());
 
-        Assert.AreEqual(1, facets.Count());
         var linkFacet = facets.ElementAt(0);
         Assert.IsNotNull(linkFacet.Index);
-        var prefix = $"ATConnection_Posts_WithLinkAndTagFacets: {DateTime.Now:O} ";
-        Assert.AreEqual(Encoding.Default.GetBytes(prefix).Length, linkFacet.Index.ByteStart);
-        Assert.AreEqual(Encoding.Default.GetBytes(prefix + "instantiator").Length, linkFacet.Index.ByteEnd);
+        var prefix1 = $"ATConnection_Posts_WithLinkAndTagFacets: {DateTime.Now:O} ";
+        Assert.AreEqual(Encoding.Default.GetBytes(prefix1).Length, linkFacet.Index.ByteStart);
+        Assert.AreEqual(Encoding.Default.GetBytes(prefix1 + "instantiator").Length, linkFacet.Index.ByteEnd);
         Assert.IsNotNull(linkFacet.Features);
         Assert.AreEqual(1, linkFacet.Features.Count());
         Assert.AreEqual("app.bsky.richtext.facet#link", linkFacet.Features[0].Type);
+
+        var tagFacet = facets.ElementAt(1);
+        Assert.IsNotNull(tagFacet.Index);
+        var prefix2 = $"ATConnection_Posts_WithLinkAndTagFacets: {DateTime.Now:O} instantiator ";
+        Assert.AreEqual(Encoding.Default.GetBytes(prefix2).Length, tagFacet.Index.ByteStart);
+        Assert.AreEqual(Encoding.Default.GetBytes(prefix2 + "#test").Length, tagFacet.Index.ByteEnd);
+        Assert.IsNotNull(tagFacet.Features);
+        Assert.AreEqual(1, tagFacet.Features.Count());
+        Assert.AreEqual("app.bsky.richtext.facet#tag", tagFacet.Features[0].Type);
     }
 }
