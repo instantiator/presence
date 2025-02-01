@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using FishyFlip;
 using FishyFlip.Lexicon;
 using FishyFlip.Lexicon.App.Bsky.Feed;
@@ -6,6 +7,7 @@ using FishyFlip.Lexicon.App.Bsky.Richtext;
 using FishyFlip.Lexicon.Com.Atproto.Repo;
 using FishyFlip.Models;
 using FishyFlip.Tools;
+using Presence.SocialFormat.Lib.Helpers;
 using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Post;
 
@@ -16,9 +18,9 @@ public class ATConnection : AbstractNetworkConnection
     private const int RATE_ms = 1000;
     private static DateTime lastAction = DateTime.MinValue;
 
-    public Uri Server(INetworkCredentials? credentials) 
-        => credentials?.ContainsKey(NetworkCredentialType.Server) == true 
-            ? new Uri("https://" + credentials[NetworkCredentialType.Server]) 
+    public Uri Server(INetworkCredentials? credentials)
+        => credentials?.ContainsKey(NetworkCredentialType.Server) == true
+            ? new Uri("https://" + credentials[NetworkCredentialType.Server])
             : new Uri("https://bsky.social");
 
     private ATProtocol? protocol;
@@ -52,7 +54,7 @@ public class ATConnection : AbstractNetworkConnection
 
         await RateLimitAsync();
         var (session, error) = await protocol.AuthenticateWithPasswordResultAsync(
-            credentials![NetworkCredentialType.AccountName], 
+            credentials![NetworkCredentialType.AccountName],
             credentials![NetworkCredentialType.AppPassword]);
 
         if (error != null)
@@ -83,11 +85,43 @@ public class ATConnection : AbstractNetworkConnection
         var atPost = new Post
         {
             Text = post.ComposeText(),
-            Facets = new List<Facet>()
+            Facets = await GetFacetsAsync(post) // TODO: analyze and transform links
+            // TODO: upload images
         };
+
         var response = await AtPostAsync(atPost, replyTo?.ReferenceKey);
         if (response == null) throw new NullReferenceException("Post reference not returned");
         return new ATPostReference(response.Uri!, post);
+    }
+
+    public async Task<List<Facet>> GetFacetsAsync(CommonPost post)
+    {
+        var facets = new List<Facet>();
+        var allItems = post.Compose().Select((pair, index) => new { pair, index });
+        foreach (var item in allItems)
+        {
+            var type = item.pair.Item1?.SnippetType;
+            var reference = item.pair.Item1?.Reference;
+            var text = item.pair.Item1?.Text;
+            var position = Encoding.Default.GetBytes(string.Join(string.Empty, allItems.Take(item.index).Select(d => d.pair.Item2))).Length;
+            var length = Encoding.Default.GetBytes(item.pair.Item2).Length;
+
+            switch (type)
+            {
+                case SnippetType.Link:
+                    reference.RequireText("Link reference");
+                    facets.Add(Facet.CreateFacetLink(position, position + length, reference!));
+                    break;
+                case SnippetType.Tag:
+                    text.RequireText("Tag text");
+                    // The tag .Text does not contain the # prefix, which is correct for the Facet.CreateFacetHashtag.
+                    // The strings found in allData come from CommonPost.Compose, which does contain the prefix, which is correct.
+                    facets.Add(Facet.CreateFacetHashtag(position, position + length, text!));
+                    break;
+
+            }
+        }
+        return facets;
     }
 
     private async Task<CreateRecordOutput> AtPostAsync(Post post, string? replyKey = null)
