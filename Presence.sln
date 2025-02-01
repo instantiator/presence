@@ -7,11 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presence.Posting.Lib", "Pre
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presence.SocialFormat.Lib", "Presence.SocialFormat.Lib\Presence.SocialFormat.Lib.csproj", "{8A778277-FF7F-4FDB-82D9-28A8DA798E3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presence.SocialFormat.Tests", "Presence.SocialFormat.Tests\Presence.SocialFormat.Tests.csproj", "{C3F41CDC-39A0-4260-87DC-DF6FEA799C69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presence.SocialFormat.Lib.Tests", "Presence.SocialFormat.Lib.Tests\Presence.SocialFormat.Lib.Tests.csproj", "{C3F41CDC-39A0-4260-87DC-DF6FEA799C69}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presence.SocialFormat.Console", "Presence.SocialFormat.Console\Presence.SocialFormat.Console.csproj", "{F8514DF7-88FC-4C45-9F5A-585B3106673E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presence.Posting.Tests", "Presence.Posting.Tests\Presence.Posting.Tests.csproj", "{BB56E413-9E7A-43EF-80D0-CDEA6CC06D9C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presence.Posting.Lib.Tests", "Presence.Posting.Lib.Tests\Presence.Posting.Lib.Tests.csproj", "{BB56E413-9E7A-43EF-80D0-CDEA6CC06D9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
