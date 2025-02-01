@@ -85,7 +85,7 @@ public class ATConnection : AbstractNetworkConnection
         var atPost = new Post
         {
             Text = post.ComposeText(),
-            Facets = await GetFacetsAsync(post) // TODO: analyze and transform links
+            Facets = await GetFacetsAsync(post)
             // TODO: upload images
         };
 

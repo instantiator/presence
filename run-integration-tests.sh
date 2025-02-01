@@ -6,6 +6,7 @@ usage() {
 Runs the integration tests.
 
 Options:
+    -f <filter>    --filter <filter>               Filter the tests by name (optional)
     -e <path>      --env-file <path>               Path to an environment file (eg. .env.integration)
     -h             --help                          Prints this help message and exits
 
@@ -20,6 +21,10 @@ while [ -n "$1" ]; do
   -e | --env-file)
     shift
     ENV_PATH=$1
+    ;;
+  -f | --filter)
+    shift
+    FILTER=$1
     ;;
   -h | --help)
     usage
@@ -49,4 +54,12 @@ if [ ! -z "$ENV_PATH" ]; then
   fi
 fi
 
-dotnet test --verbosity normal --filter TestCategory=Integration
+if [ ! -z "$FILTER" ]; then
+  echo "Running unit tests with filter: $FILTER"
+  echo
+  dotnet test --verbosity normal --filter "TestCategory=Integration&FullyQualifiedName~$FILTER"
+else
+  echo "Running all unit tests..."
+  echo
+  dotnet test --verbosity normal --filter TestCategory=Integration
+fi

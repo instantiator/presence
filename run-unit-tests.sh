@@ -6,6 +6,7 @@ usage() {
 Runs the unit tests.
 
 Options:
+    -f <filter>    --filter <filter>               Filter the tests by name (optional)
     -h             --help                          Prints this help message and exits
 
 EOF
@@ -20,6 +21,10 @@ while [ -n "$1" ]; do
     usage
     exit 0
     ;;
+  -f | --filter)
+    shift
+    FILTER=$1
+    ;;
   *)
     echo "Unknown option $1..."
     usage
@@ -29,4 +34,12 @@ while [ -n "$1" ]; do
   shift
 done
 
-dotnet test --verbosity normal --filter TestCategory=Unit "$@"
+if [ ! -z "$FILTER" ]; then
+  echo "Running unit tests with filter: $FILTER"
+  echo
+  dotnet test --verbosity normal --filter "TestCategory=Unit&FullyQualifiedName~$FILTER"
+else
+  echo "Running all unit tests..."
+  echo
+  dotnet test --verbosity normal --filter TestCategory=Unit
+fi

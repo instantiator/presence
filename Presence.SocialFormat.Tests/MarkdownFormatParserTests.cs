@@ -40,4 +40,22 @@ Another break, and now another link [ICGames](https://icgames.net/)";
         Assert.AreEqual("Tag2", request.Tags.Last().Text);
     }
 
+    [TestMethod]
+    public void SampleData_SimpleThread_md_Exists()
+    {
+        Assert.IsTrue(File.Exists("SampleData/SimpleThread.md"));
+    }
+
+    [TestMethod]
+    public void MarkdownFormatParser_CanReadSampleThread()
+    {
+        var parser = new MarkdownFormatParser();
+        var content = File.ReadAllText("SampleData/SimpleThread.md");
+        var request = parser.ToRequest(content);
+
+        Assert.AreEqual(27, request.Message.Count());
+        Assert.AreEqual(2, request.Message.Count(s => s.SnippetType == SnippetType.Link));
+        Assert.AreEqual(1, request.Message.Count(s => s.SnippetType == SnippetType.Image));
+        Assert.AreEqual(5, request.Tags.Count(s => s.SnippetType == SnippetType.Tag));
+    }
 }
