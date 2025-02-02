@@ -26,9 +26,10 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 
 ## Network support
 
-| Network      | Thread composition | Thread posting | Image posting |
-| ------------ | ------------------ | -------------- | ------------- |
-| AT (BlueSky) | ✅                 | ✅             |               |
+| Network   | Notes            | Thread composition | Thread posting | Image posting |
+| --------- | ---------------- | ------------------ | -------------- | ------------- |
+| `AT`      | ie. BlueSky      | ✅                 | ✅             | ✅            |
+| `Console` | Used for testing | ✅                 | ✅             | ✅            |
 
 ## Prerequisites
 
