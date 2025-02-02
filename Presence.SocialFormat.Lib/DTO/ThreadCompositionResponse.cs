@@ -1,6 +1,3 @@
-using Presence.SocialFormat.Lib.Networks;
-using Presence.SocialFormat.Lib.Thread.Composition;
-
 namespace Presence.SocialFormat.Lib.DTO;
 
 public class ThreadCompositionResponse

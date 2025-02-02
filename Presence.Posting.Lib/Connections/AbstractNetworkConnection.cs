@@ -40,7 +40,7 @@ public abstract class AbstractNetworkConnection : INetworkConnection
     }
 
     protected abstract Task<bool> ConnectImplementationAsync(INetworkCredentials? credentials);
-    
+
     public void Disconnect()
     {
         DisconnectImplementationAsync().Wait();
@@ -54,6 +54,17 @@ public abstract class AbstractNetworkConnection : INetworkConnection
     }
 
     public abstract Task<INetworkPostReference> PostAsync(CommonPost post, INetworkPostReference? replyTo = null);
+
+    public async Task<IEnumerable<INetworkPostReference>> PostAsync(IEnumerable<CommonPost> thread)
+    {
+        var references = new List<INetworkPostReference>();
+        foreach (var post in thread)
+        {
+            var reference = await PostAsync(post, references.LastOrDefault());
+            references.Add(reference);
+        }
+        return references;
+    }
 
     public abstract Task<bool> DeletePostAsync(INetworkPostReference uri);
 }

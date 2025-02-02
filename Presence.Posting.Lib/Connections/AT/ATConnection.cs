@@ -92,9 +92,12 @@ public class ATConnection : AbstractNetworkConnection
             Facets = await GetFacetsAsync(post),
             Embed = embed,
         };
-        var response = await AtPostAsync(atPost, replyTo?.ReferenceKey);
+
+        var response = await AtPostAsync(atPost, replyTo as ATPostReference);
         if (response == null) throw new NullReferenceException("Post reference not returned");
-        return new ATPostReference(response.Uri!, post);
+        if (response.Uri == null) throw new NullReferenceException("Post reference did not contain a Uri");
+        if (string.IsNullOrWhiteSpace(response.Cid)) throw new NullReferenceException("Post reference did not contain a Cid");
+        return new ATPostReference(response, post);
     }
 
     public async Task<Image> UploadImage(CommonPostImage cpi)
@@ -163,11 +166,16 @@ public class ATConnection : AbstractNetworkConnection
         return facets;
     }
 
-    public async Task<CreateRecordOutput> AtPostAsync(Post post, string? replyKey = null)
+    public async Task<CreateRecordOutput> AtPostAsync(Post post, ATPostReference? replyTo = null)
     {
         RequireAuthenticated();
         await RateLimitAsync();
-        var result = await protocol.Feed.CreatePostAsync(post, rkey: replyKey, validate: true);
+
+        var reply = replyTo != null
+            ? new ReplyRefDef(new StrongRef(replyTo.Uri, replyTo.Cid), new StrongRef(replyTo.Uri, replyTo.Cid))
+            : null;
+
+        var result = await protocol.Feed.CreatePostAsync(post.Text, post.Facets, reply: reply, validate: true);
         return result.HandleResult()!;
     }
 
@@ -175,7 +183,7 @@ public class ATConnection : AbstractNetworkConnection
     {
         RequireAuthenticated();
         await RateLimitAsync();
-        var result = await protocol.Feed.DeletePostAsync(reference.ReferenceKey);
+        var result = await protocol.Feed.DeletePostAsync(reference.NetworkReferences["rkey"]);
         var output = result.HandleResult()!;
         return output != null;
     }

@@ -11,14 +11,14 @@ public class Program
 {
     public class Options
     {
-        [Option('f', "input-file", Required = false, HelpText = "Path to input file containing a composition request.")]
+        [Option('f', "input-file", Required = false, HelpText = "Path to input file containing a composition request (leave blank to use stdin).")]
         public string? InputPath { get; set; } = null;
 
         [Option('n', "networks", Required = true, HelpText = "Social networks to generate for, a comma-separated list without whitespace.", Separator = ',', Min = 1)]
         public IEnumerable<SocialNetwork> Network { get; set; } = null!;
 
         [Option('i', "input-format", Required = false, Default = null, HelpText = $"Specify the input format. (Leave blank to detect from the input filename extension.)")]
-        public InputFormat? InputFormat { get; set; }
+        public ThreadCompositionRequestInputFormat? InputFormat { get; set; }
 
         [Option('o', "output-format", Required = false, Default = OutputFormat.JSON, HelpText = $"Set the output format.")]
         public OutputFormat OutputFormat { get; set; } = OutputFormat.JSON;
@@ -43,7 +43,7 @@ public class Program
     private static void HandleErrors(IEnumerable<Error> errors)
     {
         System.Console.Error.WriteLine("Supported constants:");
-        System.Console.Error.WriteLine("  Input formats:   " + Helpers.EnumAsCSV(typeof(InputFormat)));
+        System.Console.Error.WriteLine("  Input formats:   " + Helpers.EnumAsCSV(typeof(ThreadCompositionRequestInputFormat)));
         System.Console.Error.WriteLine("  Output formats:  " + Helpers.EnumAsCSV(typeof(OutputFormat)));
         System.Console.Error.WriteLine("  Social networks: " + Helpers.EnumAsCSV(typeof(SocialNetwork)));
     }
@@ -52,12 +52,12 @@ public class Program
     {
         try
         {
-            var inputFormat = options.InputFormat ?? InputReader.DetectFormat(options.InputPath);
+            var inputFormat = options.InputFormat ?? ThreadCompositionRequestInputReader.DetectFormat(options.InputPath);
             if (inputFormat == null) { throw new ArgumentException("Please specify the input format."); }
-            var request = InputReader.Decode(inputFormat!.Value, options.InputPath);
+            var request = ThreadCompositionRequestInputReader.Decode(inputFormat!.Value, options.InputPath);
             var composers = options.Network.Select(ComposerFactory.ForNetwork);
             var response = new ThreadBuilder(composers).WithRequest(request).Build();
-            System.Console.WriteLine(OutputWriter.Encode(options.OutputFormat, response));
+            System.Console.WriteLine(ThreadCompositionResponseOutputWriter.Encode(options.OutputFormat, response));
         }
         catch (Exception e)
         {

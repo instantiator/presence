@@ -7,7 +7,7 @@ using Presence.SocialFormat.Lib.IO.Text;
 
 namespace Presence.SocialFormat.Lib.IO;
 
-public class OutputWriter
+public class ThreadCompositionResponseOutputWriter
 {
     public static string Encode(OutputFormat format, ThreadCompositionResponse response)
     {

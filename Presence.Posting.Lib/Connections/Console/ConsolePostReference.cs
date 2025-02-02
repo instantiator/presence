@@ -5,7 +5,10 @@ namespace Presence.Posting.Lib.Connections.Console;
 
 public class ConsolePostReference : INetworkPostReference
 {
-    public string ReferenceKey { get; init; } = Guid.NewGuid().ToString();
+    public IDictionary<string, string> NetworkReferences { get; init; } = new Dictionary<string, string>()
+    {
+        { "guid", Guid.NewGuid().ToString() }
+    };
 
     public SocialNetwork Network => SocialNetwork.Console;
 

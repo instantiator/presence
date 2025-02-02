@@ -6,28 +6,53 @@ You can either [download the binaries](download-binaries.md) for your system fro
 
 To build and run from the repository, clone the repository (if you haven't already), and use the `format.sh` script. (You'll need to have .NET 8 installed.)
 
-Examples in this document use `format.sh` - you can substitute this for a path to the appropriate binary, eg. `Presence.SocialFormat.Console`
+Examples in this document use the prebuilt binary, ie. `Presence.SocialFormat.Console`. You can substitute the `format.sh` script if needed.
 
-## Options (help)
+## Usage
 
-Run with no parameters, or the `--help` option to see the help information:
+The prebuilt binary is either `Presence.SocialFormat.Console` (Mac OS or Linux), or `Presence.SocialFormat.Console.exe` (Windows).
 
-```bash
-./format.sh --help
-```
+- Provide the `--help` parameter for more information
 
-## Sample usage
+### Inputs
+
+- Inputs accepted as either a file (as an `-f` / `--input-file`) parameter, or through `stdin`
+- Input formats may be specified with the `-i` / `--input-format` parameter
+- Input formats accepted are:
+  - `-i JSON` - a JSON-formatted [`ThreadCompositionRequest`](https://github.com/instantiator/presence/blob/main/Presence.SocialFormat.Lib/DTO/ThreadCompositionRequest.cs) describing the content
+  - `-i MD` - a [pseudo-markdown](https://instantiator.dev/presence/guides/create-with-markdown.html) formatted file describing the content
+- Networks may be specified with the `-n` / `--networks` parameter
+- Provide networks as a comma-separated list of network codes
+- Networks accepted are:
+  - `AT` - an AT-network (ie. BlueSky)
+  - `Console` - the 'Console' network (prints to console, useful for testing)
+
+### Outputs
+
+- The output format may also be specified with the `-o` / `--output-format` parameter.
+- Output formats accepted are:
+  - `-o JSON` - a JSON-formatted [`ThreadCompositionResponse`](https://github.com/instantiator/presence/blob/main/Presence.SocialFormat.Lib/DTO/ThreadCompositionResponse.cs)
+  - `-o MD` - pseudo-markdown format
+  - `-o HR` - a friendlier human-readable format (useful for inspecting output)
+
+NB. JSON is most useful if you intend to post using `Presence.Posting.Console`
+
+See also: [SampleData](https://github.com/instantiator/presence/tree/main/SampleData)
+
+## Examples
+
+_(These examples assume that the pre-built binary is available in the working directory.)_
 
 To format the sample thread for BlueSky (AT), you can pass in the request json as a file:
 
 ```bash
-./format.sh -f SampleData/simple-snippets.json -n AT
+./Presence.SocialFormat.Console -f SampleData/simple-snippets.json -n AT
 ```
 
 Or pipe it in through `stdin`:
 
 ```bash
-cat SampleData/simple-snippets.json | ./format.sh -n AT
+cat SampleData/simple-snippets.json | ./Presence.SocialFormat.Console -n AT
 ```
 
 ## Input formats
@@ -41,7 +66,7 @@ See: [Create threads with markdown](../guides/create-with-markdown.md)
 The `SampleData/` directory contains some examples of each.
 
 ```bash
-./format.sh -f SampleData/SimpleThread.md -n Console,AT -o HR
+./Presence.SocialFormat.Console -f SampleData/SimpleThread.md -n Console,AT -o HR
 ```
 
 - `-f SampleData/SimpleThread.md` - use the markdown-like sample input file

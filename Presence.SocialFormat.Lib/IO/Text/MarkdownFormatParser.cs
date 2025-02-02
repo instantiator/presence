@@ -8,12 +8,12 @@ namespace Presence.SocialFormat.Lib.IO.Text;
 
 public class MarkdownFormatParser : IFormatParser
 {
-    public MarkdownFormatParser(ParserRules? rules = null)
+    public MarkdownFormatParser(ThreadCompositionRequestParserRules? rules = null)
     {
-        this.rules = rules ?? ParserRules.Default;
+        this.rules = rules ?? ThreadCompositionRequestParserRules.Default;
     }
 
-    private ParserRules rules { get; }
+    private ThreadCompositionRequestParserRules rules { get; }
 
     public static Regex LinkRegex = new Regex($"^{RegexConstants.MD_LINK_REGEX}");
     public static Regex ImageRegex = new Regex($"^{RegexConstants.MD_IMAGE_REGEX}");
@@ -81,7 +81,8 @@ public class MarkdownFormatParser : IFormatParser
         if (uri != null)
         {
             var metadata = uri.GetMetadata();
-            if (rules.CheckLinks) {
+            if (rules.CheckLinks)
+            {
                 if (!metadata.Exists) { throw new Exception($"Link not found: {uri}"); }
             }
             return (new SocialSnippet
@@ -110,7 +111,8 @@ public class MarkdownFormatParser : IFormatParser
         var uri = uriStr.ToUri();
         if (uri != null)
         {
-            if (rules.CheckLinks) {
+            if (rules.CheckLinks)
+            {
                 var metadata = uri.GetMetadata();
                 if (!metadata.Exists) { throw new Exception($"Link not found: {uri}"); }
             }

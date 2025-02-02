@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using FishyFlip.Lexicon.App.Bsky.Embed;
 using FishyFlip.Lexicon.App.Bsky.Feed;
 using Presence.Posting.Lib.Connections;
@@ -33,16 +34,64 @@ public class ATConnectionTests
 
     [TestMethod]
     [TestCategory("Integration")]
-    public async Task ATConnection_Posts()
+    public async Task ATConnection_Posts_Post()
     {
         var env = Environment.GetEnvironmentVariables();
         var connection = await ConnectionFactory.CreateConnection(SocialNetwork.AT, env);
         var post = new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES)
         {
-            Message = [new SocialSnippet($"ATConnection_Posts: {DateTime.Now:O}")]
+            Message = [new SocialSnippet($"ATConnection_Posts_Post: {DateTime.Now:O}")]
         };
         var result = await connection.PostAsync(post);
-        Assert.IsFalse(string.IsNullOrWhiteSpace(result.ReferenceKey));
+        Assert.IsTrue(result.Network == SocialNetwork.AT);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(result.NetworkReferences["rkey"]));
+        var resultAsAT = (ATPostReference)result;
+        Assert.AreEqual(post, resultAsAT.Origin);
+        Assert.IsNotNull(resultAsAT.Uri);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(resultAsAT.Uri.Rkey));
+        Assert.IsFalse(string.IsNullOrWhiteSpace(resultAsAT.Uri.Did?.ToString()));
+    }
+
+    [TestMethod]
+    [TestCategory("Integration")]
+    public async Task ATConnection_Posts_Replies()
+    {
+        var env = Environment.GetEnvironmentVariables();
+        var connection = await ConnectionFactory.CreateConnection(SocialNetwork.AT, env);
+        var post0 = new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES) { Message = [new SocialSnippet($"ATConnection_Posts_Replies (part 1): {DateTime.Now:O}")] };
+        var post1 = new CommonPost(1, ATThreadComposer.AT_POST_RENDER_RULES) { Message = [new SocialSnippet($"ATConnection_Posts_Replies (part 2): {DateTime.Now:O}")] };
+
+        var ref0 = await connection.PostAsync(post0);
+        Assert.IsNotNull(ref0);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(ref0.NetworkReferences["rkey"]));
+
+        var ref1 = await connection.PostAsync(post1, ref0);
+        Assert.IsNotNull(ref1);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(ref1.NetworkReferences["rkey"]));
+
+        // Assert.Fail(JsonSerializer.Serialize((ref0 as ATPostReference)!.Output, new JsonSerializerOptions { WriteIndented = true }));
+    }
+
+    [TestMethod]
+    [TestCategory("Integration")]
+    public async Task ATConnection_Posts_Thread()
+    {
+        var env = Environment.GetEnvironmentVariables();
+        var connection = await ConnectionFactory.CreateConnection(SocialNetwork.AT, env);
+        var thread = new[]
+        {
+            new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES) { Message = [new SocialSnippet($"ATConnection_Posts_Thread (part 1): {DateTime.Now:O}")] },
+            new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES) { Message = [new SocialSnippet($"ATConnection_Posts_Thread (part 2): {DateTime.Now:O}")] },
+        };
+        var result = await connection.PostAsync(thread);
+        Assert.AreEqual(thread.Length, result.Count());
+        Assert.IsTrue(result.All(r => r.Network == SocialNetwork.AT));
+        Assert.IsTrue(result.All(r => r.Origin != null));
+        Assert.IsTrue(result.All(r => r is ATPostReference));
+        Assert.IsTrue(result.All(r => ((ATPostReference)r).Output != null));
+        Assert.IsTrue(result.All(r => ((ATPostReference)r).Cid != null));
+        Assert.IsTrue(result.All(r => ((ATPostReference)r).Did != null));
+        Assert.IsTrue(result.All(r => ((ATPostReference)r).Uri != null));
     }
 
     [TestMethod]
@@ -61,7 +110,7 @@ public class ATConnectionTests
             ]
         };
         var result = await connection.PostAsync(post);
-        Assert.IsFalse(string.IsNullOrWhiteSpace(result.ReferenceKey));
+        Assert.IsFalse(string.IsNullOrWhiteSpace(result.NetworkReferences["rkey"]));
     }
 
     [TestMethod]
@@ -140,7 +189,7 @@ public class ATConnectionTests
         };
 
         var response = await connection.AtPostAsync(atPost);
-        var reference = new ATPostReference(response.Uri!, post);
-        Assert.IsFalse(string.IsNullOrWhiteSpace(reference.ReferenceKey));
+        var reference = new ATPostReference(response, post);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(reference.NetworkReferences["rkey"]));
     }
 }

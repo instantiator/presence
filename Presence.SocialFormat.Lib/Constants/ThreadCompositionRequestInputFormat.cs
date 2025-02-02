@@ -1,6 +1,6 @@
 namespace Presence.SocialFormat.Lib.Constants;
 
-public enum InputFormat
+public enum ThreadCompositionRequestInputFormat
 {
     JSON,
     MD

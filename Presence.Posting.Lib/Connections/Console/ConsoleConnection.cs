@@ -12,17 +12,20 @@ public class ConsoleConnection : AbstractNetworkConnection
     public override async Task<INetworkPostReference> PostAsync(CommonPost post, INetworkPostReference? replyTo = null)
     {
         var key = Guid.NewGuid().ToString();
-        System.Console.WriteLine($"Post ({key}): {(replyTo != null ? $"(reply to: {replyTo.ReferenceKey}) " : "")}{post.ComposeText()}");
+        System.Console.WriteLine($"Post ({key}): {(replyTo != null ? $"(reply to: {replyTo.NetworkReferences["guid"]}) " : "")}{post.ComposeText()}");
         return new ConsolePostReference
         {
-            ReferenceKey = key,
+            NetworkReferences = new Dictionary<string, string>()
+            {
+                { "guid", key }
+            },
             Origin = post
         };
     }
 
     public override async Task<bool> DeletePostAsync(INetworkPostReference uri)
     {
-        System.Console.WriteLine($"Deletion ({uri.ReferenceKey})");
+        System.Console.WriteLine($"Deletion ({uri.NetworkReferences["guid"]})");
         return true;
     }
 

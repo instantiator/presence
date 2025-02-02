@@ -48,6 +48,7 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 
 - [Downloading binaries](cli/download-binaries.md)
 - [Using `Presence.SocialFormat.Console`](cli/presence-social-format-console.md)
+- [Using `Presence.Posting.Console`](cli/presence-posting-console.md)
 
 ## Developer notes
 
