@@ -1,6 +1,5 @@
 ﻿using CommandLine;
 using Presence.SocialFormat.Lib.Constants;
-using Presence.SocialFormat.Lib.DTO;
 using Presence.SocialFormat.Lib.IO;
 using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Thread.Builder;
@@ -54,7 +53,7 @@ public class Program
         try
         {
             var inputFormat = options.InputFormat ?? InputReader.DetectFormat(options.InputPath);
-            if  (inputFormat == null) { throw new ArgumentException("Please specify the input format."); }
+            if (inputFormat == null) { throw new ArgumentException("Please specify the input format."); }
             var request = InputReader.Decode(inputFormat!.Value, options.InputPath);
             var composers = options.Network.Select(ComposerFactory.ForNetwork);
             var response = new ThreadBuilder(composers).WithRequest(request).Build();

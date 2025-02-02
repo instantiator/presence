@@ -7,4 +7,22 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.9.1" />
+    <PackageReference Include="MinVer" Version="6.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Presence.SocialFormat.Lib\Presence.SocialFormat.Lib.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <!-- <MinVerTagPrefix>social-format-console-</MinVerTagPrefix> -->
+    <MinVerVerbosity>normal</MinVerVerbosity>
+    <MinVerDefaultPreReleaseIdentifiers>rc</MinVerDefaultPreReleaseIdentifiers>
+  </PropertyGroup>
+
 </Project>
