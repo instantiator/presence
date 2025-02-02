@@ -175,7 +175,13 @@ public class ATConnection : AbstractNetworkConnection
             ? new ReplyRefDef(new StrongRef(replyTo.Uri, replyTo.Cid), new StrongRef(replyTo.Uri, replyTo.Cid))
             : null;
 
-        var result = await protocol.Feed.CreatePostAsync(post.Text, post.Facets, reply: reply, validate: true);
+        var result = await protocol.Feed.CreatePostAsync(
+            text: post.Text,
+            facets: post.Facets,
+            embed: post.Embed,
+            reply: reply,
+            validate: true);
+
         return result.HandleResult()!;
     }
 
