@@ -1,8 +1,8 @@
 using Presence.SocialFormat.Lib.DTO;
 using Presence.SocialFormat.Lib.Post;
-using Presence.SocialFormat.Tests.Composition.Helpers;
+using Presence.SocialFormat.Lib.Tests.Composition.Helpers;
 
-namespace Presence.SocialFormat.Tests;
+namespace Presence.SocialFormat.Lib.Tests;
 
 [TestClass]
 [TestCategory("Unit")]

@@ -2,7 +2,7 @@ using System.Text.Json;
 using Presence.SocialFormat.Lib.IO.Text;
 using Presence.SocialFormat.Lib.Post;
 
-namespace Presence.SocialFormat.Tests;
+namespace Presence.SocialFormat.Lib.Tests;
 
 [TestClass]
 [TestCategory("Unit")]

@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 using Presence.SocialFormat.Lib.Constants;
 
-namespace Presence.SocialFormat.Tests;
+namespace Presence.SocialFormat.Lib.Tests;
 
 [TestClass]
 [TestCategory("Unit")]

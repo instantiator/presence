@@ -6,7 +6,7 @@ using Presence.Posting.Lib.Connections.AT;
 using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Post;
 
-namespace Presence.Posting.Tests;
+namespace Presence.Posting.Lib.Tests;
 
 [TestClass]
 public class ATConnectionTests

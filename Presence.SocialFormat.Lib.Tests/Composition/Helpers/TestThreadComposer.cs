@@ -2,7 +2,7 @@ using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Post;
 using Presence.SocialFormat.Lib.Thread.Composition;
 
-namespace Presence.SocialFormat.Tests.Composition.Helpers;
+namespace Presence.SocialFormat.Lib.Tests.Composition.Helpers;
 
 public class TestThreadComposer
 {

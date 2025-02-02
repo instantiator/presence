@@ -1,6 +1,6 @@
 using Presence.SocialFormat.Lib.Helpers;
 
-namespace Presence.SocialFormat.Tests;
+namespace Presence.SocialFormat.Lib.Tests;
 
 [TestClass]
 [TestCategory("Unit")]

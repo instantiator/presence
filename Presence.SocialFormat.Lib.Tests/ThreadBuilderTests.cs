@@ -1,10 +1,9 @@
 using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Post;
+using Presence.SocialFormat.Lib.Tests.Composition.Helpers;
 using Presence.SocialFormat.Lib.Thread.Builder;
-using Presence.SocialFormat.Lib.Thread.Composition;
-using Presence.SocialFormat.Tests.Composition.Helpers;
 
-namespace Presence.SocialFormat.Tests;
+namespace Presence.SocialFormat.Lib.Tests;
 
 [TestClass]
 [TestCategory("Unit")]

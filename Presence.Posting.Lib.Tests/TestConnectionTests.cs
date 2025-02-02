@@ -1,6 +1,6 @@
 using Presence.Posting.Lib.Connections.Console;
 
-namespace Presence.Posting.Tests;
+namespace Presence.Posting.Lib.Tests;
 
 [TestClass]
 [TestCategory("Unit")]

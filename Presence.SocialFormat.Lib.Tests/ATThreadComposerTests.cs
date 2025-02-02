@@ -1,7 +1,7 @@
 using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Post;
 
-namespace Presence.SocialFormat.Tests;
+namespace Presence.SocialFormat.Lib.Tests;
 
 [TestClass]
 [TestCategory("Unit")]
