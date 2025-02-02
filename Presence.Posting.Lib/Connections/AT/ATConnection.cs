@@ -1,7 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Net.Http.Headers;
 using System.Text;
 using FishyFlip;
 using FishyFlip.Lexicon;
+using FishyFlip.Lexicon.App.Bsky.Embed;
 using FishyFlip.Lexicon.App.Bsky.Feed;
 using FishyFlip.Lexicon.App.Bsky.Richtext;
 using FishyFlip.Lexicon.Com.Atproto.Repo;
@@ -19,7 +21,7 @@ public class ATConnection : AbstractNetworkConnection
     private static DateTime lastAction = DateTime.MinValue;
 
     public Uri Server(INetworkCredentials? credentials)
-        => credentials?.ContainsKey(NetworkCredentialType.Server) == true
+        => credentials?.ContainsKey(NetworkCredentialType.Server) == true && !string.IsNullOrWhiteSpace(credentials[NetworkCredentialType.Server])
             ? new Uri("https://" + credentials[NetworkCredentialType.Server])
             : new Uri("https://bsky.social");
 
@@ -82,16 +84,54 @@ public class ATConnection : AbstractNetworkConnection
 
     public override async Task<INetworkPostReference> PostAsync(CommonPost post, INetworkPostReference? replyTo = null)
     {
+        var images = await Task.WhenAll(post.Images.Select(async i => await UploadImage(i)));
+        var embed = images.Any() ? new EmbedImages(images: images.ToList()) : null;
         var atPost = new Post
         {
             Text = post.ComposeText(),
-            Facets = await GetFacetsAsync(post)
-            // TODO: upload images
+            Facets = await GetFacetsAsync(post),
+            Embed = embed,
         };
-
         var response = await AtPostAsync(atPost, replyTo?.ReferenceKey);
         if (response == null) throw new NullReferenceException("Post reference not returned");
         return new ATPostReference(response.Uri!, post);
+    }
+
+    public async Task<Image> UploadImage(CommonPostImage cpi)
+    {
+        var uri = cpi.SourceUrl.ToUri();
+        if (uri == null) { throw new Exception($"Could not parse image uri: {cpi.SourceUrl}"); }
+        var image = await UploadImage(uri!, cpi.AltText);
+        if (image == null) { throw new Exception($"Could not upload image: {cpi.SourceUrl}"); }
+        cpi.Uploaded = true;
+        return image;
+    }
+
+    public async Task<Image> UploadImage(Uri src, string alt)
+    {
+        RequireAuthenticated();
+        var metadata = src.GetMetadata();
+        if (!metadata.IsImage) { throw new Exception($"Uri target is not an image: {src}"); }
+        if (!metadata.IsFile && !metadata.IsHttp) { throw new Exception($"Uri is neither file or link {src}"); }
+        if (!metadata.Exists) { throw new Exception($"Image not found: {src}"); }
+
+        using var httpClient = new HttpClient();
+        var stream = await src.GetStreamAsync(metadata);
+        var content = new StreamContent(stream);
+        content.Headers.ContentLength = stream.CanSeek ? stream.Length : null;
+        content.Headers.ContentType = new MediaTypeHeaderValue(metadata.MimeType!);
+
+        await RateLimitAsync();
+        var blobResult = await protocol!.Repo.UploadBlobAsync(content);
+        var success = blobResult.HandleResult();
+        if (success != null)
+        {
+            return new Image(success.Blob, alt);
+        }
+        else
+        {
+            throw new Exception($"Error uploading image");
+        }
     }
 
     public async Task<List<Facet>> GetFacetsAsync(CommonPost post)
@@ -118,13 +158,12 @@ public class ATConnection : AbstractNetworkConnection
                     // The strings found in allData come from CommonPost.Compose, which does contain the prefix, which is correct.
                     facets.Add(Facet.CreateFacetHashtag(position, position + length, text!));
                     break;
-
             }
         }
         return facets;
     }
 
-    private async Task<CreateRecordOutput> AtPostAsync(Post post, string? replyKey = null)
+    public async Task<CreateRecordOutput> AtPostAsync(Post post, string? replyKey = null)
     {
         RequireAuthenticated();
         await RateLimitAsync();

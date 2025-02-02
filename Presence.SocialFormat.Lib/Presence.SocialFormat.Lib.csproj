@@ -20,26 +20,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None
-        Include="icon.png"
-        Pack="true"
-        PackagePath="" />
-    <None
-        Include="README.md"
-        Pack="true"
-        PackagePath="" />
+    <None Include="icon.png" Pack="true" PackagePath="" />
+    <None Include="README.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference
-        Include="DotNet.ReproducibleBuilds"
-        Version="1.2.25">
+    <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.25">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference
-        Include="MinVer"
-        Version="6.0.0">
+    <PackageReference Include="MimeTypeMapOfficial" Version="1.0.17" />
+    <PackageReference Include="MinVer" Version="6.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

@@ -24,4 +24,10 @@
     <ProjectReference Include="..\Presence.Posting.Lib\Presence.Posting.Lib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="SampleData/*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

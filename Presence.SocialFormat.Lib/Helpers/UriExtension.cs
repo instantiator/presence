@@ -1,14 +1,16 @@
+using MimeTypes;
 using Presence.SocialFormat.Lib.Constants;
 
 namespace Presence.SocialFormat.Lib.Helpers;
 
 public struct UriMetadata
 {
-    public Uri Uri { get; init; }
-    public bool IsImage { get; init; }
-    public bool IsLink { get; init; }
-    public bool IsFile { get; init; }
-    public bool Exists { get; init; }
+    public required Uri Uri { get; init; }
+    public required bool IsImage { get; init; }
+    public required bool IsHttp { get; init; }
+    public required bool IsFile { get; init; }
+    public required bool Exists { get; init; }
+    public required string? MimeType { get; init; }
 }
 
 public static class UriExtension
@@ -16,19 +18,30 @@ public static class UriExtension
     public static Uri? ToUri(this string? str)
     {
         if (string.IsNullOrWhiteSpace(str)) { return null; }
-        var ok = Uri.TryCreate(str, UriKind.Absolute, out var result) ? result : null;
+        if (str.ToLower().StartsWith("file:"))
+        {
+            // detect and adjust for relative paths
+            var path = str.Substring("file:".Length).TrimStart('/');
+            if (File.Exists(path))
+            {
+                var absolute = Path.GetFullPath(path);
+                str = $"file://{absolute}";
+            }
+        }
+        Uri.TryCreate(str, UriKind.Absolute, out var result);
         return result;
     }
 
     public static UriMetadata GetMetadata(this Uri uri)
     {
         var isImage = false;
-        var isLink = uri.UriIsLink();
+        var isHttp = uri.UriIsHttp();
         var isFile = uri.UriIsFile();
         var exists = false;
+        string? mimeType = null;
 
         if (UriConstants.IMAGE_EXTENSIONS.Any(uri.AbsolutePath.EndsWith)) { isImage = true; }
-        if (isLink)
+        if (isHttp)
         {
             // get headers
             using var http = new HttpClient();
@@ -36,8 +49,9 @@ public static class UriExtension
             if (response.IsSuccessStatusCode)
             {
                 exists = true;
-                var contentType = response.Content.Headers.ContentType?.MediaType;
-                if (contentType?.StartsWith("image/") == true)
+                mimeType = response.Content.Headers.ContentType?.MediaType
+                    ?? MimeTypeMap.GetMimeType(Path.GetExtension(uri.AbsolutePath));
+                if (mimeType?.StartsWith("image/") == true)
                 {
                     isImage = true;
                 }
@@ -50,18 +64,27 @@ public static class UriExtension
         else if (isFile)
         {
             exists = File.Exists(uri.LocalPath);
+            mimeType = MimeTypeMap.GetMimeType(Path.GetExtension(uri.LocalPath));
         }
 
         return new UriMetadata
         {
             Uri = uri,
             IsImage = isImage,
-            IsLink = isLink,
+            IsHttp = isHttp,
             IsFile = isFile,
-            Exists = exists
+            Exists = exists,
+            MimeType = mimeType
         };
     }
 
-    public static bool UriIsLink(this Uri uri) => uri.Scheme == "http" || uri.Scheme == "https";
+    public static bool UriIsHttp(this Uri uri) => uri.Scheme == "http" || uri.Scheme == "https";
     public static bool UriIsFile(this Uri uri) => uri.IsFile || uri.Scheme == "file";
+
+    public static async Task<Stream> GetStreamAsync(this Uri uri, UriMetadata? metadata = null, HttpClient? httpClient = null)
+    {
+        httpClient ??= new HttpClient();
+        metadata ??= uri.GetMetadata();
+        return metadata!.Value.IsFile ? File.OpenRead(uri.LocalPath) : await httpClient!.GetStreamAsync(uri);
+    }
 }

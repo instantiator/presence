@@ -1,4 +1,6 @@
 using System.Text;
+using FishyFlip.Lexicon.App.Bsky.Embed;
+using FishyFlip.Lexicon.App.Bsky.Feed;
 using Presence.Posting.Lib.Connections;
 using Presence.Posting.Lib.Connections.AT;
 using Presence.SocialFormat.Lib.Networks;
@@ -96,5 +98,49 @@ public class ATConnectionTests
         Assert.IsNotNull(tagFacet.Features);
         Assert.AreEqual(1, tagFacet.Features.Count());
         Assert.AreEqual("app.bsky.richtext.facet#tag", tagFacet.Features[0].Type);
+    }
+
+    [TestMethod]
+    [TestCategory("Integration")]
+    [DataRow("https://instantiator.dev/presence/images/icon.png", "Presence icon (url)")]
+    [DataRow("file:///SampleData/icon.png", "Presence icon (file)")]
+    [DataRow("file:/SampleData/icon.png", "Presence icon (file)")]
+    public async Task ATConnection_UploadsImage(string uri, string alt)
+    {
+        var env = Environment.GetEnvironmentVariables();
+        var connection = (ATConnection)await ConnectionFactory.CreateConnection(SocialNetwork.AT, env);
+        var image = new CommonPostImage
+        {
+            SourceUrl = uri,
+            AltText = alt,
+        };
+
+        var post = new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES)
+        {
+            Message =
+            [
+                new SocialSnippet($"ATConnection_UploadsImage: {DateTime.Now:O}"),
+                new SocialSnippet($"From path: {uri}"),
+                new SocialSnippet("Icon courtesy of:"),
+                new SocialSnippet("icons8.com", SnippetType.Link, "https://icons8.com"),
+            ],
+            Images = [image],
+        };
+        var images = await Task.WhenAll(post.Images.Select(async i => await connection.UploadImage(i)));
+        Assert.IsTrue(image.Uploaded);
+        Assert.IsNotNull(images);
+        Assert.AreEqual(post.Images.Count(), images.Length);
+
+        var embed = new EmbedImages(images: images.ToList());
+        var atPost = new Post
+        {
+            Text = post.ComposeText(),
+            Facets = await connection.GetFacetsAsync(post),
+            Embed = embed,
+        };
+
+        var response = await connection.AtPostAsync(atPost);
+        var reference = new ATPostReference(response.Uri!, post);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(reference.ReferenceKey));
     }
 }
