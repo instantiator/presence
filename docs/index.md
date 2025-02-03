@@ -31,11 +31,13 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 | `AT`      | ie. BlueSky      | ✅                 | ✅             | ✅            |
 | `Console` | Used for testing | ✅                 | ✅             | ✅            |
 
-## Prerequisites
+## CLI tools
 
-- [.NET 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) (download link)
+- [Install the Presence CLI tools](cli/install-cli-tools.md)
+- [Using `Presence.SocialFormat.Console`](cli/presence-social-format-console.md)
+- [Using `Presence.Posting.Console`](cli/presence-posting-console.md)
 
-## User guide
+## .NET library user guide
 
 - [Install packages from Nuget](guides/install-packages.md)
 - [Create a thread with `Presence.SocialFormat.Lib`](guides/create-thread.md)
@@ -43,12 +45,6 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 - [Create threads with markdown](guides/create-with-markdown.md)
 - [Post to a social network with `Presence.Posting.Lib`](guides/send-post.md)
 - [Network specific configuration](guides/network-specifics.md)
-
-## CLI tools
-
-- [Downloading binaries](cli/download-binaries.md)
-- [Using `Presence.SocialFormat.Console`](cli/presence-social-format-console.md)
-- [Using `Presence.Posting.Console`](cli/presence-posting-console.md)
 
 ## Developer notes
 

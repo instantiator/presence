@@ -2,11 +2,11 @@
 
 ## Installation
 
-You can either [download the binaries](download-binaries.md) for your system from the latest release, or build and run the latest version of the code from this repository.
+You can either [install the CLI tools](install-cli-tools.md) for your system from the latest release, or build and run the latest version of the code from the source repository.
 
 To build and run from the repository, clone the repository (if you haven't already), and use the `post.sh` script. (You'll need to have .NET 8 installed.)
 
-Examples in this document use the prebuilt binary, ie. `Presence.Posting.Console`. You can substitute the `post.sh` script if needed.
+Examples in this document use installed binaries, ie. `Presence.Posting.Console`. You can substitute `./post.sh` to invoke the post script if needed.
 
 ## Usage
 
@@ -34,5 +34,5 @@ The output is a summary of all posting activity, as a JSON-formatted [`ThreadPos
 As mentioned above, these examples use the pre-built binaries, but you may substitute the scripts (`format.sh` and `post.sh`) to build and run from the repository code (with the .NET 8 SDK installed)
 
 ```bash
-./Presence.SocialFormat.Console -f SampleData/SimpleThread.md -n AT -o JSON | ./Presence.Posting.Console -e .env.integration
+Presence.SocialFormat.Console -f SampleData/SimpleThread.md -n AT -o JSON | Presence.Posting.Console -e .env.integration
 ```

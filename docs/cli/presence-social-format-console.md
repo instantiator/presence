@@ -2,11 +2,11 @@
 
 ## Installation
 
-You can either [download the binaries](download-binaries.md) for your system from the latest release, or build and run the latest version of the code from this repository.
+You can either [install the CLI tools](install-cli-tools.md) for your system from the latest release, or build and run the latest version of the code from the source code repository.
 
 To build and run from the repository, clone the repository (if you haven't already), and use the `format.sh` script. (You'll need to have .NET 8 installed.)
 
-Examples in this document use the prebuilt binary, ie. `Presence.SocialFormat.Console`. You can substitute the `format.sh` script if needed.
+Examples in this document use installed binaries, ie. `Presence.SocialFormat.Console`. You can substitute `./format.sh` to invoke the post script if needed.
 
 ## Usage
 
@@ -46,13 +46,13 @@ _(These examples assume that the pre-built binary is available in the working di
 To format the sample thread for BlueSky (AT), you can pass in the request json as a file:
 
 ```bash
-./Presence.SocialFormat.Console -f SampleData/simple-snippets.json -n AT
+Presence.SocialFormat.Console -f SampleData/simple-snippets.json -n AT
 ```
 
 Or pipe it in through `stdin`:
 
 ```bash
-cat SampleData/simple-snippets.json | ./Presence.SocialFormat.Console -n AT
+cat SampleData/simple-snippets.json | Presence.SocialFormat.Console -n AT
 ```
 
 ## Input formats
@@ -66,7 +66,7 @@ See: [Create threads with markdown](../guides/create-with-markdown.md)
 The `SampleData/` directory contains some examples of each.
 
 ```bash
-./Presence.SocialFormat.Console -f SampleData/SimpleThread.md -n Console,AT -o HR
+Presence.SocialFormat.Console -f SampleData/SimpleThread.md -n Console,AT -o HR
 ```
 
 - `-f SampleData/SimpleThread.md` - use the markdown-like sample input file
