@@ -17,12 +17,19 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 
 > **Warning.** This project is currently under development - libraries are not production-ready yet.
 
-[![on-push-build-and-test](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml/badge.svg?branch=main)](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml)
+| Source code                                                                                            | Status                                                                                                                                              |
+| ------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Latest build](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml) | ![Build and test](https://img.shields.io/github/actions/workflow/status/instantiator/presence/on-push-build-and-test.yaml?label=Build%20and%20test) |
 
-| Package                                                                                  | NuGet version                                                              |
-| ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| [`Presence.SocialFormat.Lib`](https://www.nuget.org/packages/Presence.SocialFormat.Lib/) | ![NuGet Version](https://img.shields.io/nuget/v/Presence.SocialFormat.Lib) |
-| [`Presence.Posting.Lib`](https://www.nuget.org/packages/Presence.Posting.Lib/)           | ![NuGet Version](https://img.shields.io/nuget/v/Presence.Posting.Lib)      |
+| CLI binaries                                                               | Status                                                                                                                                                                                                                             |
+| -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Homebrew tap](https://github.com/instantiator/homebrew-presence)          | ![Homebrew tap](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/instantiator/homebrew-presence/master/Info/presence-cli.json&query=$.versions.stable&label=instantiator/presence/presence-cli) |
+| [Latest release](https://github.com/instantiator/presence/releases/latest) | ![GitHub Release](https://img.shields.io/github/v/release/instantiator/presence?include_prereleases&label=instantiator/presence:latest)                                                                                            |
+
+| Nuget packages                                                                           | Status                                                                                                     |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| [`Presence.SocialFormat.Lib`](https://www.nuget.org/packages/Presence.SocialFormat.Lib/) | ![NuGet Version](https://img.shields.io/nuget/v/Presence.SocialFormat.Lib?label=Presence.SocialFormat.Lib) |
+| [`Presence.Posting.Lib`](https://www.nuget.org/packages/Presence.Posting.Lib/)           | ![NuGet Version](https://img.shields.io/nuget/v/Presence.Posting.Lib?label=Presence.Posting.Lib)           |
 
 ## Network support
 
