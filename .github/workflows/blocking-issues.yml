@@ -16,5 +16,6 @@ jobs:
     name: Check for blocking issues
     steps:
       - uses: Levi-Lesches/blocking-issues@v2
+        continue-on-error: true
         with:
           use-label: "blocked"
