@@ -69,6 +69,7 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 | `Presence.SocialFormat.Console` | A command line tool to reformat messages for social networks.                      | [README](https://github.com/instantiator/presence/blob/main/Presence.SocialFormat.Console/README.md) |
 | `Presence.Posting.Lib`          | A library for posting to social networks.                                          | [README](https://github.com/instantiator/presence/blob/main/Presence.Posting.Lib/README.md)          |
 | `Presence.Posting.Tests`        | Unit and integration tests for the posting library.                                | [README](https://github.com/instantiator/presence/blob/main/Presence.Posting.Tests/README.md)        |
+| `Presence.Posting.Console`      | A command line tool to post formatted threads to social networks.                  | [README](https://github.com/instantiator/presence/blob/main/Presence.Posting.Console/README.md)      |
 
 _Dependencies for each project are listed in each project's `README`._
 
