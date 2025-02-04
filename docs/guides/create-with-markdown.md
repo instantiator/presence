@@ -1,6 +1,6 @@
 # Create threads with markdown
 
-A heavily simplified markdown-a-like format can be used to represent thread content, which can be interpreted by the `InputReader` - and is supported through the console application.
+A heavily simplified markdown-a-like format can be used to represent thread content, which can be interpreted by the reader.
 
 Draft your content using simple markdown links, images, and text.
 
@@ -35,6 +35,10 @@ You can post images in markdown format, and these will be displayed in the post 
 ```markdown
 ![Presence icon](https://instantiator.dev/presence/images/icon.png)
 ```
+
+### ALT text
+
+Note that the text for a graphic (ie. in the example above, `Presence icon`) is provided as the ALT text, and it's required.
 
 ## Headings and other formatting
 
