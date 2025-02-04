@@ -7,7 +7,14 @@ Presence is a set of .NET libraries and tools for social sharing.
 You can:
 
 - Format threads for multiple social networks, from a single source
-- Post threads, messages, and images (coming soon!) to social networks
+- Post threads, messages, and images to social networks
+
+## Network support
+
+| Network   | Notes            | Thread composition | Thread posting | Image posting |
+| --------- | ---------------- | ------------------ | -------------- | ------------- |
+| `AT`      | ie. BlueSky      | ✅                 | ✅             | ✅            |
+| `Console` | Used for testing | ✅                 | ✅             | ✔️            |
 
 All code here is distributed under the [MIT](https://github.com/instantiator/presence/blob/main/LICENSE) license.
 
@@ -17,26 +24,13 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 
 > **Warning.** This project is currently under development - libraries are not production-ready yet.
 
-| Source code                                                                                            | Status                                                                                                                                              |
-| ------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Latest build](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml) | ![Build and test](https://img.shields.io/github/actions/workflow/status/instantiator/presence/on-push-build-and-test.yaml?label=Build%20and%20test) |
-
-| CLI binaries                                                               | Status                                                                                                                                                                                                                             |
-| -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Homebrew tap](https://github.com/instantiator/homebrew-presence)          | ![Homebrew tap](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/instantiator/homebrew-presence/master/Info/presence-cli.json&query=$.versions.stable&label=instantiator/presence/presence-cli) |
-| [Latest release](https://github.com/instantiator/presence/releases/latest) | ![GitHub Release](https://img.shields.io/github/v/release/instantiator/presence?include_prereleases&label=instantiator/presence:latest)                                                                                            |
-
-| Nuget packages                                                                           | Status                                                                                                     |
-| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| [`Presence.SocialFormat.Lib`](https://www.nuget.org/packages/Presence.SocialFormat.Lib/) | ![NuGet Version](https://img.shields.io/nuget/v/Presence.SocialFormat.Lib?label=Presence.SocialFormat.Lib) |
-| [`Presence.Posting.Lib`](https://www.nuget.org/packages/Presence.Posting.Lib/)           | ![NuGet Version](https://img.shields.io/nuget/v/Presence.Posting.Lib?label=Presence.Posting.Lib)           |
-
-## Network support
-
-| Network   | Notes            | Thread composition | Thread posting | Image posting |
-| --------- | ---------------- | ------------------ | -------------- | ------------- |
-| `AT`      | ie. BlueSky      | ✅                 | ✅             | ✅            |
-| `Console` | Used for testing | ✅                 | ✅             | ✅            |
+| Artefact     | Location                                                                                                        | Type            | Status                                                                                                                                                                                                                             |
+| ------------ | --------------------------------------------------------------------------------------------------------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Source code  | [Latest build and test](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml) | GitHub workflow | ![Build and test](https://img.shields.io/github/actions/workflow/status/instantiator/presence/on-push-build-and-test.yaml?label=Build%20and%20test)                                                                                |
+| CLI binaries | [presence-cli formula](https://github.com/instantiator/homebrew-presence)                                       | Homebrew tap    | ![Homebrew tap](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/instantiator/homebrew-presence/master/Info/presence-cli.json&query=$.versions.stable&label=instantiator/presence/presence-cli) |
+| CLI binaries | [Latest CLI binaries](https://github.com/instantiator/presence/releases/latest)                                 | GitHub release  | ![GitHub Release](https://img.shields.io/github/v/release/instantiator/presence?include_prereleases&label=instantiator/presence:latest)                                                                                            |
+| Library      | [`Presence.SocialFormat.Lib`](https://www.nuget.org/packages/Presence.SocialFormat.Lib/)                        | Nuget package   | ![NuGet Version](https://img.shields.io/nuget/v/Presence.SocialFormat.Lib?label=Presence.SocialFormat.Lib)                                                                                                                         |
+| Library      | [`Presence.Posting.Lib`](https://www.nuget.org/packages/Presence.Posting.Lib/)                                  | Nuget package   | ![NuGet Version](https://img.shields.io/nuget/v/Presence.Posting.Lib?label=Presence.Posting.Lib)                                                                                                                                   |
 
 ## CLI tools
 
