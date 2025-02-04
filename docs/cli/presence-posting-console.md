@@ -12,9 +12,9 @@ Examples in this document use installed binaries, ie. `Presence.Posting.Console`
 
 The prebuilt binary is either `Presence.Posting.Console` (Mac OS or Linux), or `Presence.Posting.Console.exe` (Windows).
 
-- Provide the `--help` parameter for more information
+- Use the `--help` option for more information about accepted parameters
 
-This tool is commonly used with `Presence.SocialFormat.Console` which can provide formatted thread data for posting.
+This tool is commonly used with `Presence.SocialFormat.Console` which can provide formatted thread data for posting. Both tools support the `--help` option.
 
 ## Inputs
 
@@ -31,8 +31,35 @@ The output is a summary of all posting activity, as a JSON-formatted [`ThreadPos
 
 ## Examples
 
-As mentioned above, these examples use the pre-built binaries, but you may substitute the scripts (`format.sh` and `post.sh`) to build and run from the repository code (with the .NET 8 SDK installed)
+As mentioned above, these examples use the pre-built binaries.
+
+### Format and post from a markdown source
+
+This example uses `Presence.SocialFormat.Console` to format a thread for an AT network (eg. BlueSky) from a markdown file, and then pipes it into `Presence.Posting.Console` to send to the network.
 
 ```bash
-Presence.SocialFormat.Console -f SampleData/SimpleThread.md -n AT -o JSON | Presence.Posting.Console -e .env.integration
+Presence.SocialFormat.Console -f SampleData/SimpleThread.md -n AT | Presence.Posting.Console -e .env.networks
 ```
+
+#### Notes for `Presence.SocialFormat.Console`
+
+- the `-o JSON` option is not included - this is the default output type
+- the `-n AT` option indicates that the content should be formatted for an AT network (eg. BlueSky)
+- the `-i MD` input type (a simplified Markdown-like format) is determined from the filename
+
+#### Notes for `Presence.Posting.Console`
+
+- the required input type input type is a JSON formatted `ThreadCompositionResponse` (as provided through the pipe)
+- the `-e .env.networks` option sources [network configuration](../guides/network-specifics.md) (ie. account credentials) from `.env.networks`
+
+### Pipe a simple post into the chain
+
+This example is similar, illustrating how you can provide content very simply without having to create a separate file. In this case, `echo` is used to pipe a little markdown text into the formatter.
+
+```bash
+echo "Romani ite domum" | Presence.SocialFormat.Console -i MD -n AT | Presence.Posting.Console -e .env.networks
+```
+
+#### Notes for `Presence.SocialFormat.Console`
+
+- the `-i MD` option is required, as the formatter cannot guess the format of input from `stdin`

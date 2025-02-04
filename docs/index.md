@@ -1,13 +1,20 @@
-<img src="images/icon.png" style="float: right;" />
+<img src="images/icon.png" style="float: right;" alt="The Presence icon (for now) - an envelope, with thick purple outlines, on a white-to-light-purple gradient" />
 
 # Presence
 
-Presence is a set of .NET libraries and tools for social sharing.
+Presence is a set of .NET libraries and tools for formatting and sharing threads across social networks.
 
 You can:
 
 - Format threads for multiple social networks, from a single source
-- Post threads, messages, and images to social networks
+- Post threads, messages, and images to multiple social networks
+
+## Just want to use the CLI tools?
+
+- [How to install the CLI tools](cli/install-cli-tools.md)
+- [How to prepare content](guides/create-with-markdown.md) (in a markdown-like format)
+- [How to post to social networks](cli/presence-posting-console.md)
+- [Network specific configuration](guides/network-specifics.md)
 
 ## Network support
 
@@ -32,13 +39,15 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 | Library      | [`Presence.SocialFormat.Lib`](https://www.nuget.org/packages/Presence.SocialFormat.Lib/)                        | Nuget package   | ![NuGet Version](https://img.shields.io/nuget/v/Presence.SocialFormat.Lib?label=Presence.SocialFormat.Lib)                                                                                                                         |
 | Library      | [`Presence.Posting.Lib`](https://www.nuget.org/packages/Presence.Posting.Lib/)                                  | Nuget package   | ![NuGet Version](https://img.shields.io/nuget/v/Presence.Posting.Lib?label=Presence.Posting.Lib)                                                                                                                                   |
 
-## CLI tools
+## Documentation
+
+### CLI tools
 
 - [Install the Presence CLI tools](cli/install-cli-tools.md)
 - [Using `Presence.SocialFormat.Console`](cli/presence-social-format-console.md)
 - [Using `Presence.Posting.Console`](cli/presence-posting-console.md)
 
-## .NET library user guide
+### .NET library user guide
 
 - [Install packages from Nuget](guides/install-packages.md)
 - [Create a thread with `Presence.SocialFormat.Lib`](guides/create-thread.md)
@@ -54,7 +63,7 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 - [Package versioning](dev-notes/package-versioning.md)
 - [Testing](dev-notes/testing.md)
 
-## Projects
+### Projects
 
 | Project                         | Purpose                                                                            | Project README                                                                                       |
 | ------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
@@ -69,5 +78,5 @@ _Dependencies for each project are listed in each project's `README`._
 
 ## Acknowledgements
 
-- Post icon from [icons8.com](https://icons8.com)
+- Post / envelope icon from [icons8.com](https://icons8.com)
 - Huge thanks to [Gérald Barré](https://bsky.app/profile/meziantou.net) ([meziantou](https://github.com/meziantou)) for this excellent article: [Publishing a Nuget Package](https://www.meziantou.net/publishing-a-nuget-package-following-best-practices-using-github.htm)
