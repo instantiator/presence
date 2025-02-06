@@ -18,7 +18,7 @@ This tool is commonly used with `Presence.SocialFormat.Console` which can provid
 
 ## Inputs
 
-- Provide input as a JSON-formatted `ThreadCompositionResponse`
+- Provide input to `Presence.Posting.Console` as a JSON-formatted [`ThreadCompositionResponse`](https://github.com/instantiator/presence/blob/main/Presence.SocialFormat.Lib/DTO/ThreadCompositionResponse.cs)
   - Provide a path to a file with the `-f` / `--input-file` parameter, or through `stdin`
 - Social network configuration as environment variables
   - Provide a path to a `.env` file with the `-e` / `--env-file` parameter, or in the environment

@@ -23,9 +23,12 @@ The prebuilt binary is either `Presence.SocialFormat.Console` (Mac OS or Linux),
   - `-i MD` - a [pseudo-markdown](https://instantiator.dev/presence/guides/create-with-markdown.html) formatted file describing the content
 - Networks may be specified with the `-n` / `--networks` parameter
 - Provide networks as a comma-separated list of network codes
-- Networks accepted are:
-  - `AT` - an AT-network (ie. BlueSky)
-  - `Console` - the 'Console' network (prints to console, useful for testing)
+- Supported networks are listed in the `--help` text, or see: [Network specific configuration](../guides/network-specifics.md)
+
+Examples of supported networks are:
+
+- `Console` - the 'Console' network (prints to console, useful for testing)
+- `AT` - an AT-network (ie. BlueSky)
 
 ### Outputs
 
@@ -57,7 +60,10 @@ cat SampleData/simple-snippets.json | Presence.SocialFormat.Console -n AT
 
 ## Input formats
 
-Presence can parse a `ThreadCompositionRequest` formatted as JSON, or a markdown-like representation of content.
+Provide input as either:
+
+* a JSON-formatted [`ThreadCompositionRequest`](https://github.com/instantiator/presence/blob/main/Presence.SocialFormat.Lib/DTO/ThreadCompositionRequest.cs), or
+* a markdown-like representation of content
 
 See: [Create threads with markdown](../guides/create-with-markdown.md)
 
