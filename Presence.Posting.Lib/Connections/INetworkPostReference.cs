@@ -5,7 +5,8 @@ namespace Presence.Posting.Lib.Connections;
 
 public interface INetworkPostReference
 {
-    public IDictionary<string, string> NetworkReferences { get; }
+    public IDictionary<string, string?> NetworkReferences { get; }
     public SocialNetwork Network { get; }
     public CommonPost? Origin { get; }
+    public string? Link { get; }
 }

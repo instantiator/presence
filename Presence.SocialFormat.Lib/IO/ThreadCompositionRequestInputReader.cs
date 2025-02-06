@@ -1,6 +1,3 @@
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Presence.SocialFormat.Lib.Constants;
 using Presence.SocialFormat.Lib.DTO;
 using Presence.SocialFormat.Lib.IO.Text;

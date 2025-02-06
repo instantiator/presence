@@ -6,6 +6,6 @@ public class ThreadComposerIdentity
 {
     public SocialNetwork Network { get; init; }
     public int Index { get; init; }
-    public string Value => $"{Network}#{Index}";
-    public override string ToString() => Value;
+    public string Ident => $"{Network}#{Index}";
+    public override string ToString() => Ident;
 }

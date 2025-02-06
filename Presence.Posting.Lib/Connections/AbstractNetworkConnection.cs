@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Post;
 
@@ -5,28 +6,24 @@ namespace Presence.Posting.Lib.Connections;
 
 public abstract class AbstractNetworkConnection : INetworkConnection
 {
-    public abstract SocialNetwork Network { get; }
-    public INetworkCredentials? Credentials { get; protected set; }
+    [SetsRequiredMembers]
+    protected AbstractNetworkConnection(INetworkAccount account)
+    {
+        Account = account;
+    }
+
+    public required INetworkAccount Account { get; init; }
+    public SocialNetwork Network => Account.SocialNetwork;
+    public string Prefix => Account.AccountPrefix;
     public abstract bool Connected { get; }
-    protected bool CredentialsRequired { get; }
     public DateTime? LastAction { get; protected set; }
 
-    public async Task<bool> ConnectAsync(INetworkCredentials? credentials = null)
+    public async Task<bool> ConnectAsync()
     {
-        if (CredentialsRequired)
-        {
-            if (credentials == null) throw new NullReferenceException($"Credentials are required.");
-        }
-
-        if (Credentials != null)
-        {
-            var (valid, errors) = credentials!.Validate();
-            if (!valid) { throw new ArgumentException(string.Join(", ", errors)); }
-        }
-
-        this.Credentials = credentials ?? this.Credentials;
+        var (valid, errors) = Account!.Validate();
+        if (!valid) { throw new ArgumentException(string.Join(", ", errors)); }
         await RateLimitAsync();
-        return await ConnectImplementationAsync(credentials);
+        return await ConnectImplementationAsync(Account);
     }
 
     protected async Task RateLimitAsync()
@@ -39,7 +36,7 @@ public abstract class AbstractNetworkConnection : INetworkConnection
     {
     }
 
-    protected abstract Task<bool> ConnectImplementationAsync(INetworkCredentials? credentials);
+    protected abstract Task<bool> ConnectImplementationAsync(INetworkAccount account);
 
     public void Disconnect()
     {
@@ -53,7 +50,7 @@ public abstract class AbstractNetworkConnection : INetworkConnection
         Disconnect();
     }
 
-    public abstract Task<INetworkPostReference> PostAsync(CommonPost post, INetworkPostReference? replyTo = null);
+    public abstract Task<INetworkPostReference> PostAsync(CommonPost post, INetworkPostReference? replyTo = default);
 
     public async Task<IEnumerable<INetworkPostReference>> PostAsync(IEnumerable<CommonPost> thread)
     {

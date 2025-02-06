@@ -1,5 +1,3 @@
-using System.Text.RegularExpressions;
-
 namespace Presence.SocialFormat.Lib.Constants
 {
     public class UriConstants

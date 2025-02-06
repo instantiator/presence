@@ -7,39 +7,26 @@ namespace Presence.Posting.Lib.Tests;
 public class CredentialTests
 {
     [TestMethod]
-    public void ATCredentials_Validate()
+    public void ATAccount_Validates()
     {
-        var creds = new ATCredentials();
-        var (valid, errors) = creds.Validate();
+        var account = new ATAccount("TEST", new Dictionary<NetworkCredentialType, string>
+        {
+        });
+        var (valid, errors) = account.Validate();
         Assert.IsFalse(valid);
         Assert.AreEqual(2, errors.Count());
-        Assert.IsTrue(errors.Contains("AccountName is required"));
-        Assert.IsTrue(errors.Contains("AppPassword is required"));
+        Assert.IsTrue(errors.Contains("Missing credential: AccountName"));
+        Assert.IsTrue(errors.Contains("Missing credential: AppPassword"));
 
-        creds[NetworkCredentialType.AccountName] = "test";
-        (valid, errors) = creds.Validate();
+        account[NetworkCredentialType.AccountName] = "test";
+        (valid, errors) = account.Validate();
         Assert.IsFalse(valid);
         Assert.AreEqual(1, errors.Count());
-        Assert.IsTrue(errors.Contains("AppPassword is required"));
+        Assert.IsTrue(errors.Contains("Missing credential: AppPassword"));
 
-        creds[NetworkCredentialType.AppPassword] = "test";
-        (valid, errors) = creds.Validate();
+        account[NetworkCredentialType.AppPassword] = "test";
+        (valid, errors) = account.Validate();
         Assert.IsTrue(valid);
         Assert.AreEqual(0, errors.Count());
     }
-
-    [TestMethod]
-    public void ATCredentials_AcceptEnvVariables()
-    {
-        var env = new Dictionary<string, string>
-        {
-            { "AT_AccountName", "test" },
-            { "AT_AppPassword", "test" }
-        };
-        var creds = new ATCredentials(env);
-        var (valid, errors) = creds.Validate();
-        Assert.IsTrue(valid);
-        Assert.AreEqual(0, errors.Count());
-    }
-
 }

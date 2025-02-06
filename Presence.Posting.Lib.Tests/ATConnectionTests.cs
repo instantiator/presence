@@ -1,5 +1,4 @@
 using System.Text;
-using System.Text.Json;
 using FishyFlip.Lexicon.App.Bsky.Embed;
 using FishyFlip.Lexicon.App.Bsky.Feed;
 using Presence.Posting.Lib.Connections;
@@ -17,18 +16,20 @@ public class ATConnectionTests
     public void Environment_Contains_ATConnectionConfig()
     {
         var env = Environment.GetEnvironmentVariables();
-        var credentials = new ATCredentials(env);
-        var (ok, errors) = credentials.Validate();
+        var account = new ATAccount("TEST1", new EnvironmentConfigReader(env)["TEST1"][SocialNetwork.AT]);
+        var (ok, errors) = account.Validate();
         Assert.IsTrue(ok, string.Join(", ", errors));
     }
 
     [TestMethod]
     [TestCategory("Integration")]
-    public async Task ConnectionFactory_Connects_ATConnection()
+    public async Task ConnectionFactory_Creates_ATConnection()
     {
         var env = Environment.GetEnvironmentVariables();
-        var connection = await ConnectionFactory.CreateConnection(SocialNetwork.AT, env);
+        var environment = new EnvironmentConfigReader(env)["TEST1"][SocialNetwork.AT];
+        var connection = ConnectionFactory.CreateConnection("TEST1", SocialNetwork.AT, environment);
         Assert.IsNotNull(connection);
+        await connection.ConnectAsync();
         Assert.IsTrue(connection.Connected);
     }
 
@@ -37,7 +38,9 @@ public class ATConnectionTests
     public async Task ATConnection_Posts_Post()
     {
         var env = Environment.GetEnvironmentVariables();
-        var connection = await ConnectionFactory.CreateConnection(SocialNetwork.AT, env);
+        var environment = new EnvironmentConfigReader(env)["TEST1"][SocialNetwork.AT];
+        var connection = ConnectionFactory.CreateConnection("TEST1", SocialNetwork.AT, environment);
+        await connection.ConnectAsync();
         var post = new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES)
         {
             Message = [new SocialSnippet($"ATConnection_Posts_Post: {DateTime.Now:O}")]
@@ -57,7 +60,9 @@ public class ATConnectionTests
     public async Task ATConnection_Posts_Replies()
     {
         var env = Environment.GetEnvironmentVariables();
-        var connection = await ConnectionFactory.CreateConnection(SocialNetwork.AT, env);
+        var environment = new EnvironmentConfigReader(env)["TEST1"][SocialNetwork.AT];
+        var connection = ConnectionFactory.CreateConnection("TEST1", SocialNetwork.AT, environment);
+        await connection.ConnectAsync();
         var post0 = new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES) { Message = [new SocialSnippet($"ATConnection_Posts_Replies (part 1): {DateTime.Now:O}")] };
         var post1 = new CommonPost(1, ATThreadComposer.AT_POST_RENDER_RULES) { Message = [new SocialSnippet($"ATConnection_Posts_Replies (part 2): {DateTime.Now:O}")] };
 
@@ -77,7 +82,9 @@ public class ATConnectionTests
     public async Task ATConnection_Posts_Thread()
     {
         var env = Environment.GetEnvironmentVariables();
-        var connection = await ConnectionFactory.CreateConnection(SocialNetwork.AT, env);
+        var environment = new EnvironmentConfigReader(env)["TEST1"][SocialNetwork.AT];
+        var connection = ConnectionFactory.CreateConnection("TEST1", SocialNetwork.AT, environment);
+        await connection.ConnectAsync();
         var thread = new[]
         {
             new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES) { Message = [new SocialSnippet($"ATConnection_Posts_Thread (part 1): {DateTime.Now:O}")] },
@@ -99,7 +106,9 @@ public class ATConnectionTests
     public async Task ATConnection_Posts_WithLinkAndTagFacets()
     {
         var env = Environment.GetEnvironmentVariables();
-        var connection = await ConnectionFactory.CreateConnection(SocialNetwork.AT, env);
+        var environment = new EnvironmentConfigReader(env)["TEST1"][SocialNetwork.AT];
+        var connection = ConnectionFactory.CreateConnection("TEST1", SocialNetwork.AT, environment);
+        await connection.ConnectAsync();
         var post = new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES)
         {
             Message =
@@ -117,7 +126,7 @@ public class ATConnectionTests
     [TestCategory("Unit")]
     public async Task ATConnection_IdentifiesFacets()
     {
-        var connection = new ATConnection();
+        var connection = new ATConnection(new ATAccount("TEST1", new Dictionary<NetworkCredentialType, string>()));
         var post = new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES)
         {
             Message =
@@ -157,7 +166,10 @@ public class ATConnectionTests
     public async Task ATConnection_UploadsImage(string uri, string alt)
     {
         var env = Environment.GetEnvironmentVariables();
-        var connection = (ATConnection)await ConnectionFactory.CreateConnection(SocialNetwork.AT, env);
+        var environment = new EnvironmentConfigReader(env)["TEST1"][SocialNetwork.AT];
+        var connection = ConnectionFactory.CreateConnection("TEST1", SocialNetwork.AT, environment) as ATConnection;
+        Assert.IsNotNull(connection);
+        await connection.ConnectAsync();
         var image = new CommonPostImage
         {
             SourceUrl = uri,
@@ -189,7 +201,6 @@ public class ATConnectionTests
         };
 
         var response = await connection.AtPostAsync(atPost);
-        var reference = new ATPostReference(response, post);
-        Assert.IsFalse(string.IsNullOrWhiteSpace(reference.NetworkReferences["rkey"]));
+        Assert.IsFalse(string.IsNullOrWhiteSpace(response.Uri?.Rkey));
     }
 }

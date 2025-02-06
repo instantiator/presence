@@ -10,7 +10,6 @@ using FishyFlip.Lexicon.Com.Atproto.Repo;
 using FishyFlip.Models;
 using FishyFlip.Tools;
 using Presence.SocialFormat.Lib.Helpers;
-using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Post;
 
 namespace Presence.Posting.Lib.Connections.AT;
@@ -20,20 +19,21 @@ public class ATConnection : AbstractNetworkConnection
     private const int RATE_ms = 1000;
     private static DateTime lastAction = DateTime.MinValue;
 
-    public Uri Server(INetworkCredentials? credentials)
-        => credentials?.ContainsKey(NetworkCredentialType.Server) == true && !string.IsNullOrWhiteSpace(credentials[NetworkCredentialType.Server])
-            ? new Uri("https://" + credentials[NetworkCredentialType.Server])
+    public Uri Server(INetworkAccount? account)
+        => account?.ContainsKey(NetworkCredentialType.Server) == true && !string.IsNullOrWhiteSpace(account[NetworkCredentialType.Server])
+            ? new Uri("https://" + account[NetworkCredentialType.Server])
             : new Uri("https://bsky.social");
 
-    private ATProtocol? protocol;
-    private Session? session;
+    public ATProtocol? Protocol;
+    public Session? Session;
+    public ATHandle? Author;
 
-    public ATConnection()
+    [SetsRequiredMembers]
+    public ATConnection(ATAccount account) : base(account)
     {
     }
 
-    public override bool Connected => session != null;
-    public override SocialNetwork Network => SocialNetwork.AT;
+    public override bool Connected => Session != null;
 
     protected override async Task RateLimitImplementationAsync(DateTime? lastAction)
     {
@@ -47,15 +47,15 @@ public class ATConnection : AbstractNetworkConnection
         }
     }
 
-    protected override async Task<bool> ConnectImplementationAsync(INetworkCredentials? credentials)
+    protected override async Task<bool> ConnectImplementationAsync(INetworkAccount credentials)
     {
-        this.protocol = new ATProtocolBuilder()
+        this.Protocol = new ATProtocolBuilder()
             .EnableAutoRenewSession(true)
             .WithInstanceUrl(Server(credentials))
             .Build();
 
         await RateLimitAsync();
-        var (session, error) = await protocol.AuthenticateWithPasswordResultAsync(
+        var (session, error) = await Protocol.AuthenticateWithPasswordResultAsync(
             credentials![NetworkCredentialType.AccountName],
             credentials![NetworkCredentialType.AppPassword]);
 
@@ -63,26 +63,28 @@ public class ATConnection : AbstractNetworkConnection
         {
             throw new Exception($"{error.StatusCode}: {error.Detail}");
         }
-        this.session = session;
+        this.Session = session;
+        this.Author = session!.Handle;
+        
         return Connected;
     }
 
     protected override async Task DisconnectImplementationAsync()
     {
-        session = null;
-        protocol?.Dispose();
-        protocol = null;
+        Session = null;
+        Protocol?.Dispose();
+        Protocol = null;
     }
 
-    [MemberNotNull(nameof(protocol))]
-    [MemberNotNull(nameof(session))]
+    [MemberNotNull(nameof(Protocol))]
+    [MemberNotNull(nameof(Session))]
     private void RequireAuthenticated()
     {
-        if (protocol == null) throw new NullReferenceException("protocol is null");
-        if (session == null) throw new NullReferenceException("session is null");
+        if (Protocol == null) throw new NullReferenceException("protocol is null");
+        if (Session == null) throw new NullReferenceException("session is null");
     }
 
-    public override async Task<INetworkPostReference> PostAsync(CommonPost post, INetworkPostReference? replyTo = null)
+    public override async Task<INetworkPostReference> PostAsync(CommonPost post, INetworkPostReference? replyTo = default)
     {
         var images = await Task.WhenAll(post.Images.Select(async i => await UploadImage(i)));
         var embed = images.Any() ? new EmbedImages(images: images.ToList()) : null;
@@ -97,7 +99,7 @@ public class ATConnection : AbstractNetworkConnection
         if (response == null) throw new NullReferenceException("Post reference not returned");
         if (response.Uri == null) throw new NullReferenceException("Post reference did not contain a Uri");
         if (string.IsNullOrWhiteSpace(response.Cid)) throw new NullReferenceException("Post reference did not contain a Cid");
-        return new ATPostReference(response, post);
+        return new ATPostReference(response, Server(Account).Host, Author!.Handle, post);
     }
 
     public async Task<Image> UploadImage(CommonPostImage cpi)
@@ -125,7 +127,7 @@ public class ATConnection : AbstractNetworkConnection
         content.Headers.ContentType = new MediaTypeHeaderValue(metadata.MimeType!);
 
         await RateLimitAsync();
-        var blobResult = await protocol!.Repo.UploadBlobAsync(content);
+        var blobResult = await Protocol!.Repo.UploadBlobAsync(content);
         var success = blobResult.HandleResult();
         if (success != null)
         {
@@ -166,7 +168,7 @@ public class ATConnection : AbstractNetworkConnection
         return facets;
     }
 
-    public async Task<CreateRecordOutput> AtPostAsync(Post post, ATPostReference? replyTo = null)
+    public async Task<CreateRecordOutput> AtPostAsync(Post post, ATPostReference? replyTo = default)
     {
         RequireAuthenticated();
         await RateLimitAsync();
@@ -175,7 +177,7 @@ public class ATConnection : AbstractNetworkConnection
             ? new ReplyRefDef(new StrongRef(replyTo.Uri, replyTo.Cid), new StrongRef(replyTo.Uri, replyTo.Cid))
             : null;
 
-        var result = await protocol.Feed.CreatePostAsync(
+        var result = await Protocol.Feed.CreatePostAsync(
             text: post.Text,
             facets: post.Facets,
             embed: post.Embed,
@@ -189,7 +191,7 @@ public class ATConnection : AbstractNetworkConnection
     {
         RequireAuthenticated();
         await RateLimitAsync();
-        var result = await protocol.Feed.DeletePostAsync(reference.NetworkReferences["rkey"]);
+        var result = await Protocol.Feed.DeletePostAsync(((ATPostReference)reference.NetworkReferences).RKey);
         var output = result.HandleResult()!;
         return output != null;
     }

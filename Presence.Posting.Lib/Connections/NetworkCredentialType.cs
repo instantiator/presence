@@ -4,5 +4,6 @@ public enum NetworkCredentialType
 {
     AccountName,
     AppPassword,
-    Server
+    Server,
+    PrintPrefix
 }

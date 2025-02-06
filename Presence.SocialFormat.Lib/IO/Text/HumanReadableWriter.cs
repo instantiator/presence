@@ -1,5 +1,4 @@
 using Presence.SocialFormat.Lib.DTO;
-using Presence.SocialFormat.Lib.IO;
 
 namespace Presence.SocialFormat.Lib.IO.Text;
 

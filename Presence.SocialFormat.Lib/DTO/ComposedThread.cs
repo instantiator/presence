@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Post;
 using Presence.SocialFormat.Lib.Thread.Composition;
 

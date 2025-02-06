@@ -1,5 +1,4 @@
 using Presence.SocialFormat.Lib.DTO;
-using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Post;
 
 namespace Presence.SocialFormat.Lib.Thread.Composition;

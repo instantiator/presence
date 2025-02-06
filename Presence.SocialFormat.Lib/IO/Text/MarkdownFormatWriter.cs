@@ -9,7 +9,7 @@ public class MarkdownFormatWriter : IFormatWriter
         var lines = new List<string>();
         foreach (var thread in response.Threads)
         {
-            lines.Add($"## {thread.Value.Identity.Value}");
+            lines.Add($"## {thread.Value.Identity.Ident}");
             lines.Add(string.Empty);
 
             foreach (var post in thread.Value.Posts)

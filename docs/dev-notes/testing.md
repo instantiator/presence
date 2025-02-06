@@ -41,7 +41,7 @@ For information about configuration variables, see: [Network specifics](../guide
 Provide the path to a configuration file with the `-e` / `--env-file` parameter to `run-integration-tests.sh`. (If not provided, the environment is assumed to contain these variables.)
 
 ```bash
-./run-integration-tests.sh -e .env.integration
+./run-integration-tests.sh -e .env.accounts.integration
 ```
 
 If this path is not provided, configuration is expected to be made available through environment variables.

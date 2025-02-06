@@ -5,7 +5,7 @@ namespace Presence.Posting.Lib.Connections.Console;
 
 public class ConsolePostReference : INetworkPostReference
 {
-    public IDictionary<string, string> NetworkReferences { get; init; } = new Dictionary<string, string>()
+    public IDictionary<string, string?> NetworkReferences { get; init; } = new Dictionary<string, string?>()
     {
         { "guid", Guid.NewGuid().ToString() }
     };
@@ -13,4 +13,6 @@ public class ConsolePostReference : INetworkPostReference
     public SocialNetwork Network => SocialNetwork.Console;
 
     public CommonPost? Origin { get; init; }
+
+    public string? Link => "(printed to console)";
 }

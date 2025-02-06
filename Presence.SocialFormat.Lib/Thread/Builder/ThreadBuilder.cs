@@ -96,7 +96,7 @@ public class ThreadBuilder
         return new ThreadCompositionResponse
         {
             Threads = Composers.ToDictionary(
-                composer => composer.Identity.Value,
+                composer => composer.Identity.Network,
                 composer => composer.Compose(new ThreadCompositionRequest() { Message = Message, Tags = Tags }))
         };
     }
@@ -107,7 +107,7 @@ public class ThreadBuilder
         return new ThreadCompositionResponse
         {
             Threads = composers.ToDictionary(
-                composer => composer.Identity.Value,
+                composer => composer.Identity.Network,
                 composer => composer.Compose(new ThreadCompositionRequest() { Message = Message, Tags = Tags }))
         };
     }
@@ -116,10 +116,10 @@ public class ThreadBuilder
     {
         return new ThreadCompositionResponse
         {
-            Threads = new Dictionary<string, ComposedThread>()
+            Threads = new Dictionary<SocialNetwork, ComposedThread>()
             {
                 {
-                    composer.Identity.Value,
+                    composer.Identity.Network,
                     composer.Compose(new ThreadCompositionRequest() { Message = Message, Tags = Tags })
                 }
             }

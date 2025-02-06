@@ -40,21 +40,26 @@ public class Program
             new EnvLoader().AddEnvFile(options.EnvPath).Load();
         }
         var env = Environment.GetEnvironmentVariables();
-
+        var connections = ConnectionFactory.CreateConnections(env);
         var summaries = new List<ThreadPostSummary>();
         var threadCompositionResponse = ThreadCompositionResponseInputReader.Decode(options.InputPath);
-        foreach (var thread in threadCompositionResponse.Threads.Select(t => t.Value))
+
+        foreach (var connection in connections)
         {
             try
             {
-                var connection = await ConnectionFactory.CreateConnection(thread.Identity.Network, env);
+                var threads = threadCompositionResponse.Threads.Where(t => t.Key == connection.Network);
+                if (threads.Count() != 1) { throw new KeyNotFoundException($"{threads.Count()} threads found for network {connection.Network}"); }
+                var thread = threads.Single().Value;
+                await connection.ConnectAsync();
                 var references = await connection.PostAsync(thread.Posts);
                 var result = new ThreadPostSummary
                 {
-                    Identity = thread.Identity,
-                    Thread = thread,
-                    Success = true,
-                    Reference = references.First()
+                    AccountPrefix = connection.Prefix,
+                    Network = connection.Network,
+                    PostReferences = references.Select(r => r.NetworkReferences),
+                    Posts = references?.Count(),
+                    Success = true
                 };
                 summaries.Add(result);
             }
@@ -62,10 +67,9 @@ public class Program
             {
                 summaries.Add(new ThreadPostSummary
                 {
-                    Identity = thread.Identity,
-                    Thread = thread,
+                    AccountPrefix = connection.Prefix,
+                    Network = connection.Network,
                     Success = false,
-                    Reference = null,
                     Exception = e
                 });
             }
@@ -74,17 +78,14 @@ public class Program
         // summarise activity
         var response = new ThreadPostingResponse
         {
-            Threads = summaries.ToDictionary(s => s.Identity.Value, s => s)
+            Summaries = summaries
+                .Select(s => s.AccountPrefix)
+                .ToDictionary(
+                    p => p, 
+                    p => summaries.Where(s => s.AccountPrefix == p).ToDictionary(s => s.Network, s => s))
         };
 
         System.Console.WriteLine(JsonSerializer.Serialize(response, new JsonSerializerOptions { WriteIndented = true }));
-        if (response.Threads.Any(s => !s.Value.Success))
-        {
-            foreach (var exception in response.Threads.Where(t => !t.Value.Success).Select(t => t.Value.Exception))
-            {
-                System.Console.WriteLine(exception?.ToString());
-            }
-        }
         return response;
     }
 
