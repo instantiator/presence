@@ -7,17 +7,13 @@ Runs the integration tests.
 
 Options:
     -f <filter>    --filter <filter>               Filter the tests by name (optional)
-    -e <path>      --env-file <path>               Path to an environment file (optional)
+    -e <path>      --env-file <path>               Path to an environment file (optional) eg. .env.accounts.integration
     -h             --help                          Prints this help message and exits
-
-Defaults:
-    Environment file path = .env.accounts.integration
 
 EOF
 }
 
 # defaults
-ENV_PATH=".env.accounts.integration"
 
 # parameters
 while [ -n "$1" ]; do

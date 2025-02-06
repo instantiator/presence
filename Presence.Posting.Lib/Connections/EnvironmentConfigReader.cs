@@ -20,9 +20,9 @@ public class EnvironmentConfigReader : Dictionary<string, Dictionary<SocialNetwo
                 prefix => prefix, 
                 prefix => 
                     strings.Keys
-                        .Where(k => k.StartsWith(prefix))
+                        .Where(k => k.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
                         .Select(k => k.Substring($"{prefix}_".Length))
-                        .Select(k => Enum.GetValues<SocialNetwork>().Where(n => k.StartsWith(n.ToString())))
+                        .Select(k => Enum.GetValues<SocialNetwork>().Where(n => k.StartsWith(n.ToString(), StringComparison.OrdinalIgnoreCase)))
                         .Where(nn => nn.Count() != 0)
                         .Select(nn => nn.Single())
                         .Distinct()
@@ -42,7 +42,7 @@ public class EnvironmentConfigReader : Dictionary<string, Dictionary<SocialNetwo
         .ToDictionary(kv => kv.Key.Trim(), kv => kv.Value.Trim())
         .Where(kv => kv.Key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
         .ToDictionary(kv => kv.Key.Substring(prefix.Length).Trim('_'), kv => kv.Value)
-        .Where(kv => kv.Key.StartsWith(network.ToString()))
+        .Where(kv => kv.Key.StartsWith(network.ToString(), StringComparison.OrdinalIgnoreCase))
         .ToDictionary(kv => kv.Key.Substring(network.ToString().Length).Trim('_'), kv => kv.Value)
         .ToDictionary(kv => Enum.Parse<NetworkCredentialType>(kv.Key, true), kv => kv.Value);
 
