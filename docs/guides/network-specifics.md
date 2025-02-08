@@ -1,17 +1,6 @@
 # Network specific configuration
 
-## Configuration
-
-`Presence.Posting.Console` accepts configuration variables through the environment or from a `.env` format configuration file.
-
-Here is a a sample `.env` configuration file, each part is explained below:
-
-```env
-PRESENCE_ACCOUNTS="TEST0,TEST1"
-TEST0_Console_PrintPrefix="Console>"
-TEST1_AT_AccountName="presence-lib-test.bsky.social"
-TEST1_AT_AppPassword="<the app password goes here>"
-```
+All configuration to Presence is provided as key-value pairs, through environment variables, a `.env` formatted file, or in a JSON-formatted command-line parameter.
 
 ## Accounts
 
@@ -47,7 +36,7 @@ These combined to give a key of: `TEST1_AT_AccountName`
 
 Each network requires specific configuration keys.
 
-## `Console` network
+### `Console` network
 
 The Console network is used to test threads by printing to your console instead of posting to a social network.
 
@@ -63,7 +52,7 @@ eg. The following line defines the `PrintPrefix` key and value in a `.env` confi
 TEST0_Console_PrintPrefix="Console>"
 ```
 
-## `AT` (BlueSky) network
+### `AT` (BlueSky) network
 
 Create an application password for your account in **Privacy & Security** settings in BlueSky.
 
@@ -84,3 +73,83 @@ TEST1_AT_AccountName="presence-lib-test.bsky.social"
 You must provide both `AccountName` and `AppPassword` to be able to connect to an AT network.
 
 The `Server` value is optional, and can be used to indicate the AT service the account is with, if it is not `bsky.social`.
+
+## Configuration variables
+
+`Presence.Posting.Console` accepts configuration variables through the environment or from a `.env` format configuration file.
+
+Filename: `.env.example`
+
+```env
+PRESENCE_ACCOUNTS="TEST0,TEST1"
+TEST0_Console_PrintPrefix="Console>"
+TEST1_AT_AccountName="presence-lib-test.bsky.social"
+TEST1_AT_AppPassword="<the app password goes here>"
+```
+
+### Example 1: Environment variables
+
+```bash
+Presence.SocialFormat.Console -f SampleData/SimpleThread.md -n AT,Console | Presence.Posting.Console
+```
+
+### Example 2: `-e` / `--env-file` parameter
+
+```bash
+Presence.SocialFormat.Console -f SampleData/SimpleThread.md -n AT,Console | Presence.Posting.Console -e .env.example
+```
+
+## Configuration by JSON
+
+Alternatively, you may provide the configuration as a json object that's effectively an `IDictionary<string,string>`
+
+You may provide this to `Presence.Posting.Console` either:
+
+* as the `PRESENCE_CONFIG_JSON` variable (see: `ConfigKeys`), or
+* in the `-j` / `--json-config` parameter
+
+This key supercedes any others found in the configuration.
+
+### Example 1: `PRESENCE_CONFIG_JSON` as an environment variable
+
+Sample JSON:
+
+```json
+{ "PRESENCE_ACCOUNTS": "TEST0", "TEST0_Console_PrintPrefix": "JsonConfiguredConsole" }
+```
+
+provide configuration JSON in the `PRESENCE_CONFIG_JSON` variable, and invoke with:
+
+```bash
+Presence.SocialFormat.Console -f SampleData/SimpleThread.md -n Console | Presence.Posting.Console
+```
+
+### Example 2: `PRESENCE_CONFIG_JSON` variable in a `.env` file
+
+Filename: `.env.example`
+
+```env
+PRESENCE_JSON_CONFIG="{ \"PRESENCE_ACCOUNTS\": \"TEST0\", \"TEST0_Console_PrintPrefix\": \"JsonConfiguredConsole\" }"
+```
+
+Invoke with:
+
+```bash
+Presence.SocialFormat.Console -f SampleData/SimpleThread.md -n Console | Presence.Posting.Console -e .env.example
+```
+
+In this case, **only** the `PRESENCE_CONFIG_JSON` key will be used from: `.env.example`
+
+* The console prefix will be: `JsonConfiguredConsole`
+* The other definition of `TEST0_Console_PrintPrefix` is ignored
+* Any other variables provided in the `.env` file would also be ignored
+
+### Example 3: `-j` / `--json-config` parameter
+
+Invoke with:
+
+```bash
+Presence.SocialFormat.Console -f SampleData/SimpleThread.md -n Console | Presence.Posting.Console -j "{ \"PRESENCE_ACCOUNTS\": \"TEST0\", \"TEST0_Console_PrintPrefix\": \"JsonConfiguredConsole\" }"
+```
+
+In the example above, all environment variables are ignored, and configuration comes only from the `-j` / `--json-config` parameter.

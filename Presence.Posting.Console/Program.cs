@@ -2,6 +2,7 @@
 using CommandLine;
 using DotEnv.Core;
 using Presence.Posting.Lib.Connections;
+using Presence.Posting.Lib.Constants;
 using Presence.Posting.Lib.DTO;
 using Presence.SocialFormat.Lib.IO;
 
@@ -14,8 +15,11 @@ public class Program
         [Option('f', "input-file", Required = false, HelpText = "Path to input file containing a thread composition response (leave blank to use stdin).")]
         public string? InputPath { get; set; } = null;
 
-        [Option('e', "env-file", Required = false, HelpText = "Path to a file containing environment variables to use for connections.")]
+        [Option('e', "env-file", Required = false, HelpText = "Path to a file containing environment variables to use for connections.", SetName = "config")]
         public string? EnvPath { get; set; } = null;
+
+        [Option('j', "json-config", Required = false, HelpText = "JSON configuration string, defining accounts and account credentials.", SetName = "config")]
+        public string? JsonConfig { get; set; } = null;
     }
 
     public static async Task Main(string[] args)
@@ -38,6 +42,10 @@ public class Program
         if (options.EnvPath != null)
         {
             new EnvLoader().AddEnvFile(options.EnvPath).Load();
+        }
+        if (options.JsonConfig != null)
+        {
+            Environment.SetEnvironmentVariable(ConfigKeys.JSON_DATA_ENV_KEY, options.JsonConfig);
         }
         var env = Environment.GetEnvironmentVariables();
         var connections = ConnectionFactory.CreateConnections(env);
