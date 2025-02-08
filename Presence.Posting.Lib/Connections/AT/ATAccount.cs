@@ -1,10 +1,11 @@
+using Presence.Posting.Lib.Constants;
 using Presence.SocialFormat.Lib.Networks;
 
 namespace Presence.Posting.Lib.Connections;
 
 public class ATAccount : AbstractNetworkAccount
 {
-    public ATAccount(string prefix, IDictionary<NetworkCredentialType, string> credentials) : base(prefix, credentials)
+    public ATAccount(string prefix, IDictionary<NetworkCredentialType, string?> credentials) : base(prefix, credentials)
     {
     }
 

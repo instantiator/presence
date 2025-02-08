@@ -1,8 +1,10 @@
 using System.Text;
 using FishyFlip.Lexicon.App.Bsky.Embed;
 using FishyFlip.Lexicon.App.Bsky.Feed;
+using Presence.Posting.Lib.Config;
 using Presence.Posting.Lib.Connections;
 using Presence.Posting.Lib.Connections.AT;
+using Presence.Posting.Lib.Constants;
 using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Post;
 
@@ -126,7 +128,7 @@ public class ATConnectionTests
     [TestCategory("Unit")]
     public async Task ATConnection_IdentifiesFacets()
     {
-        var connection = new ATConnection(new ATAccount("TEST1", new Dictionary<NetworkCredentialType, string>()));
+        var connection = new ATConnection(new ATAccount("TEST1", new Dictionary<NetworkCredentialType, string?>()));
         var post = new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES)
         {
             Message =

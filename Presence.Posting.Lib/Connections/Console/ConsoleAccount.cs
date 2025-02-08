@@ -1,11 +1,12 @@
 using Presence.Posting.Lib.Connections;
+using Presence.Posting.Lib.Constants;
 using Presence.SocialFormat.Lib.Networks;
 
 namespace Presence.Posting.Lib;
 
 public class ConsoleAccount : AbstractNetworkAccount
 {
-    public ConsoleAccount(string accountPrefix, IDictionary<NetworkCredentialType, string>? credentials = null) : base(accountPrefix, credentials)
+    public ConsoleAccount(string accountPrefix, IDictionary<NetworkCredentialType, string?>? credentials = null) : base(accountPrefix, credentials)
     {
     }
 

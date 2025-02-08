@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Presence.Posting.Lib.Connections;
 using Presence.SocialFormat.Lib.Networks;
 
 namespace Presence.Posting.Lib.DTO;

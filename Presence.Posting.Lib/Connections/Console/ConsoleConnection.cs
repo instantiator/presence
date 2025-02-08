@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Presence.Posting.Lib.Constants;
 using Presence.SocialFormat.Lib.Post;
 
 namespace Presence.Posting.Lib.Connections.Console;

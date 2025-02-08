@@ -1,4 +1,4 @@
-namespace Presence.Posting.Lib.Connections;
+namespace Presence.Posting.Lib.Constants;
 
 public enum NetworkCredentialType
 {

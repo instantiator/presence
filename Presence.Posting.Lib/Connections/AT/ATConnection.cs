@@ -9,6 +9,7 @@ using FishyFlip.Lexicon.App.Bsky.Richtext;
 using FishyFlip.Lexicon.Com.Atproto.Repo;
 using FishyFlip.Models;
 using FishyFlip.Tools;
+using Presence.Posting.Lib.Constants;
 using Presence.SocialFormat.Lib.Helpers;
 using Presence.SocialFormat.Lib.Post;
 
@@ -56,8 +57,8 @@ public class ATConnection : AbstractNetworkConnection
 
         await RateLimitAsync();
         var (session, error) = await Protocol.AuthenticateWithPasswordResultAsync(
-            credentials![NetworkCredentialType.AccountName],
-            credentials![NetworkCredentialType.AppPassword]);
+            credentials![NetworkCredentialType.AccountName]!,
+            credentials![NetworkCredentialType.AppPassword]!);
 
         if (error != null)
         {

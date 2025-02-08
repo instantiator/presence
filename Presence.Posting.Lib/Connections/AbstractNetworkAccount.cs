@@ -1,13 +1,14 @@
+using Presence.Posting.Lib.Constants;
 using Presence.SocialFormat.Lib.Networks;
 
 namespace Presence.Posting.Lib.Connections;
 
-public abstract class AbstractNetworkAccount : Dictionary<NetworkCredentialType, string>, INetworkAccount
+public abstract class AbstractNetworkAccount : Dictionary<NetworkCredentialType, string?>, INetworkAccount
 {
-    protected AbstractNetworkAccount(string accountPrefix, IDictionary<NetworkCredentialType, string>? credentials = null)
+    protected AbstractNetworkAccount(string accountPrefix, IDictionary<NetworkCredentialType, string?>? credentials = null)
     {
         AccountPrefix = accountPrefix;
-        SetCredentials(credentials ?? new Dictionary<NetworkCredentialType, string>());
+        SetCredentials(credentials ?? new Dictionary<NetworkCredentialType, string?>());
     }
 
     public string AccountPrefix { get; init; }
@@ -25,7 +26,7 @@ public abstract class AbstractNetworkAccount : Dictionary<NetworkCredentialType,
         return (errors.Count() == 0, errors);
     }
 
-    private void SetCredentials(IDictionary<NetworkCredentialType, string> credentials)
+    private void SetCredentials(IDictionary<NetworkCredentialType, string?> credentials)
     {
         foreach (var (key, value) in credentials)
         {

@@ -1,4 +1,5 @@
 using Presence.Posting.Lib.Connections;
+using Presence.Posting.Lib.Constants;
 
 namespace Presence.Posting.Lib.Tests;
 
@@ -9,7 +10,7 @@ public class CredentialTests
     [TestMethod]
     public void ATAccount_Validates()
     {
-        var account = new ATAccount("TEST", new Dictionary<NetworkCredentialType, string>
+        var account = new ATAccount("TEST", new Dictionary<NetworkCredentialType, string?>
         {
         });
         var (valid, errors) = account.Validate();

@@ -1,18 +1,24 @@
 using System.Collections;
+using Presence.Posting.Lib.Constants;
 using Presence.Posting.Lib.Helpers;
 using Presence.SocialFormat.Lib.Networks;
 
-namespace Presence.Posting.Lib.Connections;
+namespace Presence.Posting.Lib.Config;
 
-public class EnvironmentConfigReader : Dictionary<string, Dictionary<SocialNetwork, Dictionary<NetworkCredentialType, string>>>
+public class EnvironmentConfigReader : Dictionary<string, Dictionary<SocialNetwork, Dictionary<NetworkCredentialType, string?>>>
 {
-    public const string ACCOUNTS_ENV_KEY = "PRESENCE_ACCOUNTS";
-
     public EnvironmentConfigReader(IDictionary env)
     {
-        // extract account prefixes
-        var strings = env.ToStringDictionary();
-        var prefixes = strings[ACCOUNTS_ENV_KEY].Split(',');
+        // If the JSON data key is present use that in preference to other environment variables.
+        // Otherwise, convert the the environment dictionary to a simple string dictionary.
+        var strings = (env.Contains(ConfigKeys.JSON_DATA_ENV_KEY)
+            ? JsonConfigReader.ReadJsonConfig(env[ConfigKeys.JSON_DATA_ENV_KEY] as string)
+            : null) ?? env.ToStringDictionary();
+
+        // extract prefixes
+        var prefixes = strings.ContainsKey(ConfigKeys.ACCOUNTS_ENV_KEY) && !string.IsNullOrWhiteSpace(strings[ConfigKeys.ACCOUNTS_ENV_KEY])
+            ? strings[ConfigKeys.ACCOUNTS_ENV_KEY]!.Split(',')
+            : throw new ArgumentException($"Please provide a comma separated list of account prefixes in config key: {ConfigKeys.ACCOUNTS_ENV_KEY}");
 
         // extract credentials per network per prefix
         var credentials = prefixes
@@ -37,9 +43,9 @@ public class EnvironmentConfigReader : Dictionary<string, Dictionary<SocialNetwo
         }
     }
 
-    private Dictionary<NetworkCredentialType,string> ExtractCredentials(string prefix, SocialNetwork network, IDictionary<string,string> env)
+    private Dictionary<NetworkCredentialType,string?> ExtractCredentials(string prefix, SocialNetwork network, IDictionary<string,string?> env)
     => env
-        .ToDictionary(kv => kv.Key.Trim(), kv => kv.Value.Trim())
+        .ToDictionary(kv => kv.Key.Trim(), kv => kv.Value?.Trim())
         .Where(kv => kv.Key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
         .ToDictionary(kv => kv.Key.Substring(prefix.Length).Trim('_'), kv => kv.Value)
         .Where(kv => kv.Key.StartsWith(network.ToString(), StringComparison.OrdinalIgnoreCase))

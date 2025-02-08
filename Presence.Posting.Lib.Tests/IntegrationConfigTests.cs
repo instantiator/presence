@@ -1,13 +1,14 @@
-using Presence.Posting.Lib.Connections;
+using Presence.Posting.Lib.Config;
+using Presence.Posting.Lib.Constants;
 using Presence.SocialFormat.Lib.Networks;
 
 namespace Presence.Posting.Lib.Tests;
 
 [TestClass]
-[TestCategory("Integration")]
-public class ConfigTests
+public class IntegrationConfigTests
 {
     [TestMethod]
+    [TestCategory("Integration")]
     public void ConfigPresent()
     {
         var env = Environment.GetEnvironmentVariables();
@@ -26,5 +27,4 @@ public class ConfigTests
         Assert.IsTrue(environment["TEST1"][SocialNetwork.AT].ContainsKey(NetworkCredentialType.AccountName));
         Assert.IsTrue(environment["TEST1"][SocialNetwork.AT].ContainsKey(NetworkCredentialType.AppPassword));
     }
-
 }

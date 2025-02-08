@@ -1,6 +1,8 @@
 using System.Collections;
+using Presence.Posting.Lib.Config;
 using Presence.Posting.Lib.Connections.AT;
 using Presence.Posting.Lib.Connections.Console;
+using Presence.Posting.Lib.Constants;
 using Presence.SocialFormat.Lib.Networks;
 
 namespace Presence.Posting.Lib.Connections;
@@ -13,7 +15,7 @@ public class ConnectionFactory
         return environment.Keys.SelectMany((prefix) => environment[prefix].Keys.Select((network) => CreateConnection(prefix, network, environment[prefix][network])));
     }
 
-    public static INetworkConnection CreateConnection(string prefix, SocialNetwork network, IDictionary<NetworkCredentialType, string> credentials)
+    public static INetworkConnection CreateConnection(string prefix, SocialNetwork network, IDictionary<NetworkCredentialType, string?> credentials)
     {
         return network switch
         {
@@ -23,9 +25,9 @@ public class ConnectionFactory
         };
     }
 
-    public static ConsoleConnection CreateConsole(string prefix, IDictionary<NetworkCredentialType, string> credentials)
+    public static ConsoleConnection CreateConsole(string prefix, IDictionary<NetworkCredentialType, string?> credentials)
         => new ConsoleConnection(new ConsoleAccount(prefix, credentials));
 
-    public static ATConnection CreateAT(string prefix, IDictionary<NetworkCredentialType, string> credentials)
+    public static ATConnection CreateAT(string prefix, IDictionary<NetworkCredentialType, string?> credentials)
         => new ATConnection(new ATAccount(prefix, credentials));
 }
