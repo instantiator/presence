@@ -9,14 +9,12 @@ on:
     paths:
       - format-thread/**
       - post-thread/**
-      - .github/workflows/test-actions.yaml
   pull_request:
     branches:
       - "*"
     paths:
       - format-thread/**
       - post-thread/**
-      - .github/workflows/test-actions.yaml
     
 jobs:
   format-simple-thread:
