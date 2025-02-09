@@ -9,12 +9,14 @@ on:
     paths:
       - format-thread/**
       - post-thread/**
+      - .github/workflows/test-actions.yaml
   pull_request:
     branches:
       - "*"
     paths:
       - format-thread/**
       - post-thread/**
+      - .github/workflows/test-actions.yaml
     
 jobs:
   format-simple-thread:
@@ -32,7 +34,7 @@ jobs:
         uses: instantiator/presence/post-thread@main
         with:
           thread: ${{ steps.format-thread.outputs.format-response }}
-          config: "{ \"PRESENCE_ACCOUNTS\": \"TEST0\", \"TEST0_CONSOLE_PRINTPREFIX\": \"[TEST0-GHA]\" }"
+          config: "{ \"PRESENCE_ACCOUNTS\": \"TEST0,TEST1\", \"TEST0_CONSOLE_PRINTPREFIX\": \"[TEST0-GHA]\", \"TEST1_AT_ACCOUNTNAME\": \"${{ secrets.TEST1_AT_ACCOUNTNAME }}\", \"TEST1_AT_APPPASSWORD\": \"${{ secrets.TEST1_AT_APPPASSWORD }}\" }"
           # simplest case if you've no other important secrets: provide all your secrets as a JSON object
           # config: ${{ toJson(secrets) }}
       - name: Summarise activity
