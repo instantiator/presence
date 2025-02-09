@@ -1,17 +1,14 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
-name: test-actions
+# For more information on using and configuring these actions, see:
+# https://instantiator.dev/presence/gha/format-and-post-with-gha.html
+
+name: on-push-test-actions
 on:
   workflow_dispatch:
   push:
     branches:
       - "main"
-    paths:
-      - format-thread/**
-      - post-thread/**
-  pull_request:
-    branches:
-      - "*"
     paths:
       - format-thread/**
       - post-thread/**
@@ -33,28 +30,6 @@ jobs:
         with:
           thread: ${{ steps.format-thread.outputs.format-response }}
           config: "{ \"PRESENCE_ACCOUNTS\": \"TEST0,TEST1\", \"TEST0_CONSOLE_PRINTPREFIX\": \"[TEST0-GHA]\", \"TEST1_AT_ACCOUNTNAME\": \"${{ secrets.TEST1_AT_ACCOUNTNAME }}\", \"TEST1_AT_APPPASSWORD\": \"${{ secrets.TEST1_AT_APPPASSWORD }}\" }"
-
-        # CONFIGURATION OPTIONS
-
-        # 1. METHOD ABOVE
-        # provide a single config input containing a JSON dictionary of all configuration
-
-        # 2. SIMPLEST CASE
-        # If you've no other important secrets: provide all your secrets as a JSON object
-        # with:
-        #   thread: ${{ steps.format-thread.outputs.format-response }}
-        #   config: ${{ toJson(secrets) }}
-
-        # 3. AS ENVIRONMENT VARIABLES
-        # pass individual secrets as environment variables
-        # with:
-        #   thread: ${{ steps.format-thread.outputs.format-response }}
-        # env:
-        #   PRESENCE_ACCOUNTS: "TEST0,TEST1"
-        #   TEST0_CONSOLE_PRINTPREFIX: "[TEST0-GHA]"
-        #   TEST1_AT_ACCOUNTNAME: ${{ secrets.TEST1_AT_ACCOUNTNAME }}
-        #   TEST1_AT_APPPASSWORD: ${{ secrets.TEST1_AT_APPPASSWORD }}
-
       - name: Summarise activity
         id: summarise
         run: echo "${{ steps.post-thread.outputs.post-thread-summary }}"

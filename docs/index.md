@@ -9,6 +9,12 @@ You can:
 - Format threads for multiple social networks, from a single source
 - Post threads, messages, and images to multiple social networks
 
+## Just want to use the GitHub Actions?
+
+- [Format and post a thread with GitHub Actions](gha/format-and-post-with-gha.md)
+- [How to prepare content](guides/create-with-markdown.md) (in a markdown-like format)
+- [Network specific configuration](guides/network-specifics.md)
+
 ## Just want to use the CLI tools?
 
 - [How to install the CLI tools](cli/install-cli-tools.md)
@@ -39,7 +45,11 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 | Formatting library | Nuget package   | [`Presence.SocialFormat.Lib`](https://www.nuget.org/packages/Presence.SocialFormat.Lib/)                        | ![NuGet Version](https://img.shields.io/nuget/v/Presence.SocialFormat.Lib?label=Presence.SocialFormat.Lib)                                                                                                                         |
 | Posting library    | Nuget package   | [`Presence.Posting.Lib`](https://www.nuget.org/packages/Presence.Posting.Lib/)                                  | ![NuGet Version](https://img.shields.io/nuget/v/Presence.Posting.Lib?label=Presence.Posting.Lib)                                                                                                                                   |
 
-## Documentation
+## All documentation
+
+### GitHub Actions
+
+- [Format and post a thread with GitHub Actions](gha/format-and-post-with-gha.md)
 
 ### CLI tools
 
