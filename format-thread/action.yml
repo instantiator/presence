@@ -23,7 +23,7 @@ runs:
         [[ ! $(type -P "Presence.SocialFormat.Console") ]] && \
           wget https://raw.githubusercontent.com/instantiator/presence/refs/heads/main/download-latest-binaries.sh && \
           chmod +x download-latest-binaries.sh && \
-          ./download-latest-binaries.sh --system linux-x64 --target-directory .
+          ./download-latest-binaries.sh --system linux-x64 --target-directory ./bin
     - name: Format thread
       id: format-thread
       shell: bash
@@ -33,7 +33,7 @@ runs:
         INPUT_FORMAT: ${{ inputs.input-format }}
         OUTPUT_FORMAT: ${{ inputs.output-format }}
       run: |
-        export THREAD=$(./Presence.SocialFormat.Console --networks $NETWORKS ${INPUT_FILE:+"--input-file $INPUT_FILE" } ${INPUT_FORMAT:+"--input-format $INPUT_FORMAT" } ${OUTPUT_FORMAT:+"--output-format $OUTPUT_FORMAT" })
+        export THREAD=$(./bin/Presence.SocialFormat.Console --networks $NETWORKS ${INPUT_FILE:+"--input-file $INPUT_FILE" } ${INPUT_FORMAT:+"--input-format $INPUT_FORMAT" } ${OUTPUT_FORMAT:+"--output-format $OUTPUT_FORMAT" })
         echo "thread=$(echo $THREAD)" >> "$GITHUB_OUTPUT"
 outputs:
   format-response:

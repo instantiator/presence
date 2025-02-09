@@ -81,6 +81,7 @@ wget -O $ZIP_PATH $LATEST_RELEASE_DOWNLOAD_URL
 unzip -o $ZIP_PATH -d $TMP_DIR
 
 # copy the binaries into the target directory
+mkdir -p ${TARGET_DIRECTORY}
 for BINARY in "${BINARIES[@]}"; do
   # establish binary file names (suffix .exe for Windows)
   if [ "$SYSTEM" == "win-x64" ]; then
@@ -91,6 +92,6 @@ for BINARY in "${BINARIES[@]}"; do
 
   echo "Copying from: ${TMP_DIR}/release/${SYSTEM}/${BINARY_FILE}"
   echo "Copying to:   ${TARGET_DIRECTORY}/${BINARY_FILE}"
-  cp ${TMP_DIR}/release/${SYSTEM}/${BINARY_FILE} ${TARGET_DIRECTORY}/${BINARY_FILE}
+  cp -rf ${TMP_DIR}/release/${SYSTEM}/${BINARY_FILE} ${TARGET_DIRECTORY}/${BINARY_FILE}
   chmod +x ${TARGET_DIRECTORY}/${BINARY_FILE}
 done
