@@ -24,11 +24,11 @@ jobs:
         uses: instantiator/presence/format-thread@main
         with:
           networks: 'Console,AT'
+          imput-format: 'MD'
           input-content: |
             This is a simple thread posted from GitHub Actions, with a simple link: [Presence documentation](https://instantiator.dev/presence)
 
             It contains a minimum of two posts. #Test #GHA #Posting #SocialNetworks #Presence
-          import-format: 'MD'
       - name: Summarise basic thread formatting activity
         run: echo "${{ steps.format-basic-thread.outputs.format-response }}"
       - name: Post the basic thread to console
