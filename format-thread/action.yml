@@ -29,11 +29,16 @@ runs:
       shell: bash
       run: |
         THREAD=Presence.SocialFormat.Console \
-          --networks ${{ inputs.networks }} \
-          ${${{ inputs.input-file }}:+"--input-file" "${{ inputs.input-file }}"} \
-          ${${{ inputs.input-format }}:+"--input-format" "${{ inputs.input-format }}"} \
-          ${${{ inputs.output-format }}:+"--output-format" "${{ inputs.output-format }}"}
+          --networks $NETWORKS \
+          ${INPUT_FILE:+"--input-file $INPUT_FILE" } \
+          ${INPUT_FORMAT:+"--input-format $INPUT_FORMAT" } \
+          ${OUTPUT_FORMAT:+"--output-format $OUTPUT_FORMAT" }
         echo "thread=$(echo $THREAD)" >> "$GITHUB_OUTPUT"
+      env:
+        NETWORKS: ${{ inputs.networks }}
+        INPUT_FILE: ${{ inputs.input-file }}
+        INPUT_FORMAT: ${{ inputs.input-format }}
+        OUTPUT_FORMAT: ${{ inputs.output-format }}
 outputs:
   format-response:
     description: "A formatted thread"
