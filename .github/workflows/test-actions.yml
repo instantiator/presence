@@ -25,7 +25,7 @@ jobs:
         id: format-thread
         uses: instantiator/presence/format-thread@main
         with:
-          networks: 'Console'
+          networks: 'Console,AT'
           input-file: 'SampleData/SimpleThread.md'
       - name: Post sample thread to console
         id: post-thread
