@@ -3,7 +3,19 @@
 name: test-actions
 on:
   workflow_dispatch:
-
+  push:
+    branches:
+      - "main"
+    paths:
+      - format-thread/**
+      - post-thread/**
+  pull_request:
+    branches:
+      - "*"
+    paths:
+      - format-thread/**
+      - post-thread/**
+    
 jobs:
   format-simple-thread:
     runs-on: ubuntu-latest
@@ -20,7 +32,9 @@ jobs:
         uses: instantiator/presence/post-thread@main
         with:
           thread: ${{ steps.format-thread.outputs.format-response }}
-          config: ${{ toJson(secrets) }}
+          config: "{ \"PRESENCE_ACCOUNTS\": \"TEST0\", \"TEST0_CONSOLE_PRINTPREFIX\": \"[TEST0-GHA]\" }"
+          # simplest case if you've no other important secrets: provide all your secrets as a JSON object
+          # config: ${{ toJson(secrets) }}
       - name: Summarise activity
         id: summarise
         run: echo "${{ steps.post-thread.outputs.post-thread-summary }}"

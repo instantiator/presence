@@ -20,6 +20,7 @@ on:
       - Presence.SocialFormat.Console/**
       - Presence.SocialFormat.Tests/**
       - Presence.Posting.Lib/**
+      - Presence.Posting.Console/**
       - Presence.Posting.Tests/**
 
 env:

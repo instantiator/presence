@@ -14,7 +14,7 @@ runs:
       shell: bash
       run: |
         # if the format binary is not found, download the latest binaries
-        [[ ! $(type -P "Presence.SocialFormat.Console") ]] && \
+        if [[ ! -x "./bin/Presence.Posting.Console" ]] && \
           wget https://raw.githubusercontent.com/instantiator/presence/refs/heads/main/download-latest-binaries.sh && \
           chmod +x download-latest-binaries.sh && \
           ./download-latest-binaries.sh --system linux-x64 --target-directory ./bin
