@@ -37,6 +37,7 @@ runs:
         export THREAD=$(./bin/Presence.SocialFormat.Console --networks $NETWORKS ${INPUT_FILE:+"--input-file" "$INPUT_FILE" } ${INPUT_FORMAT:+"--input-format" "$INPUT_FORMAT" } ${OUTPUT_FORMAT:+"--output-format" "$OUTPUT_FORMAT" })
         echo "format-response=$(echo $THREAD)" >> "$GITHUB_OUTPUT"
         if [[ $(echo $THREAD | jq -r '.fullSuccess') != "true" ]]; then
+          echo $THREAD
           exit 1
         fi
 outputs:
