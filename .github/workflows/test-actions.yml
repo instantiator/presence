@@ -13,7 +13,7 @@ jobs:
         id: format-thread
         uses: instantiator/presence/format-thread@main
         with:
-          input-file: 'SampleData/SimpleThread.md'
           networks: 'Console'
+          input-file: 'SampleData/SimpleThread.md'
       - name: Print formatted thread
         run: echo "${{ steps.format-thread.outputs.format-response }}"

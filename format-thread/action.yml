@@ -1,15 +1,15 @@
 name: 'Format a thread'
 description: 'Formats a thread using the latest version of Presence.SocialFormat.Console'
 inputs:
-  input-file:
-    description: 'Path to a file containing input content'
-    required: false
   networks:
     description: 'A comma-separated list of networks to format for'
     required: true
+  input-file:
+    description: 'Path to a file containing input content'
+    required: false
   input-format:
     description: 'The format of the input content'
-    required: true
+    required: false
   output-format:
     description: 'The format of the output content (default: JSON)'
     required: false
@@ -27,6 +27,11 @@ runs:
     - name: Format thread
       id: format-thread
       shell: bash
+      env:
+        NETWORKS: ${{ inputs.networks }}
+        INPUT_FILE: ${{ inputs.input-file }}
+        INPUT_FORMAT: ${{ inputs.input-format }}
+        OUTPUT_FORMAT: ${{ inputs.output-format }}
       run: |
         THREAD=Presence.SocialFormat.Console \
           --networks $NETWORKS \
@@ -34,11 +39,6 @@ runs:
           ${INPUT_FORMAT:+"--input-format $INPUT_FORMAT" } \
           ${OUTPUT_FORMAT:+"--output-format $OUTPUT_FORMAT" }
         echo "thread=$(echo $THREAD)" >> "$GITHUB_OUTPUT"
-      env:
-        NETWORKS: ${{ inputs.networks }}
-        INPUT_FILE: ${{ inputs.input-file }}
-        INPUT_FORMAT: ${{ inputs.input-format }}
-        OUTPUT_FORMAT: ${{ inputs.output-format }}
 outputs:
   format-response:
     description: "A formatted thread"
