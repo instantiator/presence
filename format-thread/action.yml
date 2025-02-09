@@ -1,0 +1,40 @@
+name: 'Format a thread'
+description: 'Formats a thread using the latest version of Presence.SocialFormat.Console'
+inputs:
+  input-file:
+    description: 'Path to a file containing input content'
+    required: false
+  networks:
+    description: 'A comma-separated list of networks to format for'
+    required: true
+  input-format:
+    description: 'The format of the input content'
+    required: true
+  output-format:
+    description: 'The format of the output content (default: JSON)'
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - name: Download latest binaries
+      shell: bash
+      run: |
+        # if the format binary is not found, download the latest binaries
+        [[ ! $(type -P "Presence.SocialFormat.Console") ]] && \
+          wget https://raw.githubusercontent.com/instantiator/presence/refs/heads/main/download-latest-binaries.sh && \
+          chmod +x download-latest-binaries.sh && \
+          ./download-latest-binaries.sh --system linux-x64 --target-directory .
+    - name: Format thread
+      id: format-thread
+      shell: bash
+      run: |
+        THREAD=Presence.SocialFormat.Console \
+          --networks ${{ inputs.networks }} \
+          ${${{ inputs.input-file }}:+"--input-file" "${{ inputs.input-file }}"} \
+          ${${{ inputs.input-format }}:+"--input-format" "${{ inputs.input-format }}"} \
+          ${${{ inputs.output-format }}:+"--output-format" "${{ inputs.output-format }}"}
+        echo "thread=$(echo $THREAD)" >> "$GITHUB_OUTPUT"
+outputs:
+  format-response:
+    description: "A formatted thread"
+    value: ${{ steps.format-thread.outputs.thread }}

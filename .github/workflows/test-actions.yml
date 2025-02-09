@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: test-actions
+on:
+  workflow_dispatch:
+
+jobs:
+  format-simple-thread:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Format sample thread
+        id: format-thread
+        uses: instantiator/presence/format-thread@main
+        with:
+          input-file: 'SampleData/SimpleThread.md'
+          networks: 'Console'
+      - name: Print formatted thread
+        run: echo "${{ steps.format-thread.outputs.format-response }}"
