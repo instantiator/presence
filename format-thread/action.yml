@@ -33,7 +33,7 @@ runs:
         INPUT_FORMAT: ${{ inputs.input-format }}
         OUTPUT_FORMAT: ${{ inputs.output-format }}
       run: |
-        export THREAD=$(./bin/Presence.SocialFormat.Console --networks $NETWORKS ${INPUT_FILE:+"--input-file $INPUT_FILE" } ${INPUT_FORMAT:+"--input-format $INPUT_FORMAT" } ${OUTPUT_FORMAT:+"--output-format $OUTPUT_FORMAT" })
+        export THREAD=$(./bin/Presence.SocialFormat.Console --networks $NETWORKS ${INPUT_FILE:+"--input-file" "$INPUT_FILE" } ${INPUT_FORMAT:+"--input-format" "$INPUT_FORMAT" } ${OUTPUT_FORMAT:+"--output-format" "$OUTPUT_FORMAT" })
         echo "thread=$(echo $THREAD)" >> "$GITHUB_OUTPUT"
 outputs:
   format-response:
