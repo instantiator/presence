@@ -3,15 +3,18 @@ description: 'Formats a thread using the latest version of Presence.SocialFormat
 inputs:
   networks:
     description: 'A comma-separated list of networks to format for'
-    required: true
+    required: true  
   input-file:
     description: 'Path to a file containing input content'
     required: false
+  input-content:
+    description: 'Input content to format (if no input-file is provided)'
+    required: false
   input-format:
-    description: 'The format of the input content'
+    description: 'The format of the input content (required if input-file is not provided)'
     required: false
   output-format:
-    description: 'The format of the output content (default: JSON)'
+    description: 'The format of the output content (default: JSON - as required by the instantiator/presence/post-thread action)'
     required: false
 runs:
   using: "composite"
@@ -31,10 +34,40 @@ runs:
       env:
         NETWORKS: ${{ inputs.networks }}
         INPUT_FILE: ${{ inputs.input-file }}
+        INPUT_CONTENT: ${{ inputs.input-content }}
         INPUT_FORMAT: ${{ inputs.input-format }}
         OUTPUT_FORMAT: ${{ inputs.output-format }}
       run: |
-        export THREAD=$(./bin/Presence.SocialFormat.Console --networks $NETWORKS ${INPUT_FILE:+"--input-file" "$INPUT_FILE" } ${INPUT_FORMAT:+"--input-format" "$INPUT_FORMAT" } ${OUTPUT_FORMAT:+"--output-format" "$OUTPUT_FORMAT" })
+        # validate inputs
+        
+        if [[ -z "$INPUT_FILE" && -z "$INPUT_CONTENT" ]]; then
+          echo "Either input-file or input-content must be provided"
+          exit 1
+        fi
+        if [[ -n "$INPUT_FILE" && -n "$INPUT_CONTENT" ]]; then
+          echo "Only one of input-file or input-content can be provided"
+          exit 1
+        fi
+        if [[ -n "$INPUT_CONTENT" && -z "$INPUT_FORMAT" ]]; then
+          echo "input-format must be provided if input-content is provided"
+          exit 1
+        fi
+        if [[ -n "$INPUT_FILE" && -n "$INPUT_FORMAT" ]]; then
+          echo "input-format is ignored when input-file is provided"
+        fi
+
+        # if input content is provided, push it into a temporary file and update INPUT_FILE
+        if [[ -n "$INPUT_CONTENT" ]]; then
+          export TMP_CONTENT_PATH=$(mktemp)
+          echo "$INPUT_CONTENT" > $TMP_CONTENT_PATH
+          export INPUT_FILE=$TMP_CONTENT_PATH
+        fi
+
+        export THREAD=$(./bin/Presence.SocialFormat.Console \
+          --networks $NETWORKS \
+          ${INPUT_FILE:+"--input-file" "$INPUT_FILE" } \
+          ${INPUT_FORMAT:+"--input-format" "$INPUT_FORMAT" } \
+          ${OUTPUT_FORMAT:+"--output-format" "$OUTPUT_FORMAT" })
         echo "format-response=$(echo $THREAD)" >> "$GITHUB_OUTPUT"
         if [[ $(echo $THREAD | jq -r '.fullSuccess') != "true" ]]; then
           echo $THREAD

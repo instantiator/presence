@@ -34,6 +34,18 @@ Here the inputs, under `with:` provide key information:
 * `networks:` - a comma-separated list of networks to format a content for
 * `input-file:` - a source file providing the input content (here, it's in 'markdown-like' syntax)
 
+Alternatively, provide content directly rather than from a file:
+
+```yaml
+    input-format: 'MD'
+    input-content: |
+      This is a simple thread.
+
+      With two posts.
+```
+
+`input-content` and `input-file` are mutually exclusive. `input-format` is required if `input-content` is provided.
+
 For information about preparing content, see:
 
 * [Create threads with markdown](../guides/create-with-markdown.md)
@@ -58,19 +70,25 @@ This step will also need some configuration to tell it about network credentials
 
 You should provide credentials for all networks you intend to post to.
 
+It is recommended to store your social network credentials in GitHub Actions Secrets, to prevent their being discovered / abused.
+
 For information about configuration keys, see: [Network specific configuration](../guides/network-specifics.md)
 
 NB. If you have not provided a thread for each social network configured, the posts that can be sent will be sent, but the step will report failure.
 
 There are several ways to provide configuration:
 
-1. Provide all secrets as JSON _(simplest case)_
+1. Provide all secrets as JSON _(simplest option)_
 2. Craft the JSON configuration _(better control of your secrets)_
 3. As environment variables _(probably easiest to read)_
 
-#### 1. Provide all secrets as JSON _(simplest case)_
+#### 1. Provide all secrets as JSON _(simplest option)_
 
-If you've no other important secrets: provide all your secrets as a JSON object
+If you're confident you have no other important secrets in your repository, it's simplest to provide all your secrets as a JSON object.
+
+This is the approach shown in: [`on-push-test-actions.yml`](https://github.com/instantiator/presence/blob/main/.github/workflows/on-push-test-actions.yml)
+
+It's also the option that will require the least maintenance if you intend to add more credentials/secrets in future.
 
 ```yaml
 with:
@@ -80,9 +98,10 @@ with:
 
 #### 2. Craft the JSON configuration _(better control of your secrets)_
 
-This is the approach shown in: [`on-push-test-actions.yml`](https://github.com/instantiator/presence/blob/main/.github/workflows/on-push-test-actions.yml)
 
 Provide a single `config` input containing a JSON dictionary of all configuration.
+
+This is a little more complex, but allows you much better control of which information is passed to the action.
 
 ```yaml
 with:
@@ -93,6 +112,8 @@ with:
 #### 3. Provide environment variables _(probably easiest to read)_
 
 Pass individual secrets as environment variables.
+
+Similarly, this grants you item-by-item control of which information is passed to the action.
 
 ```yaml
 with:

@@ -17,19 +17,45 @@ jobs:
   format-simple-thread:
     runs-on: ubuntu-latest
     steps:
+      # 1. create and post a thread from input provided in the workflow
+
+      - name: Format a basic thread
+        id: format-basic-thread
+        uses: instantiator/presence/format-thread@main
+        with:
+          networks: 'Console,AT'
+          input-content: |
+            This is a simple thread posted from GitHub Actions, with a simple link: [Presence documentation](https://instantiator.dev/presence)
+
+            It contains a minimum of two posts. #Test #GHA #Posting #SocialNetworks #Presence
+          import-format: 'MD'
+      - name: Summarise basic thread formatting activity
+        run: echo "${{ steps.format-basic-thread.outputs.format-response }}"
+      - name: Post the basic thread to console
+        id: post-basic-thread
+        uses: instantiator/presence/post-thread@main
+        with:
+          thread: ${{ steps.format-basic-thread.outputs.format-response }}
+          config: ${{ toJson(secrets) }}
+      - name: Summarise the basic thread posting activity
+        run: echo "${{ steps.post-basic-thread.outputs.post-thread-summary }}"
+
+      # 2. create and post a thread from input provided from a file in the repository
+
       - uses: actions/checkout@v4
-      - name: Format sample thread
-        id: format-thread
+      - name: Format sample thread from file
+        id: format-sample-thread
         uses: instantiator/presence/format-thread@main
         with:
           networks: 'Console,AT'
           input-file: 'SampleData/SimpleThread.md'
-      - name: Post sample thread to console
-        id: post-thread
+      - name: Summarise sample thread formatting activity
+        run: echo "${{ steps.format-sample-thread.outputs.format-response }}"
+      - name: Post the sample thread to console
+        id: post-sample-thread
         uses: instantiator/presence/post-thread@main
         with:
-          thread: ${{ steps.format-thread.outputs.format-response }}
-          config: "{ \"PRESENCE_ACCOUNTS\": \"TEST0,TEST1\", \"TEST0_CONSOLE_PRINTPREFIX\": \"[TEST0-GHA]\", \"TEST1_AT_ACCOUNTNAME\": \"${{ secrets.TEST1_AT_ACCOUNTNAME }}\", \"TEST1_AT_APPPASSWORD\": \"${{ secrets.TEST1_AT_APPPASSWORD }}\" }"
-      - name: Summarise activity
-        id: summarise
-        run: echo "${{ steps.post-thread.outputs.post-thread-summary }}"
+          thread: ${{ steps.format-sample-thread.outputs.format-response }}
+          config: ${{ toJson(secrets) }}
+      - name: Summarise the sample thread posting activity
+        run: echo "${{ steps.post-sample-thread.outputs.post-thread-summary }}"
