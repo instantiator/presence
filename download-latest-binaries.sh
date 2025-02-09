@@ -92,4 +92,5 @@ for BINARY in "${BINARIES[@]}"; do
   echo "Copying from: ${TMP_DIR}/release/${SYSTEM}/${BINARY_FILE}"
   echo "Copying to:   ${TARGET_DIRECTORY}/${BINARY_FILE}"
   cp ${TMP_DIR}/release/${SYSTEM}/${BINARY_FILE} ${TARGET_DIRECTORY}/${BINARY_FILE}
+  chmod +x ${TARGET_DIRECTORY}/${BINARY_FILE}
 done
