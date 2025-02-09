@@ -15,5 +15,12 @@ jobs:
         with:
           networks: 'Console'
           input-file: 'SampleData/SimpleThread.md'
-      - name: Print formatted thread
-        run: echo "${{ steps.format-thread.outputs.format-response }}"
+      - name: Post sample thread to console
+        id: post-thread
+        uses: instantiator/presence/post-thread@main
+        with:
+          thread: ${{ steps.format-thread.outputs.format-response }}
+          config: ${{ toJson(secrets) }}
+      - name: Summarise activity
+        id: summarise
+        run: echo "${{ steps.post-thread.outputs.post-thread-summary }}"

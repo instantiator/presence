@@ -1,0 +1,33 @@
+name: 'Format a thread'
+description: 'Formats a thread using the latest version of Presence.SocialFormat.Console'
+inputs:
+  thread:
+    description: 'A formatted thread (JSON)'
+    required: true
+  config:
+    description: 'A JSON dictionary object of configuration strings'
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - name: Download latest binaries
+      shell: bash
+      run: |
+        # if the format binary is not found, download the latest binaries
+        [[ ! $(type -P "Presence.SocialFormat.Console") ]] && \
+          wget https://raw.githubusercontent.com/instantiator/presence/refs/heads/main/download-latest-binaries.sh && \
+          chmod +x download-latest-binaries.sh && \
+          ./download-latest-binaries.sh --system linux-x64 --target-directory ./bin
+    - name: Post thread
+      id: post-thread
+      shell: bash
+      env:
+        THREAD: ${{ inputs.thread }}
+        CONFIG: ${{ inputs.config }}
+      run: |
+        export SUMMARY=$(echo ${THREAD} | ./bin/Presence.Posting.Console --json-config "${CONFIG}")
+        echo "summary=$(echo $SUMMARY)" >> "$GITHUB_OUTPUT"
+outputs:
+  post-thread-summary:
+    description: "A summary of posting activity"
+    value: ${{ steps.post-thread.outputs.summary }}
