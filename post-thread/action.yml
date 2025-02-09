@@ -27,8 +27,11 @@ runs:
         CONFIG: ${{ inputs.config }}
       run: |
         export SUMMARY=$(echo ${THREAD} | ./bin/Presence.Posting.Console --json-config "${CONFIG}")
-        echo "summary=$(echo $SUMMARY)" >> "$GITHUB_OUTPUT"
+        echo "post-thread-summary=$(echo $SUMMARY)" >> "$GITHUB_OUTPUT"
+        if [[ $(echo $SUMMARY | jq -r '.FullSuccess') != "true" ]]; then
+          exit 1
+        fi
 outputs:
   post-thread-summary:
     description: "A summary of posting activity"
-    value: ${{ steps.post-thread.outputs.summary }}
+    value: ${{ steps.post-thread.outputs.post-thread-summary }}

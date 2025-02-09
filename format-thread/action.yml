@@ -35,8 +35,11 @@ runs:
         OUTPUT_FORMAT: ${{ inputs.output-format }}
       run: |
         export THREAD=$(./bin/Presence.SocialFormat.Console --networks $NETWORKS ${INPUT_FILE:+"--input-file" "$INPUT_FILE" } ${INPUT_FORMAT:+"--input-format" "$INPUT_FORMAT" } ${OUTPUT_FORMAT:+"--output-format" "$OUTPUT_FORMAT" })
-        echo "thread=$(echo $THREAD)" >> "$GITHUB_OUTPUT"
+        echo "format-response=$(echo $THREAD)" >> "$GITHUB_OUTPUT"
+        if [[ $(echo $THREAD | jq -r '.fullSuccess') != "true" ]]; then
+          exit 1
+        fi
 outputs:
   format-response:
     description: "A formatted thread"
-    value: ${{ steps.format-thread.outputs.thread }}
+    value: ${{ steps.format-thread.outputs.format-response }}
