@@ -29,6 +29,7 @@ runs:
         export SUMMARY=$(echo ${THREAD} | ./bin/Presence.Posting.Console --json-config "${CONFIG}")
         echo "post-thread-summary=$(echo $SUMMARY)" >> "$GITHUB_OUTPUT"
         if [[ $(echo $SUMMARY | jq -r '.FullSuccess') != "true" ]]; then
+          echo $SUMMARY
           exit 1
         fi
 outputs:
