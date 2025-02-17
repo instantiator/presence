@@ -1,7 +1,7 @@
 using Presence.SocialFormat.Lib.Post;
 using Presence.SocialFormat.Lib.Thread.Composition;
 
-namespace Presence.SocialFormat.Lib.Networks;
+namespace Presence.SocialFormat.Lib.Networks.Console;
 
 public class ConsoleThreadComposer : SimpleThreadComposer
 {

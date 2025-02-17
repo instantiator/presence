@@ -25,7 +25,10 @@ This tool is commonly used with `Presence.SocialFormat.Console` which can provid
   - a path to a `.env` file, with the `-e` / `--env-file` parameter, or
   - a JSON dictionary object, with the `-j` / `--json-config` parameter
 
-See also: [Network specific configuration](../guides/network-specifics.md)
+See also:
+
+* [Network specific configuration](../guides/network-specifics.md)
+* [Network specific constraints](../guides/network-constraints.md)
 
 ## Output
 

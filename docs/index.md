@@ -57,23 +57,32 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 - [Using `Presence.SocialFormat.Console`](cli/presence-social-format-console.md)
 - [Using `Presence.Posting.Console`](cli/presence-posting-console.md)
 
-### .NET library user guide
+### .NET library and user guides
 
 - [Install packages from Nuget](guides/install-packages.md)
 - [Create a thread with `Presence.SocialFormat.Lib`](guides/create-thread.md)
 - [Create posts with images](guides/create-images.md)
 - [Create threads with markdown](guides/create-with-markdown.md)
 - [Post to a social network with `Presence.Posting.Lib`](guides/send-post.md)
-- [Network specific configuration](guides/network-specifics.md)
 
-## Developer notes
+### Configuration
+
+- [Network specific constraints](guides/network-constraints.md)
+- [Network specific configuration](guides/network-specifics.md)
+  - [Set up a `Console` network](guides/networks/setup-console.md)
+  - [Set up an `AT` network](guides/networks/setup-at.md)
+  - [Set up a `Slack` network](guides/networks/setup-slack.md)
+
+### Developer notes
 
 - [Presence project](https://github.com/users/instantiator/projects/1/views/1)
 - [Contributing guidelines](CONTRIBUTING.md)
 - [Package versioning](dev-notes/package-versioning.md)
 - [Testing](dev-notes/testing.md)
 
-### Projects
+## Solution projects
+
+The solution file `Presence.sln` contains a number of projects, found in this repository:
 
 | Project                         | Purpose                                                                            | Project README                                                                                       |
 | ------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |

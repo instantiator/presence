@@ -40,7 +40,10 @@ Examples of supported networks are:
 
 NB. JSON is most useful if you intend to post using `Presence.Posting.Console`
 
-See also: [SampleData](https://github.com/instantiator/presence/tree/main/SampleData)
+See also:
+
+* [Network specific constraints](../guides/network-constraints.md)
+* [SampleData](https://github.com/instantiator/presence/tree/main/SampleData)
 
 ## Examples
 

@@ -11,7 +11,8 @@ public class ConsoleConnection : AbstractNetworkConnection
     {
     }
 
-    public override bool Connected => true;
+    private bool connected = false;
+    public override bool Connected => connected;
 
     public override async Task<INetworkPostReference> PostAsync(CommonPost post, INetworkPostReference? replyTo = default)
     {
@@ -35,8 +36,9 @@ public class ConsoleConnection : AbstractNetworkConnection
 
     protected override async Task<bool> ConnectImplementationAsync(INetworkAccount account)
     {
+        connected = true;
         System.Console.Error.WriteLine($"{Account[NetworkCredentialType.PrintPrefix]} Connected: {account.AccountPrefix}");
-        return true;
+        return Connected;
     }
 
     protected override async Task DisconnectImplementationAsync()

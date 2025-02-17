@@ -6,6 +6,7 @@ using Presence.Posting.Lib.Connections;
 using Presence.Posting.Lib.Connections.AT;
 using Presence.Posting.Lib.Constants;
 using Presence.SocialFormat.Lib.Networks;
+using Presence.SocialFormat.Lib.Networks.AT;
 using Presence.SocialFormat.Lib.Post;
 
 namespace Presence.Posting.Lib.Tests;

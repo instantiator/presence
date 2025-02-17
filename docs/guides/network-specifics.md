@@ -2,6 +2,8 @@
 
 All configuration to Presence is provided as key-value pairs, through environment variables, a `.env` formatted file, or in a JSON-formatted command-line parameter.
 
+For information about each network's limitations, see: [Network specific constraints](network-constraints.md)
+
 ## Accounts
 
 Presence supports multiple accounts.
@@ -29,50 +31,19 @@ For example:
 - The account prefix is: `TEST1`
 - The network is: `AT` (ie. BlueSky)
 - The credential type is: `AccountName`
+- Each part of the key is separated by an `_` underscore character
 
-These combined to give a key of: `TEST1_AT_AccountName`
+These combine to give a key of: `TEST1_AT_AccountName`
 
 ## Networks
 
 Each network requires specific configuration keys.
 
-### `Console` network
+See:
 
-The Console network is used to test threads by printing to your console instead of posting to a social network.
-
-The Network is always: `Console`
-
-| Credential type | Req      | Value                                                         |
-| --------------- | -------- | ------------------------------------------------------------- |
-| `PrintPrefix`   | Required | A short piece of text to print at the beginning of each line. |
-
-eg. The following line defines the `PrintPrefix` key and value in a `.env` configuration file:
-
-```env
-TEST0_Console_PrintPrefix="Console>"
-```
-
-### `AT` (BlueSky) network
-
-Create an application password for your account in **Privacy & Security** settings in BlueSky.
-
-The Network is always: `AT`
-
-| Credential type | Req      | Value                                                     |
-| --------------- | -------- | --------------------------------------------------------- |
-| `AccountName`   | Required | Your account name, eg. `instantiator.bsky.social`         |
-| `AppPassword`   | Required | An application password created in your account           |
-| `Server`        |          | The AT network server to connect to, if not `bsky.social` |
-
-eg. The following line defines the `AccountName` variable for an `AT` account with prefix `TEST1`, in the format of a `.env` configuration file:
-
-```env
-TEST1_AT_AccountName="presence-lib-test.bsky.social"
-```
-
-You must provide both `AccountName` and `AppPassword` to be able to connect to an AT network.
-
-The `Server` value is optional, and can be used to indicate the AT service the account is with, if it is not `bsky.social`.
+* [Set up a `Console` network](networks/setup-console.md)
+* [Set up an `AT` network](networks/setup-at.md)
+* [Set up a `Slack` network](networks/setup-slack.md)
 
 ## Configuration variables
 

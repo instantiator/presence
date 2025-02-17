@@ -3,7 +3,6 @@ using Presence.SocialFormat.Lib.Constants;
 using Presence.SocialFormat.Lib.IO;
 using Presence.SocialFormat.Lib.Networks;
 using Presence.SocialFormat.Lib.Thread.Builder;
-using Presence.SocialFormat.Lib.Thread.Composition;
 
 namespace Presence.SocialFormat.Console;
 
