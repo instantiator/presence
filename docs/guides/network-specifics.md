@@ -37,7 +37,7 @@ These combine to give a key of: `TEST1_AT_AccountName`
 
 ## Networks
 
-Each network requires specific configuration keys.
+Each network requires specific configuration keys, which relate to the configuration required to connect to and post to the network.
 
 See:
 
@@ -45,7 +45,7 @@ See:
 * [Set up an `AT` network](networks/setup-at.md)
 * [Set up a `Slack` network](networks/setup-slack.md)
 
-## Configuration variables
+## Configuration by variables
 
 `Presence.Posting.Console` accepts configuration variables through the environment or from a `.env` format configuration file.
 
