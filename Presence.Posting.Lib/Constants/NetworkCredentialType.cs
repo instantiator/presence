@@ -5,5 +5,6 @@ public enum NetworkCredentialType
     AccountName,
     AppPassword,
     Server,
-    PrintPrefix
+    PrintPrefix,
+    IncomingWebhookUrl
 }

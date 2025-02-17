@@ -8,13 +8,14 @@ namespace Presence.Posting.Lib.Connections;
 
 public class ATPostReference : INetworkPostReference
 {
-    public ATPostReference(CreateRecordOutput output, string server, string handle, CommonPost? origin = null, Post? atOrigin = null)
+    public ATPostReference(CreateRecordOutput output, string server, string handle, CommonPost? origin = null, Post? atOrigin = null, IEnumerable<NetworkPostNotification>? notifications = null)
     {
         Server = server;
         Handle = handle;
         Output = output;
         Origin = origin;
         AtOrigin = atOrigin;
+        Notifications = notifications ?? new List<NetworkPostNotification>();
     }
 
     public string Server;
@@ -39,4 +40,6 @@ public class ATPostReference : INetworkPostReference
     public SocialNetwork Network => SocialNetwork.AT;
 
     public string? Link => $"https://bsky.app/profile/{Handle}/post/{RKey}";
+
+    public IEnumerable<NetworkPostNotification> Notifications { get; private set; }
 }

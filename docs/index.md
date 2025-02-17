@@ -24,10 +24,23 @@ You can:
 
 ## Network support
 
-| Network   | Notes            | Thread composition | Thread posting | Image posting |
-| --------- | ---------------- | ------------------ | -------------- | ------------- |
-| `AT`      | ie. BlueSky      | ✅                 | ✅             | ✅            |
-| `Console` | Used for testing | ✅                 | ✅             | ✔️            |
+| Network        | Notes                    | Thread composition | Thread posting | Image posting   |
+| -------------- | ------------------------ | ------------------ | -------------- | --------------- |
+| `Console`      | Used for testing         | ✅                 | ✅             | ✔️              |
+| `AT`           | AT networks, eg. BlueSky | ✅                 | ✅             | ✅              |
+| `SlackWebhook` | Simple Slack posting     | ✅                 | ❌             | ½ (by URL only) |
+
+### Clarifications
+
+`SlackWebhook` does not yet support posting of threads.
+
+In practice this is almost irrelevant - Slack permits posts of up to 40,000 characters, which is significantly larger than many other social networks. If a post exceeds this limit, it will be continued in a subsequent top-level post.
+
+_The intended behavior, however, is to send subsequent posts as replies to the original message._
+
+`SlackWebhook` permits posting images by URL, but does not support upload of local images. Images that cannot be included in a post to slack will result in a warning.
+
+## OSS
 
 All code here is distributed under the [MIT](https://github.com/instantiator/presence/blob/main/LICENSE) license.
 

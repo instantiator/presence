@@ -43,6 +43,7 @@ public class ConsoleConnection : AbstractNetworkConnection
 
     protected override async Task DisconnectImplementationAsync()
     {
+        connected = false;
         System.Console.Error.WriteLine($"{Account[NetworkCredentialType.PrintPrefix]} Disconnect");
     }
 

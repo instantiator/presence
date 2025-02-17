@@ -30,7 +30,7 @@ public class SlackThreadComposer : SimpleThreadComposer
     };
 
     public SlackThreadComposer(ThreadCompositionRules? threadRules = null, PostRenderRules? postRules = null, ICounterCreator? counterCreator = null) : base(
-            SocialNetwork.Slack,
+            SocialNetwork.SlackWebhook,
             threadRules ?? SLACK_THREAD_COMPOSITION_RULES,
             postRules ?? SLACK_POST_RENDER_RULES,
             counterCreator)

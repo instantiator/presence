@@ -14,7 +14,7 @@ public class ComposerFactory
                 return new ConsoleThreadComposer();
             case SocialNetwork.AT:
                 return new ATThreadComposer();
-            case SocialNetwork.Slack:
+            case SocialNetwork.SlackWebhook:
                 return new SlackThreadComposer();
             default:
                 throw new NotImplementedException($"No composer implemented for network: {network}");

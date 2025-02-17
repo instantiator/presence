@@ -18,7 +18,6 @@ namespace Presence.Posting.Lib.Connections.AT;
 public class ATConnection : AbstractNetworkConnection
 {
     private const int RATE_ms = 1000;
-    private static DateTime lastAction = DateTime.MinValue;
 
     public Uri Server(INetworkAccount? account)
         => account?.ContainsKey(NetworkCredentialType.Server) == true && !string.IsNullOrWhiteSpace(account[NetworkCredentialType.Server])

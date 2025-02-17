@@ -76,8 +76,6 @@ public class ATConnectionTests
         var ref1 = await connection.PostAsync(post1, ref0);
         Assert.IsNotNull(ref1);
         Assert.IsFalse(string.IsNullOrWhiteSpace(ref1.NetworkReferences["rkey"]));
-
-        // Assert.Fail(JsonSerializer.Serialize((ref0 as ATPostReference)!.Output, new JsonSerializerOptions { WriteIndented = true }));
     }
 
     [TestMethod]

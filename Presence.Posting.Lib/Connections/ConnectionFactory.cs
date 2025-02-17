@@ -2,6 +2,7 @@ using System.Collections;
 using Presence.Posting.Lib.Config;
 using Presence.Posting.Lib.Connections.AT;
 using Presence.Posting.Lib.Connections.Console;
+using Presence.Posting.Lib.Connections.Slack;
 using Presence.Posting.Lib.Constants;
 using Presence.SocialFormat.Lib.Networks;
 
@@ -22,6 +23,7 @@ public class ConnectionFactory
         {
             SocialNetwork.Console => CreateConsole(prefix, credentials),
             SocialNetwork.AT => CreateAT(prefix, credentials),
+            SocialNetwork.SlackWebhook => CreateSlackWebhook(prefix, credentials),
             _ => throw new NotImplementedException($"Network {network} is not supported.")
         };
     }
@@ -31,4 +33,7 @@ public class ConnectionFactory
 
     public static ATConnection CreateAT(string prefix, IDictionary<NetworkCredentialType, string?> credentials)
         => new ATConnection(new ATAccount(prefix, credentials));
+
+    public static SlackWebhookConnection CreateSlackWebhook(string prefix, IDictionary<NetworkCredentialType, string?> credentials)
+        => new SlackWebhookConnection(new SlackWebhookAccount(prefix, credentials));
 }

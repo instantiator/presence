@@ -31,12 +31,12 @@ public class SlackThreadComposerTests
             Assert.IsTrue(thread.Posts.All(p => p.ComposeText().Length <= 40000));
             if (thread.Posts.Count() > 1)
             {
-                Assert.IsTrue(thread.Posts.All(p => p.Prefix.Count() == 1));
-                Assert.IsTrue(thread.Posts.All(p => p.Prefix.Single().SnippetType == SnippetType.Counter));
+                Assert.IsTrue(thread.Posts.All(p => p.Prefix.Concat(p.Suffix).Count() == 1));
+                Assert.IsTrue(thread.Posts.All(p => p.Prefix.Concat(p.Suffix).Single().SnippetType == SnippetType.Counter));
             }
             else
             {
-                Assert.IsTrue(thread.Posts.All(p => p.Prefix.Count() == 0));
+                Assert.IsTrue(thread.Posts.All(p => p.Prefix.Concat(p.Suffix).Count() == 0));
             }
         }
     }

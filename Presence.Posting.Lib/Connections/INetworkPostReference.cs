@@ -9,4 +9,5 @@ public interface INetworkPostReference
     public SocialNetwork Network { get; }
     public CommonPost? Origin { get; }
     public string? Link { get; }
+    public IEnumerable<NetworkPostNotification> Notifications { get; }
 }

@@ -11,8 +11,7 @@ public class ConsolePostReference : INetworkPostReference
     };
 
     public SocialNetwork Network => SocialNetwork.Console;
-
     public CommonPost? Origin { get; init; }
-
     public string? Link => "(printed to console)";
+    public IEnumerable<NetworkPostNotification> Notifications { get; private set; } = new List<NetworkPostNotification>();
 }

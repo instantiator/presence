@@ -4,5 +4,5 @@ public enum SocialNetwork
 {
     Console,
     AT,
-    Slack
+    SlackWebhook
 }
