@@ -16,6 +16,7 @@ on:
       - Presence.SocialFormat.Console/**
       - Presence.Posting.Lib/**
       - Presence.Posting.Console/**
+      - .github/workflows/on-push-test-actions.yaml
     
 jobs:
   format-simple-thread:

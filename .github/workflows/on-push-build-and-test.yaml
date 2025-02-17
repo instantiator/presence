@@ -3,6 +3,7 @@
 name: on-push-build-and-test
 on:
   workflow_dispatch:
+    
   push:
     branches:
       - "main"
@@ -12,6 +13,8 @@ on:
       - Presence.SocialFormat.Tests/**
       - Presence.Posting.Lib/**
       - Presence.Posting.Tests/**
+      - .github/workflows/on-push-build-and-test.yaml
+
   pull_request:
     branches:
       - "*"
@@ -22,6 +25,7 @@ on:
       - Presence.Posting.Lib/**
       - Presence.Posting.Console/**
       - Presence.Posting.Tests/**
+      - .github/workflows/on-push-build-and-test.yaml
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
