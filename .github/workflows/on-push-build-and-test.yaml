@@ -30,6 +30,7 @@ env:
   TEST0_Console_PrintPrefix: ${{ secrets.TEST0_Console_PrintPrefix }}
   TEST1_AT_AccountName: ${{ secrets.TEST1_AT_AccountName }}
   TEST1_AT_AppPassword: ${{ secrets.TEST1_AT_AppPassword }}
+  TEST2_TEST2_SlackWebhook_IncomingWebhookUrl: ${{ secrets.TEST2_SlackWebhook_IncomingWebhookUrl }}
 
 jobs:
   build-and-test:

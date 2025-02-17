@@ -12,6 +12,10 @@ on:
     paths:
       - format-thread/**
       - post-thread/**
+      - Presence.SocialFormat.Lib/**
+      - Presence.SocialFormat.Console/**
+      - Presence.Posting.Lib/**
+      - Presence.Posting.Console/**
     
 jobs:
   format-simple-thread:
@@ -47,7 +51,7 @@ jobs:
         id: format-sample-thread
         uses: instantiator/presence/format-thread@main
         with:
-          networks: 'Console,AT'
+          networks: 'Console,AT,SlackWebhook'
           input-file: 'SampleData/SimpleThread.md'
       - name: Summarise sample thread formatting activity
         run: echo "${{ steps.format-sample-thread.outputs.format-response }}"

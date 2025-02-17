@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Presence.Posting.Lib.Config;
 using Presence.Posting.Lib.Connections;
 using Presence.Posting.Lib.Connections.Slack;
@@ -15,9 +16,16 @@ public class SlackConnectionTests
     public void Environment_Contains_SlackWebhookConnectionConfig()
     {
         var env = Environment.GetEnvironmentVariables();
-        var account = new SlackWebhookAccount("TEST2", new EnvironmentConfigReader(env)["TEST2"][SocialNetwork.SlackWebhook]);
-        var (ok, errors) = account.Validate();
-        Assert.IsTrue(ok, string.Join(", ", errors));
+        try
+        {
+            var account = new SlackWebhookAccount("TEST2", new EnvironmentConfigReader(env)["TEST2"][SocialNetwork.SlackWebhook]);
+            var (ok, errors) = account.Validate();
+            Assert.IsTrue(ok, string.Join(", ", errors));
+        }
+        catch (Exception e)
+        {
+            Assert.Fail(string.Join('\n', e.Message, JsonSerializer.Serialize(env, new JsonSerializerOptions { WriteIndented = true })));
+        }
     }
 
     [TestMethod]
