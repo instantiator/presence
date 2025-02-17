@@ -28,7 +28,7 @@ jobs:
         id: format-basic-thread
         uses: instantiator/presence/format-thread@main
         with:
-          networks: 'Console,AT'
+          networks: 'Console,AT,SlackWebhook'
           input-format: 'MD'
           input-content: |
             This is a simple thread posted from GitHub Actions, with a simple link: [Presence documentation](https://instantiator.dev/presence)

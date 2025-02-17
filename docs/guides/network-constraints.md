@@ -24,4 +24,4 @@ Each network's rate-limiting mechanism works differently. The quick summaries in
 | --------------- | ----------------------- | ---------------------------------- | ----------------------------------------------------------------------------------- |
 | `Console`       | `ConsoleThreadComposer` | ∞                                  | N/A                                                                                 |
 | `AT`            | `ATThreadComposer`      | 1666 creates/hr, 11666 creates/day | [Rate limits](https://docs.bsky.app/docs/advanced-guides/rate-limits) (BlueSky API) |
-| `Slack`         | `SlackThreadComposer`   | 1 post/sec (short busts < 1/sec)   | [Rate limits](https://api.slack.com/apis/rate-limits) (Slack API)                   |
+| `SlackWebhook`  | `SlackThreadComposer`   | 1 post/sec (short busts < 1/sec)   | [Rate limits](https://api.slack.com/apis/rate-limits) (Slack API)                   |
