@@ -1,10 +1,5 @@
 <div style="float: right; margin-left: 2rem; text-align: center;">
-  <img src="images/icon.png" alt="The Presence icon (for now) - an envelope, with thick purple outlines, on a white-to-light-purple gradient" style="width: 100%; height: auto;" />
-
-[![Stars badge](https://img.shields.io/github/stars/instantiator/presence)](https://github.com/instantiator/presence)
-
-![Forks badge](https://img.shields.io/github/forks/instantiator/presence)
-
+  <img src="images/icon.png" alt="The Presence icon (for now) - an envelope, with thick purple outlines, on a white-to-light-purple gradient" />
 </div>
 
 # Presence
@@ -12,6 +7,8 @@
 [![License badge](https://img.shields.io/github/license/instantiator/presence)](https://github.com/instantiator/presence)
 [![Commit activity badge](https://img.shields.io/github/commit-activity/m/instantiator/presence)](https://github.com/instantiator/presence)
 [![Last commit badge](https://img.shields.io/github/last-commit/instantiator/presence/main)](https://github.com/instantiator/presence)
+[![Stars badge](https://img.shields.io/github/stars/instantiator/presence)](https://github.com/instantiator/presence)
+![Forks badge](https://img.shields.io/github/forks/instantiator/presence)
 
 Presence is a set of .NET libraries and tools for formatting and sharing threads across social networks.
 
