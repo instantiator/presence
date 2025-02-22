@@ -41,18 +41,25 @@ You can:
 <details>
   <summary><b>⏳ Clarifications...</b></summary>
   <br/>
-
-  * **The `Console` network does not really post images.**
-    * It indicates the source of the image that would have been posted. This is the intended behaviour.
-
-  * **`SlackWebhook` does not yet support posting of threads.**
-    * In practice this is almost irrelevant - Slack permits posts of up to 40,000 characters, which is significantly larger than many other social networks. If a post exceeds this limit, it will be continued in a subsequent top-level post.
-    * _The intended behavior, however, is to send subsequent posts as replies to the original message._
-
-  * **`SlackWebhook` permits posting images by URL, but does not support upload of local images.**
-    * Images that cannot be included in a post to slack will result in a warning.
-    * A good solution for this will [need a little investigation](https://github.com/instantiator/presence/issues/35#issue-2871104974).
-
+  <ul>
+    <li><b>The <code>Console</code> network does not really post images.</b>
+      <ul>
+        <li>It indicates the source of the image that would have been posted. This is the intended behaviour.</li>
+      </ul>
+    </li>
+    <li><b><code>SlackWebhook</code> does not yet support posting of threads.</b>
+      <ul>
+        <li>In practice this is almost irrelevant - Slack permits posts of up to 40,000 characters, which is significantly larger than many other social networks. If a post exceeds this limit, it will be continued in a subsequent top-level post.</li>
+        <li><i>The intended behavior, however, is to send subsequent posts as replies to the original message.</i></li>
+      </ul>
+    </li>
+    <li><b><code>SlackWebhook</code> permits posting images by URL, but does not support upload of local images.</b>
+      <ul>
+        <li>Images that cannot be included in a post to slack will result in a warning.</li>
+        <li>A good solution for this will <a href="https://github.com/instantiator/presence/issues/35#issue-2871104974">need a little investigation</a>.</li>
+      </ul>
+    </li>
+  </ul>
 </details>
 
 ## Status
