@@ -7,8 +7,15 @@
 [![License badge](https://img.shields.io/github/license/instantiator/presence)](https://github.com/instantiator/presence)
 [![Commit activity badge](https://img.shields.io/github/commit-activity/m/instantiator/presence)](https://github.com/instantiator/presence)
 [![Last commit badge](https://img.shields.io/github/last-commit/instantiator/presence/main)](https://github.com/instantiator/presence)
-[![Stars badge](https://img.shields.io/github/stars/instantiator/presence)](https://github.com/instantiator/presence)
-![Forks badge](https://img.shields.io/github/forks/instantiator/presence)
+
+<!-- [![Stars badge](https://img.shields.io/github/stars/instantiator/presence)](https://github.com/instantiator/presence)
+![Forks badge](https://img.shields.io/github/forks/instantiator/presence) -->
+
+<a class="github-button" href="https://github.com/instantiator/presence" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-show-count="true" aria-label="Star instantiator/presence on GitHub">Star</a>
+<a class="github-button" href="https://github.com/instantiator/presence/fork" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork instantiator/presence on GitHub">Fork</a>
+<a class="github-button" href="https://github.com/instantiator/presence/subscription" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-eye" data-show-count="true" aria-label="Watch instantiator/presence on GitHub">Watch</a>
+<a class="github-button" href="https://github.com/instantiator/presence/issues" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-issue-opened" aria-label="Issue instantiator/presence on GitHub">Issue</a>
+<a class="github-button" href="https://github.com/instantiator/presence/discussions" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-comment-discussion" aria-label="Discuss instantiator/presence on GitHub">Discuss</a>
 
 Presence is a set of .NET libraries and tools for formatting and sharing threads across social networks.
 
@@ -128,3 +135,6 @@ _Dependencies for each project are listed in each project's `README`._
 
 - Post / envelope icon from [icons8.com](https://icons8.com)
 - Huge thanks to [Gérald Barré](https://bsky.app/profile/meziantou.net) ([meziantou](https://github.com/meziantou)) for this excellent article: [Publishing a Nuget Package](https://www.meziantou.net/publishing-a-nuget-package-following-best-practices-using-github.htm)
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
