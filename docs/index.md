@@ -1,6 +1,17 @@
-<img src="images/icon.png" style="float: right;" alt="The Presence icon (for now) - an envelope, with thick purple outlines, on a white-to-light-purple gradient" />
+<div style="float: right; margin-left: 2rem; text-align: center;">
+  <img src="images/icon.png" alt="The Presence icon (for now) - an envelope, with thick purple outlines, on a white-to-light-purple gradient" style="width: 100%; height: auto;" />
+
+[![Stars badge](https://img.shields.io/github/stars/instantiator/presence)](https://github.com/instantiator/presence)
+
+![Forks badge](https://img.shields.io/github/forks/instantiator/presence)
+
+</div>
 
 # Presence
+
+[![License badge](https://img.shields.io/github/license/instantiator/presence)](https://github.com/instantiator/presence)
+[![Commit activity badge](https://img.shields.io/github/commit-activity/m/instantiator/presence)](https://github.com/instantiator/presence)
+[![Last commit badge](https://img.shields.io/github/last-commit/instantiator/presence/main)](https://github.com/instantiator/presence)
 
 Presence is a set of .NET libraries and tools for formatting and sharing threads across social networks.
 
@@ -24,39 +35,40 @@ You can:
 
 ## Network support
 
-| Network        | Notes                    | Thread composition | Thread posting | Image posting   |
-| -------------- | ------------------------ | ------------------ | -------------- | --------------- |
-| `Console`      | Used for testing         | ✅                 | ✅             | ✔️              |
-| `AT`           | AT networks, eg. BlueSky | ✅                 | ✅             | ✅              |
-| `SlackWebhook` | Simple Slack posting     | ✅                 | ❌             | ½ (by URL only) |
+| Network        | Notes                    | Thread composition | Thread posting | Image posting |
+| -------------- | ------------------------ | ------------------ | -------------- | ------------- |
+| `Console`      | Used for testing         | ✅                 | ✅             | ✔️            |
+| `AT`           | AT networks, eg. BlueSky | ✅                 | ✅             | ✅            |
+| `SlackWebhook` | Simple Slack posting     | ✅                 | ⏳             | ⏳            |
 
-### Clarifications
+<details>
+  <summary><b>⏳ Clarifications...</b></summary>
+  <br/>
 
-`SlackWebhook` does not yet support posting of threads.
+  * **The `Console` network does not really post images.**
+    * It indicates the source of the image that would have been posted. This is the intended behaviour.
 
-In practice this is almost irrelevant - Slack permits posts of up to 40,000 characters, which is significantly larger than many other social networks. If a post exceeds this limit, it will be continued in a subsequent top-level post.
+  * **`SlackWebhook` does not yet support posting of threads.**
+    * In practice this is almost irrelevant - Slack permits posts of up to 40,000 characters, which is significantly larger than many other social networks. If a post exceeds this limit, it will be continued in a subsequent top-level post.
+    * _The intended behavior, however, is to send subsequent posts as replies to the original message._
 
-_The intended behavior, however, is to send subsequent posts as replies to the original message._
+  * **`SlackWebhook` permits posting images by URL, but does not support upload of local images.**
+    * Images that cannot be included in a post to slack will result in a warning.
+    * A good solution for this will [need a little investigation](https://github.com/instantiator/presence/issues/35#issue-2871104974).
 
-`SlackWebhook` permits posting images by URL, but does not support upload of local images. Images that cannot be included in a post to slack will result in a warning.
-
-## OSS
-
-All code here is distributed under the [MIT](https://github.com/instantiator/presence/blob/main/LICENSE) license.
-
-Source code is at: [instantiator/presence](https://github.com/instantiator/presence)
+</details>
 
 ## Status
 
-> **Warning.** This project is currently under development - libraries are not production-ready yet.
+> **NB. This project is currently under development.** Libraries are not production-ready yet.
 
-| Artefact           | Type            | Location                                                                                                        | Status                                                                                                                                                                                                                             |
-| ------------------ | --------------- | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Latest source      | GitHub workflow | [Latest build and test](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml) | ![Build and test](https://img.shields.io/github/actions/workflow/status/instantiator/presence/on-push-build-and-test.yaml?label=Build%20and%20test)                                                                                |
+| Artefact           | Type            | Location                                                                                                        | Status                                                                                                                                                                                                                           |
+| ------------------ | --------------- | --------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Latest source      | GitHub workflow | [Latest build and test](https://github.com/instantiator/presence/actions/workflows/on-push-build-and-test.yaml) | ![Build and test](https://img.shields.io/github/actions/workflow/status/instantiator/presence/on-push-build-and-test.yaml?label=Build%20and%20test)                                                                              |
 | CLI binaries       | Homebrew tap    | [presence-cli formula](https://github.com/instantiator/homebrew-presence)                                       | ![Homebrew tap](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/instantiator/homebrew-presence/main/Info/presence-cli.json&query=$.versions.stable&label=instantiator/presence/presence-cli) |
-| CLI binaries       | GitHub release  | [Latest release](https://github.com/instantiator/presence/releases/latest)                                      | ![GitHub Release](https://img.shields.io/github/v/release/instantiator/presence?include_prereleases&label=instantiator/presence:latest)                                                                                            |
-| Formatting library | Nuget package   | [`Presence.SocialFormat.Lib`](https://www.nuget.org/packages/Presence.SocialFormat.Lib/)                        | ![NuGet Version](https://img.shields.io/nuget/v/Presence.SocialFormat.Lib?label=Presence.SocialFormat.Lib)                                                                                                                         |
-| Posting library    | Nuget package   | [`Presence.Posting.Lib`](https://www.nuget.org/packages/Presence.Posting.Lib/)                                  | ![NuGet Version](https://img.shields.io/nuget/v/Presence.Posting.Lib?label=Presence.Posting.Lib)                                                                                                                                   |
+| CLI binaries       | GitHub release  | [Latest release](https://github.com/instantiator/presence/releases/latest)                                      | ![GitHub Release](https://img.shields.io/github/v/release/instantiator/presence?include_prereleases&label=instantiator/presence:latest)                                                                                          |
+| Formatting library | Nuget package   | [`Presence.SocialFormat.Lib`](https://www.nuget.org/packages/Presence.SocialFormat.Lib/)                        | ![NuGet Version](https://img.shields.io/nuget/v/Presence.SocialFormat.Lib?label=Presence.SocialFormat.Lib)                                                                                                                       |
+| Posting library    | Nuget package   | [`Presence.Posting.Lib`](https://www.nuget.org/packages/Presence.Posting.Lib/)                                  | ![NuGet Version](https://img.shields.io/nuget/v/Presence.Posting.Lib?label=Presence.Posting.Lib)                                                                                                                                 |
 
 ## All documentation
 
@@ -93,9 +105,9 @@ Source code is at: [instantiator/presence](https://github.com/instantiator/prese
 - [Package versioning](dev-notes/package-versioning.md)
 - [Testing](dev-notes/testing.md)
 
-## Solution projects
+## Source code
 
-The solution file `Presence.sln` contains a number of projects, found in this repository:
+All code in this project is distributed under the [MIT](https://github.com/instantiator/presence/blob/main/LICENSE) license. Source code is available at: [instantiator/presence](https://github.com/instantiator/presence)
 
 | Project                         | Purpose                                                                            | Project README                                                                                       |
 | ------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
