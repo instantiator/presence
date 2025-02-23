@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
+using Corvus.Json;
+using Presence.Posting.Lib.Connections.Slack.BlockKit;
 using Presence.Posting.Lib.Constants;
 using Presence.SocialFormat.Lib.Helpers;
 using Presence.SocialFormat.Lib.Post;
@@ -30,12 +32,12 @@ public class SlackWebhookConnection : AbstractNetworkConnection
         RequireAuthenticated();
 
         // TODO: upload local images (when implemented)
-        var (blocks, notifications) = ComposeBlocks(post);
+        var (text, blocks, notifications) = ComposeBlocks(post);
 
-        var slackPost = new SlackWebhookPost
+        var slackPost = new
         {
-            text = post.ComposeText(),
-            blocks = blocks
+            text,
+            blocks
         };
 
         var json = JsonSerializer.Serialize(slackPost);
@@ -54,86 +56,106 @@ public class SlackWebhookConnection : AbstractNetworkConnection
         return new SlackWebhookPostReference(null, post);
     }
 
-    protected (IEnumerable<SlackWebhookPostBlock>, IEnumerable<NetworkPostNotification>) ComposeBlocks(CommonPost post)
+    protected (string, JsonAny[], IEnumerable<NetworkPostNotification>) ComposeBlocks(CommonPost post)
     {
-        var blocks = new List<SlackWebhookPostBlock>();
-        var notifications = new List<NetworkPostNotification>();
-        var allItems = post.Compose().Select((pair, index) => new { pair, index });
-        foreach (var item in allItems.Where(i => i != null && i.pair.Item1 != null && i.pair.Item2 != null))
-        {
-            var type = item.pair.Item1?.SnippetType;
-            var reference = item.pair.Item1?.Reference;
-            var text = item.pair.Item1?.Text;
-
-            switch (type)
-            {
-                case SnippetType.Text:
-                case SnippetType.Counter:
-                case SnippetType.Tag:
-                    text.RequireText("Text");
-                    blocks.Add(new SlackWebhookPostBlock()
-                    {
-                        text = new SlackWebhookPostBlockText()
-                        {
-                            text = text!,
-                            type = "mrkdwn" // support basic formatting if used
-                        },
-                    });
-                    break;
-
-                case SnippetType.Link:
-                    text.RequireText("Text");
-                    reference.RequireText("Link");
-                    blocks.Add(new SlackWebhookPostBlock()
-                    {
-                        text = new SlackWebhookPostBlockText()
-                        {
-                            text = $"<{reference!}|{text!}>",
-                            type = "mrkdwn"
-                        },
-                    });
-                    break;
-
-                case SnippetType.Break:
-                    blocks.Add(new SlackWebhookPostBlock()
-                    {
-                        type = "divider"
-                    });
-                    break;
-
-                case SnippetType.Image:
-                    text.RequireText("Image alt text");
-                    reference.RequireText("Image url");
-                    var refUrl = new Uri(reference!);
-                    if (refUrl.UriIsHttp())
-                    {
-                        blocks.Add(new SlackWebhookPostBlock()
-                        {
-                            accessory = new SlackWebhookPostBlockAccessory()
-                            {
-                                alt_text = text,
-                                image_url = reference,
-                                type = "image"
-                            }
-                        });
-                    }
-                    else
-                    {
-                        // TODO: generate warning - the image could not be included because no upload facility is available yet
-                        notifications.Add(new NetworkPostNotification()
-                        {
-                            Message = $"Image upload to Slack not supported: {reference}",
-                            NotificationType = NetworkPostNotificationType.ImageUpload,
-                            Severity = NetworkPostNotificationSeverity.Warning
-                        });
-                    }
-                    break;
-                default:
-                    throw new NotImplementedException($"{type} not supported yet.");
-            }
-        } // all items
-        return (blocks, notifications);
+        var text = post.ComposeText();
+        var result = post.ToBlockKitJson();
+        var blocks = result.Item1;
+        var notifications = result.Item2;
+        return (post.ComposeText(), blocks, notifications);
     }
+
+    //     var section = new SectionBlock()
+    //     {
+    //         text = new RichTextBlock(post.ComposeText(), "mrkdwn"),
+    //     };
+
+    //     var sectionedBlocks = new List<MarkdownTextBlock>();
+    //     var accessories = new List<SlackAccessoryBlock>();
+    //     var notifications = new List<NetworkPostNotification>();
+    //     var allItems = post.Compose().Select((pair, index) => new { pair, index });
+    //     foreach (var item in allItems.Where(i => i != null && i.pair.Item1 != null && i.pair.Item2 != null))
+    //     {
+    //         var type = item.pair.Item1?.SnippetType;
+    //         var reference = item.pair.Item1?.Reference;
+    //         var text = item.pair.Item1?.Text;
+
+    //         switch (type)
+    //         {
+    //             case SnippetType.Text:
+    //                 text.RequireText("Text");
+    //                 sectionedBlocks.Add(new MarkdownTextBlock(text!, "mrkdwn"));
+    //                 break;
+                
+    //             case SnippetType.Counter:
+    //                 // TODO: this is actually going to be some kind of context block
+    //                 text.RequireText("Text");
+    //                 sectionedBlocks.Add(new SectionBlock(text!));
+    //                 break;
+
+    //             case SnippetType.Tag:
+    //                 // TODO: this is actually going to be some kind of context block
+    //                 text.RequireText("Text");
+    //                 sectionedBlocks.Add(new SectionBlock(text!));
+    //                 break;
+
+    //             case SnippetType.Link:
+    //                 text.RequireText("Text");
+    //                 reference.RequireText("Link");
+    //                 sectionedBlocks.Add(new SlackBlock()
+    //                 {
+    //                     text = new SlackWebhookPostBlockText()
+    //                     {
+    //                         text = $"<{reference!}|{text!}>",
+    //                         type = "mrkdwn"
+    //                     },
+    //                 });
+    //                 break;
+
+    //             case SnippetType.Break:
+    //                 sectionedBlocks.Add(new SlackBlock()
+    //                 {
+    //                     type = "divider"
+    //                 });
+    //                 break;
+
+    //             case SnippetType.Image:
+    //                 text.RequireText("Image alt text");
+    //                 reference.RequireText("Image url");
+    //                 var refUrl = new Uri(reference!);
+    //                 if (refUrl.UriIsHttp())
+    //                 {
+    //                     sectionedBlocks.Add(new SlackBlock()
+    //                     {
+    //                         accessory = new SlackWebhookPostBlockAccessory()
+    //                         {
+    //                             alt_text = text,
+    //                             image_url = reference,
+    //                             type = "image"
+    //                         }
+    //                     });
+    //                 }
+    //                 else
+    //                 {
+    //                     // TODO: generate warning - the image could not be included because no upload facility is available yet
+    //                     notifications.Add(new NetworkPostNotification()
+    //                     {
+    //                         Message = $"Image upload to Slack not supported: {reference}",
+    //                         NotificationType = NetworkPostNotificationType.ImageUpload,
+    //                         Severity = NetworkPostNotificationSeverity.Warning
+    //                     });
+    //                 }
+    //                 break;
+    //             default:
+    //                 throw new NotImplementedException($"{type} not supported yet.");
+    //         }
+    //     } // all items
+
+    //     return (new SectionBlock()
+    //     {
+
+    //     }, notifications);
+    // }
 
     protected override async Task<bool> ConnectImplementationAsync(INetworkAccount account)
     {

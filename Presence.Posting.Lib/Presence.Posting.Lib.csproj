@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Corvus.Json.ExtendedTypes" Version="4.2.4" />
     <PackageReference Include="FishyFlip" Version="3.1.2" />
     <PackageReference Include="RestSharp" Version="112.1.0" />
   </ItemGroup>
