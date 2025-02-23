@@ -17,7 +17,7 @@
 <a class="github-button" href="https://github.com/instantiator/presence/issues" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-issue-opened" aria-label="Issue instantiator/presence on GitHub">Issue</a>
 <a class="github-button" href="https://github.com/instantiator/presence/discussions" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-comment-discussion" aria-label="Discuss instantiator/presence on GitHub">Discuss</a>
 
-Presence is a set of .NET libraries and tools for formatting and sharing threads across social networks.
+Presence is a set of .NET libraries, command line tools, and GitHub Actions to formatting and share content as threads to social networks.
 
 You can:
 
