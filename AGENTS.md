@@ -52,3 +52,12 @@ Match the task against a trigger below, then follow that SKILL.md literally.
 - [update-latest](dev-qual/skills/update-latest/SKILL.md) — Bring an installed dev-qual (project or user scope) up to date without losing customisations. Use when an update is reported, the dev-qual checkout has moved on, or setup looks stale.
 
 <!-- dev-qual:skills:end -->
+
+## Project rules
+
+These take precedence over dev-qual's defaults where they differ.
+
+- **Plans live on the GitHub issue they relate to, not in the repository.** Every plan belongs to an issue; ask which one if it isn't clear. Do not write plans to `docs/plans/` or list them in `docs/index.md`.
+  - Keep the working copy at `.plans/<issue-number>-<slug>.md` (gitignored; `PLANS_GLOB` in `.dev-qual.env` points dev-qual's stop hook and `plan-status.sh` at it), and tick stages there as their gates pass.
+  - Post the plan as a markdown comment on the issue once it is agreed (`gh issue comment <n> --body-file <file>`), and edit that comment as stages complete and when the plan is marked `status: done`.
+  - Plans posted to issues are public: leave out local paths, secrets and credential values.

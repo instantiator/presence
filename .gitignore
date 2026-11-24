@@ -10,3 +10,6 @@ release/
 
 # aislop per-machine session logs
 .aislop/*.jsonl
+
+# Local working copies of plans; the record is a comment on the plan's GitHub issue
+.plans/

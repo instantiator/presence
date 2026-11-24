@@ -1,6 +1,6 @@
 # Testing
 
-A number of unit tests and integration tests are provided in the `Presence.SocialFormat.Tests` and `Presence.Posting.Tests` projects.
+A number of unit tests and integration tests are provided in the `Presence.SocialFormat.Lib.Tests` and `Presence.Posting.Lib.Tests` projects.
 
 Tests are categorised across all projects using the `TestCategory` attribute - with these values:
 
