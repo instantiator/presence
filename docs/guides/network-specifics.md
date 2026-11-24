@@ -22,7 +22,7 @@ You will likely assign much more meaningful names to your accounts.
 
 Each configuration key is constructed as follows:
 
-```
+```text
 <AccountPrefix>_<Network>_<CredentialType>
 ```
 
@@ -41,9 +41,9 @@ Each network requires specific configuration keys, which relate to the configura
 
 See:
 
-* [Set up a `Console` network](networks/setup-console.md)
-* [Set up an `AT` network](networks/setup-at.md)
-* [Set up a `Slack` network](networks/setup-slack.md)
+- [Set up a `Console` network](networks/setup-console.md)
+- [Set up an `AT` network](networks/setup-at.md)
+- [Set up a `Slack` network](networks/setup-slack.md)
 
 ## Configuration by variables
 
@@ -76,8 +76,8 @@ Alternatively, you may provide the configuration as a json object that's effecti
 
 You may provide this to `Presence.Posting.Console` either:
 
-* as the `PRESENCE_CONFIG_JSON` variable (see: `ConfigKeys`), or
-* in the `-j` / `--json-config` parameter
+- as the `PRESENCE_CONFIG_JSON` variable (see: `ConfigKeys`), or
+- in the `-j` / `--json-config` parameter
 
 This key supercedes any others found in the configuration.
 
@@ -111,9 +111,9 @@ Presence.SocialFormat.Console -f SampleData/SimpleThread.md -n Console | Presenc
 
 In this case, **only** the `PRESENCE_CONFIG_JSON` key will be used from: `.env.example`
 
-* The console prefix will be: `JsonConfiguredConsole`
-* The other definition of `TEST0_Console_PrintPrefix` is ignored
-* Any other variables provided in the `.env` file would also be ignored
+- The console prefix will be: `JsonConfiguredConsole`
+- The other definition of `TEST0_Console_PrintPrefix` is ignored
+- Any other variables provided in the `.env` file would also be ignored
 
 ### Example 3: `-j` / `--json-config` parameter
 

@@ -49,7 +49,8 @@ if [ ! -z "$ENV_PATH" ]; then
     echo "Environment config path: $ENV_PATH"
     echo
     set -o allexport
-    source $ENV_PATH
+    # shellcheck source=/dev/null
+    source "$ENV_PATH"
     set +o allexport
   fi
 fi

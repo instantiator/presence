@@ -89,7 +89,7 @@ public class Program
             Summaries = summaries
                 .Select(s => s.AccountPrefix)
                 .ToDictionary(
-                    p => p, 
+                    p => p,
                     p => summaries.Where(s => s.AccountPrefix == p).ToDictionary(s => s.Network, s => s))
         };
 

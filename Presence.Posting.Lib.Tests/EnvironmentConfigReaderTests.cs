@@ -93,14 +93,14 @@ public class EnvironmentConfigReaderTests
     {
         var env = new Dictionary<string, string>()
         {
-            { 
+            {
                 ConfigKeys.JSON_DATA_ENV_KEY, @"
                 {
                     ""PRESENCE_ACCOUNTS"": ""TEST0,TEST1"",
                     ""TEST0_CONSOLE_PRINTPREFIX"": ""json:printprefix:test0"",
                     ""TEST1_AT_ACCOUNTNAME"": ""json:account:test1"",
                     ""TEST1_AT_APPPASSWORD"": ""json:password:test1""
-                }" 
+                }"
             },
             { "PRESENCE_ACCOUNTS", "TEST0" },
             { "TEST0_CONSOLE_PRINTPREFIX", "ignored:printprefix:test0" },

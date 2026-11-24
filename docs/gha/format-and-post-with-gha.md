@@ -98,7 +98,6 @@ with:
 
 #### 2. Craft the JSON configuration _(better control of your secrets)_
 
-
 Provide a single `config` input containing a JSON dictionary of all configuration.
 
 This is a little more complex, but allows you much better control of which information is passed to the action.

@@ -65,7 +65,7 @@ public class ATConnection : AbstractNetworkConnection
         }
         this.Session = session;
         this.Author = session!.Handle;
-        
+
         return Connected;
     }
 

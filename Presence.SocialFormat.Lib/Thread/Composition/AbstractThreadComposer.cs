@@ -105,7 +105,7 @@ public abstract class AbstractThreadComposer : IThreadComposer
                         if (index + 1 < posts.Count)
                             posts[index + 1].Images.AddRange(overflowIntoNext);
                         else
-                            posts.Insert(index+1, CommonPost.ImageOverflowPost(index + 1, PostRules, overflowIntoNext, ThreadRules.ImageOverflowText, post.Prefix, post.Suffix));
+                            posts.Insert(index + 1, CommonPost.ImageOverflowPost(index + 1, PostRules, overflowIntoNext, ThreadRules.ImageOverflowText, post.Prefix, post.Suffix));
                         break;
                     case ImageOverflowRule.OverflowInsertNewPost:
                         var overflowInsert = post.Images.Skip(ThreadRules.MaxImagesPerPost).ToList();

@@ -23,8 +23,8 @@ public class EnvironmentConfigReader : Dictionary<string, Dictionary<SocialNetwo
         // extract credentials per network per prefix
         var credentials = prefixes
             .ToDictionary(
-                prefix => prefix, 
-                prefix => 
+                prefix => prefix,
+                prefix =>
                     strings.Keys
                         .Where(k => k.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
                         .Select(k => k.Substring($"{prefix}_".Length))
@@ -43,7 +43,7 @@ public class EnvironmentConfigReader : Dictionary<string, Dictionary<SocialNetwo
         }
     }
 
-    private Dictionary<NetworkCredentialType,string?> ExtractCredentials(string prefix, SocialNetwork network, IDictionary<string,string?> env)
+    private Dictionary<NetworkCredentialType, string?> ExtractCredentials(string prefix, SocialNetwork network, IDictionary<string, string?> env)
     => env
         .ToDictionary(kv => kv.Key.Trim(), kv => kv.Value?.Trim())
         .Where(kv => kv.Key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))

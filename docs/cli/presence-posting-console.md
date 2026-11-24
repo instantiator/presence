@@ -27,8 +27,8 @@ This tool is commonly used with `Presence.SocialFormat.Console` which can provid
 
 See also:
 
-* [Network specific configuration](../guides/network-specifics.md)
-* [Network specific constraints](../guides/network-constraints.md)
+- [Network specific configuration](../guides/network-specifics.md)
+- [Network specific constraints](../guides/network-constraints.md)
 
 ## Output
 

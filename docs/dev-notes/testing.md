@@ -22,7 +22,7 @@ Both scripts accept an `-f` / `--filter` parameter to allow you to filter the te
 
 Please note that both the unit tests and integration tests assume internet access.
 
-_(This is, perhaps, unusual. Unit tests are often assumed to be able to run independently and in full isolation. However, some of the unit tests establish that code to access internet services works and this is considered more 'primitive' than integrations with third party services, such as social networks. You may disagree.)_
+This is, perhaps, unusual. Unit tests are often assumed to be able to run independently and in full isolation. However, some of the unit tests establish that code to access internet services works and this is considered more 'primitive' than integrations with third party services, such as social networks. You may disagree.
 
 The integration tests also assume access to the supported social networks (and sufficient configuration to run against a test account). See [Network specifics](../guides/network-specifics.md) for more information about configuration per network.
 

@@ -42,12 +42,12 @@ NB. JSON is most useful if you intend to post using `Presence.Posting.Console`
 
 See also:
 
-* [Network specific constraints](../guides/network-constraints.md)
-* [SampleData](https://github.com/instantiator/presence/tree/main/SampleData)
+- [Network specific constraints](../guides/network-constraints.md)
+- [SampleData](https://github.com/instantiator/presence/tree/main/SampleData)
 
 ## Examples
 
-_(These examples assume that the pre-built binary is available in the working directory.)_
+These examples assume that the pre-built binary is available in the working directory.
 
 To format the sample thread for BlueSky (AT), you can pass in the request json as a file:
 
@@ -65,8 +65,8 @@ cat SampleData/simple-snippets.json | Presence.SocialFormat.Console -n AT
 
 Provide input as either:
 
-* a JSON-formatted [`ThreadCompositionRequest`](https://github.com/instantiator/presence/blob/main/Presence.SocialFormat.Lib/DTO/ThreadCompositionRequest.cs), or
-* a markdown-like representation of content
+- a JSON-formatted [`ThreadCompositionRequest`](https://github.com/instantiator/presence/blob/main/Presence.SocialFormat.Lib/DTO/ThreadCompositionRequest.cs), or
+- a markdown-like representation of content
 
 See: [Create threads with markdown](../guides/create-with-markdown.md)
 

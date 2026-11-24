@@ -41,13 +41,13 @@ public class SlackWebhookConnection : AbstractNetworkConnection
         var json = JsonSerializer.Serialize(slackPost);
         var request = new RestRequest().AddJsonBody(json);
         using var client = new RestClient(Webhook);
-        
+
         await RateLimitAsync();
         var response = await client.PostAsync(request);
 
         if (!response.IsSuccessful)
-        { 
-            throw new Exception($"{response.ErrorMessage}, posting to Slack webhook: {Webhook}"); 
+        {
+            throw new Exception($"{response.ErrorMessage}, posting to Slack webhook: {Webhook}");
         }
 
         // TODO: search for and get the ts value for the slack post reference

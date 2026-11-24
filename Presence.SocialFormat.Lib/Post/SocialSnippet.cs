@@ -106,8 +106,8 @@ public class SocialSnippet
         }
 
         // TODO: add the option to truncate individual words if needed
-        if (fittedWords.Count == 0 && remainingWords.Count > 0) 
-        { 
+        if (fittedWords.Count == 0 && remainingWords.Count > 0)
+        {
             // throw new Exception($"Cannot truncate this snippet to {space} characters - the first word does not fit. Words: {string.Join(" ", remainingWords)}"); 
             return null;
         }

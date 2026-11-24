@@ -17,7 +17,7 @@ public class SlackThreadComposerTests
             // form a long snippet
             var snippet = new SocialSnippet()
             {
-                Text = string.Join(' ', Enumerable.Repeat("0123456789", i*1000)),
+                Text = string.Join(' ', Enumerable.Repeat("0123456789", i * 1000)),
                 SnippetType = SnippetType.Text
             };
 

@@ -3,10 +3,10 @@ using Presence.SocialFormat.Lib.Post;
 
 namespace Presence.Posting.Lib.Connections;
 
-public interface INetworkConnection : IDisposable 
+public interface INetworkConnection : IDisposable
 {
     public SocialNetwork Network { get; }
-    public string Prefix { get;}
+    public string Prefix { get; }
     public bool Connected { get; }
     public Task<bool> ConnectAsync();
     public void Disconnect();

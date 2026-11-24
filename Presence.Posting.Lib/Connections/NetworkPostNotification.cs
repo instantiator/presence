@@ -1,6 +1,6 @@
 namespace Presence.Posting.Lib.Connections;
 
-public enum NetworkPostNotificationType 
+public enum NetworkPostNotificationType
 {
     ImageUpload
 }

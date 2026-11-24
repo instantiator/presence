@@ -10,7 +10,7 @@ namespace Presence.Posting.Lib.Connections;
 
 public class ConnectionFactory
 {
-    
+
     public static IEnumerable<INetworkConnection> CreateConnections(IDictionary env)
     {
         var environment = new EnvironmentConfigReader(env);
