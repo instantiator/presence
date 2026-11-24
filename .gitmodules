@@ -1,0 +1,3 @@
+[submodule "dev-qual"]
+	path = dev-qual
+	url = https://github.com/instantiator/dev-qual
