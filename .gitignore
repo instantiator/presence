@@ -7,3 +7,6 @@ TestResults/
 nuget/
 release/
 .env*
+
+# aislop per-machine session logs
+.aislop/*.jsonl

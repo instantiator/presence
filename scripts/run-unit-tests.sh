@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 usage() {
   cat << EOF
@@ -15,7 +15,7 @@ EOF
 # defaults
 
 # parameters
-while [ -n "$1" ]; do
+while [ $# -gt 0 ]; do
   case $1 in
   -h | --help)
     usage
@@ -34,7 +34,7 @@ while [ -n "$1" ]; do
   shift
 done
 
-if [ ! -z "$FILTER" ]; then
+if [ -n "${FILTER:-}" ]; then
   echo "Running unit tests with filter: $FILTER"
   echo
   dotnet test --verbosity normal --filter "TestCategory=Unit&FullyQualifiedName~$FILTER"
