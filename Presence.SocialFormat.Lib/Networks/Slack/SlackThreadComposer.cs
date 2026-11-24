@@ -5,7 +5,7 @@ namespace Presence.SocialFormat.Lib.Networks.Slack;
 
 public class SlackThreadComposer : SimpleThreadComposer
 {
-    public static ThreadCompositionRules SLACK_THREAD_COMPOSITION_RULES = new()
+    public static readonly ThreadCompositionRules SlackThreadCompositionRules = new()
     {
         TagsOnAllPosts = false,
         TagsOnFirstPost = true,
@@ -17,7 +17,7 @@ public class SlackThreadComposer : SimpleThreadComposer
         ImageOverflowText = "(continued...)",
     };
 
-    public static PostRenderRules SLACK_POST_RENDER_RULES = new()
+    public static readonly PostRenderRules SlackPostRenderRules = new()
     {
         MaxLength = 40000,
         ShowLinkUrls = false, // link text can be shown
@@ -31,8 +31,8 @@ public class SlackThreadComposer : SimpleThreadComposer
 
     public SlackThreadComposer(ThreadCompositionRules? threadRules = null, PostRenderRules? postRules = null, ICounterCreator? counterCreator = null) : base(
             SocialNetwork.SlackWebhook,
-            threadRules ?? SLACK_THREAD_COMPOSITION_RULES,
-            postRules ?? SLACK_POST_RENDER_RULES,
+            threadRules ?? SlackThreadCompositionRules,
+            postRules ?? SlackPostRenderRules,
             counterCreator)
     {
     }

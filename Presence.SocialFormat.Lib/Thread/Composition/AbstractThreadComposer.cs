@@ -20,7 +20,7 @@ public abstract class AbstractThreadComposer : IThreadComposer
         Identity = new ThreadComposerIdentity() { Network = network, Index = GetCounter(network) };
     }
 
-    public int GetCounter(SocialNetwork network)
+    public static int GetCounter(SocialNetwork network)
     {
         if (!_counters.ContainsKey(network))
         {
@@ -39,7 +39,7 @@ public abstract class AbstractThreadComposer : IThreadComposer
         {
             foreach (var nextSnippet in request.Message)
             {
-                posts.AddRange(AddSnippet(posts.Count(), posts.LastOrDefault(), nextSnippet, request.Tags));
+                posts.AddRange(AddSnippet(posts.Count, posts.LastOrDefault(), nextSnippet, request.Tags));
             }
             UpliftPostImages(posts);
             ArrangePostImages(posts);
@@ -62,19 +62,20 @@ public abstract class AbstractThreadComposer : IThreadComposer
             success = false;
         }
         // if the last post is empty - remove it
-        if (posts.Last().Message.Count() == 0 && posts.Last().Images.Count() == 0)
+        var lastPost = posts.LastOrDefault();
+        if (lastPost != null && !lastPost.Message.Any() && lastPost.Images.Count == 0)
         {
-            posts.Remove(posts.Last());
+            posts.Remove(lastPost);
         }
         return new ComposedThread(Identity, posts, success, exception);
     }
 
-    protected void UpliftPostImages(IEnumerable<CommonPost> posts)
+    protected static void UpliftPostImages(IEnumerable<CommonPost> posts)
     {
         foreach (var (post, index) in posts.Select((p, i) => (p, i)))
         {
             var snippet_images = post.Message.Where(snippet => snippet.SnippetType == SnippetType.Image);
-            var snippets_with_images = post.Message.Where(snippet => snippet.Images.Any());
+            var snippets_with_images = post.Message.Where(snippet => snippet.Images.Count > 0);
 
             // append images to post
             post.Images.AddRange(snippet_images.Select(snippet => CommonPostImage.From(snippet)));
@@ -89,10 +90,10 @@ public abstract class AbstractThreadComposer : IThreadComposer
     protected void ArrangePostImages(List<CommonPost> posts)
     {
         int index = 0;
-        while (index < posts.Count())
+        while (index < posts.Count)
         {
             var post = posts[index];
-            if (post.Images.Count() > ThreadRules.MaxImagesPerPost)
+            if (post.Images.Count > ThreadRules.MaxImagesPerPost)
             {
                 switch (ThreadRules.ImageOverflowRule)
                 {
@@ -168,7 +169,7 @@ public abstract class AbstractThreadComposer : IThreadComposer
                     currentPost = CreateNewPost(newPosts.Count + nextIndex, tags);
                     newPosts.Add(currentPost);
 
-                    var additionalPosts = AddSnippet(newPosts.Count + nextIndex, currentPost, parts.Item2!, tags);
+                    var additionalPosts = AddSnippet(newPosts.Count + nextIndex, currentPost, parts.Item2, tags);
                     newPosts.AddRange(additionalPosts);
                 }
             }
@@ -188,7 +189,7 @@ public abstract class AbstractThreadComposer : IThreadComposer
                     newPosts.Add(currentPost);
 
                     // if the new post can't fit the snippet, throw an exception - this is a fresh blank post and the snippet won't resize
-                    if (!currentPost.Fits(nextSnippet)) { throw new Exception("Snippet too large for blank post, cannot resize"); }
+                    if (!currentPost.Fits(nextSnippet)) { throw new InvalidOperationException("Snippet too large for blank post, cannot resize"); }
                     var additionalPosts = AddSnippet(newPosts.Count + nextIndex, currentPost, nextSnippet, tags);
                     newPosts.AddRange(additionalPosts);
                 }
@@ -200,7 +201,7 @@ public abstract class AbstractThreadComposer : IThreadComposer
                 newPosts.Add(currentPost);
 
                 // if the new post can't fit the snippet, throw an exception - this is a fresh blank post and the snippet won't resize
-                if (!currentPost.Fits(nextSnippet)) { throw new Exception("Snippet too large for blank post, cannot resize"); }
+                if (!currentPost.Fits(nextSnippet)) { throw new InvalidOperationException("Snippet too large for blank post, cannot resize"); }
                 var additionalPosts = AddSnippet(newPosts.Count + nextIndex, currentPost, nextSnippet, tags);
                 newPosts.AddRange(additionalPosts);
             }
@@ -224,7 +225,7 @@ public abstract class AbstractThreadComposer : IThreadComposer
 
         if (post.MessageSpace <= PostRules.WordSpace.Length + PostRules.MinAcceptableSpace)
         {
-            throw new Exception($"Insufficient space in new post: {post.MessageSpace} (min = {PostRules.MinAcceptableSpace})");
+            throw new InvalidOperationException($"Insufficient space in new post: {post.MessageSpace} (min = {PostRules.MinAcceptableSpace})");
         }
 
         return post;

@@ -27,7 +27,7 @@ public class ATThreadComposerTests
                 Tags = []
             });
 
-            Assert.IsTrue(thread.Posts.Count() > 0);
+            Assert.IsTrue(thread.Posts.Any());
             Assert.IsTrue(thread.Posts.All(p => p.ComposeText().Length <= 300));
             if (thread.Posts.Count() > 1)
             {
@@ -36,7 +36,7 @@ public class ATThreadComposerTests
             }
             else
             {
-                Assert.IsTrue(thread.Posts.All(p => p.Prefix.Count() == 0));
+                Assert.IsTrue(thread.Posts.All(p => !p.Prefix.Any()));
             }
         }
     }

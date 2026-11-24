@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Presence.SocialFormat.Lib.Helpers;
 
 public static class StringExtension
 {
-    public static void RequireText(this string? text, string? name = null)
+    public static void RequireText([NotNull] this string? text, string? name = null)
     {
         if (string.IsNullOrWhiteSpace(text))
         {

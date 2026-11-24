@@ -13,7 +13,7 @@ public class RegexTests
     [DataRow("![instantiator.dev](https://instantiator.dev/lewis/profile.jpg)", false, true, "instantiator.dev", "https://instantiator.dev/lewis/profile.jpg")]
     public void MD_REGEX_CanMatchUrls(string input, bool isLink, bool isImage, string expectedText, string expectedUri)
     {
-        var LinkRegex = new Regex($"^{RegexConstants.MD_LINK_REGEX}");
+        var LinkRegex = new Regex($"^{RegexConstants.MdLinkRegex}");
         var linkMatch = LinkRegex.Match(input);
         Assert.AreEqual(isLink, linkMatch.Success);
 
@@ -25,7 +25,7 @@ public class RegexTests
         Assert.AreNotEqual(isLink, string.IsNullOrWhiteSpace(linkUri));
         if (isLink) { Assert.AreEqual(expectedUri, linkUri); }
 
-        var ImageRegex = new Regex($"^{RegexConstants.MD_IMAGE_REGEX}");
+        var ImageRegex = new Regex($"^{RegexConstants.MdImageRegex}");
         var imageMatch = ImageRegex.Match(input);
         Assert.AreEqual(isImage, imageMatch.Success);
 

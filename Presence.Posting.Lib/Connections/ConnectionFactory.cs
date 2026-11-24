@@ -24,7 +24,7 @@ public class ConnectionFactory
             SocialNetwork.Console => CreateConsole(prefix, credentials),
             SocialNetwork.AT => CreateAT(prefix, credentials),
             SocialNetwork.SlackWebhook => CreateSlackWebhook(prefix, credentials),
-            _ => throw new NotImplementedException($"Network {network} is not supported.")
+            _ => throw new NotSupportedException($"Network {network} is not supported.")
         };
     }
 

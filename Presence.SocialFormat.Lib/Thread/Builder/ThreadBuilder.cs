@@ -103,7 +103,7 @@ public class ThreadBuilder
 
     public ThreadCompositionResponse Build(IEnumerable<IThreadComposer> composers)
     {
-        if (composers.Count() == 0) { throw new ArgumentException("No composers specified.", "composers"); }
+        if (!composers.Any()) { throw new ArgumentException("No composers specified.", nameof(composers)); }
         return new ThreadCompositionResponse
         {
             Threads = composers.ToDictionary(

@@ -27,7 +27,7 @@ public class SlackThreadComposerTests
                 Tags = []
             });
 
-            Assert.IsTrue(thread.Posts.Count() > 0);
+            Assert.IsTrue(thread.Posts.Any());
             Assert.IsTrue(thread.Posts.All(p => p.ComposeText().Length <= 40000));
             if (thread.Posts.Count() > 1)
             {
@@ -36,7 +36,7 @@ public class SlackThreadComposerTests
             }
             else
             {
-                Assert.IsTrue(thread.Posts.All(p => p.Prefix.Concat(p.Suffix).Count() == 0));
+                Assert.IsTrue(thread.Posts.All(p => !p.Prefix.Concat(p.Suffix).Any()));
             }
         }
     }

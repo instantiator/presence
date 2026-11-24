@@ -24,7 +24,7 @@ public class ThreadBuilderTests
             .WithMessage(new SocialSnippet("Hello, world!"))
             .Build();
 
-        Assert.AreEqual(1, response.Threads.Count());
+        Assert.AreEqual(1, response.Threads.Count);
         Assert.AreEqual(SocialNetwork.Console, response.Threads.Single().Value.Identity.Network);
 
         Assert.AreEqual(1, response.Threads.Single().Value.Posts.Count());
@@ -39,7 +39,7 @@ public class ThreadBuilderTests
             .WithMessage(new SocialSnippet("Hello, world!"))
             .Build();
 
-        Assert.AreEqual(1, response.Threads.Count());
+        Assert.AreEqual(1, response.Threads.Count);
         Assert.AreEqual(SocialNetwork.AT, response.Threads.Single().Value.Identity.Network);
         Assert.AreEqual(1, response.Threads.Single().Value.Posts.Count());
         Assert.AreEqual("Hello, world!", response.Threads.Single().Value.Posts.Single().Message.Single().Text);
@@ -55,7 +55,7 @@ public class ThreadBuilderTests
             .WithMessage(new SocialSnippet("Hello, world!"))
             .Build();
 
-        Assert.AreEqual(2, response.Threads.Count());
+        Assert.AreEqual(2, response.Threads.Count);
         Assert.IsTrue(response.Threads.Values.Any(thread => thread.Identity.Network == SocialNetwork.AT));
         Assert.IsTrue(response.Threads.Values.Any(thread => thread.Identity.Network == SocialNetwork.Console));
         Assert.IsTrue(response.Threads.Values.All(thread => thread.Posts.Count() == 1));

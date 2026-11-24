@@ -44,7 +44,7 @@ public class ATConnectionTests
         var environment = new EnvironmentConfigReader(env)["TEST1"][SocialNetwork.AT];
         var connection = ConnectionFactory.CreateConnection("TEST1", SocialNetwork.AT, environment);
         await connection.ConnectAsync();
-        var post = new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES)
+        var post = new CommonPost(0, ATThreadComposer.AtPostRenderRules)
         {
             Message = [new SocialSnippet($"ATConnection_Posts_Post: {DateTime.Now:O}")]
         };
@@ -66,8 +66,8 @@ public class ATConnectionTests
         var environment = new EnvironmentConfigReader(env)["TEST1"][SocialNetwork.AT];
         var connection = ConnectionFactory.CreateConnection("TEST1", SocialNetwork.AT, environment);
         await connection.ConnectAsync();
-        var post0 = new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES) { Message = [new SocialSnippet($"ATConnection_Posts_Replies (part 1): {DateTime.Now:O}")] };
-        var post1 = new CommonPost(1, ATThreadComposer.AT_POST_RENDER_RULES) { Message = [new SocialSnippet($"ATConnection_Posts_Replies (part 2): {DateTime.Now:O}")] };
+        var post0 = new CommonPost(0, ATThreadComposer.AtPostRenderRules) { Message = [new SocialSnippet($"ATConnection_Posts_Replies (part 1): {DateTime.Now:O}")] };
+        var post1 = new CommonPost(1, ATThreadComposer.AtPostRenderRules) { Message = [new SocialSnippet($"ATConnection_Posts_Replies (part 2): {DateTime.Now:O}")] };
 
         var ref0 = await connection.PostAsync(post0);
         Assert.IsNotNull(ref0);
@@ -88,8 +88,8 @@ public class ATConnectionTests
         await connection.ConnectAsync();
         var thread = new[]
         {
-            new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES) { Message = [new SocialSnippet($"ATConnection_Posts_Thread (part 1): {DateTime.Now:O}")] },
-            new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES) { Message = [new SocialSnippet($"ATConnection_Posts_Thread (part 2): {DateTime.Now:O}")] },
+            new CommonPost(0, ATThreadComposer.AtPostRenderRules) { Message = [new SocialSnippet($"ATConnection_Posts_Thread (part 1): {DateTime.Now:O}")] },
+            new CommonPost(0, ATThreadComposer.AtPostRenderRules) { Message = [new SocialSnippet($"ATConnection_Posts_Thread (part 2): {DateTime.Now:O}")] },
         };
         var result = await connection.PostAsync(thread);
         Assert.AreEqual(thread.Length, result.Count());
@@ -110,7 +110,7 @@ public class ATConnectionTests
         var environment = new EnvironmentConfigReader(env)["TEST1"][SocialNetwork.AT];
         var connection = ConnectionFactory.CreateConnection("TEST1", SocialNetwork.AT, environment);
         await connection.ConnectAsync();
-        var post = new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES)
+        var post = new CommonPost(0, ATThreadComposer.AtPostRenderRules)
         {
             Message =
             [
@@ -125,10 +125,10 @@ public class ATConnectionTests
 
     [TestMethod]
     [TestCategory("Unit")]
-    public async Task ATConnection_IdentifiesFacets()
+    public void ATConnection_IdentifiesFacets()
     {
         var connection = new ATConnection(new ATAccount("TEST1", new Dictionary<NetworkCredentialType, string?>()));
-        var post = new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES)
+        var post = new CommonPost(0, ATThreadComposer.AtPostRenderRules)
         {
             Message =
             [
@@ -137,8 +137,8 @@ public class ATConnectionTests
                 new SocialSnippet($"test", SnippetType.Tag),
             ],
         };
-        var facets = await connection.GetFacetsAsync(post);
-        Assert.AreEqual(2, facets.Count());
+        var facets = ATConnection.GetFacets(post);
+        Assert.AreEqual(2, facets.Count);
 
         var linkFacet = facets.ElementAt(0);
         Assert.IsNotNull(linkFacet.Index);
@@ -146,7 +146,7 @@ public class ATConnectionTests
         Assert.AreEqual(Encoding.Default.GetBytes(prefix1).Length, linkFacet.Index.ByteStart);
         Assert.AreEqual(Encoding.Default.GetBytes(prefix1 + "instantiator").Length, linkFacet.Index.ByteEnd);
         Assert.IsNotNull(linkFacet.Features);
-        Assert.AreEqual(1, linkFacet.Features.Count());
+        Assert.AreEqual(1, linkFacet.Features.Count);
         Assert.AreEqual("app.bsky.richtext.facet#link", linkFacet.Features[0].Type);
 
         var tagFacet = facets.ElementAt(1);
@@ -155,7 +155,7 @@ public class ATConnectionTests
         Assert.AreEqual(Encoding.Default.GetBytes(prefix2).Length, tagFacet.Index.ByteStart);
         Assert.AreEqual(Encoding.Default.GetBytes(prefix2 + "#test").Length, tagFacet.Index.ByteEnd);
         Assert.IsNotNull(tagFacet.Features);
-        Assert.AreEqual(1, tagFacet.Features.Count());
+        Assert.AreEqual(1, tagFacet.Features.Count);
         Assert.AreEqual("app.bsky.richtext.facet#tag", tagFacet.Features[0].Type);
     }
 
@@ -177,7 +177,7 @@ public class ATConnectionTests
             AltText = alt,
         };
 
-        var post = new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES)
+        var post = new CommonPost(0, ATThreadComposer.AtPostRenderRules)
         {
             Message =
             [
@@ -191,13 +191,13 @@ public class ATConnectionTests
         var images = await Task.WhenAll(post.Images.Select(async i => await connection.UploadImage(i)));
         Assert.IsTrue(image.Uploaded);
         Assert.IsNotNull(images);
-        Assert.AreEqual(post.Images.Count(), images.Length);
+        Assert.AreEqual(post.Images.Count, images.Length);
 
         var embed = new EmbedImages(images: images.ToList());
         var atPost = new Post
         {
             Text = post.ComposeText(),
-            Facets = await connection.GetFacetsAsync(post),
+            Facets = ATConnection.GetFacets(post),
             Embed = embed,
         };
 

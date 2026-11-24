@@ -6,15 +6,15 @@ using Presence.SocialFormat.Lib.Thread.Builder;
 
 namespace Presence.SocialFormat.Console;
 
-public class Program
+internal sealed class Program
 {
-    public class Options
+    public sealed class Options
     {
         [Option('f', "input-file", Required = false, HelpText = "Path to input file containing a composition request (leave blank to use stdin).")]
-        public string? InputPath { get; set; } = null;
+        public string? InputPath { get; set; }
 
         [Option('n', "networks", Required = true, HelpText = "Social networks to generate for, a comma-separated list without whitespace.", Separator = ',', Min = 1)]
-        public IEnumerable<SocialNetwork> Network { get; set; } = null!;
+        public IEnumerable<SocialNetwork> Network { get; set; } = [];
 
         [Option('i', "input-format", Required = false, Default = null, HelpText = $"Specify the input format. (Leave blank to detect from the input filename extension.)")]
         public ThreadCompositionRequestInputFormat? InputFormat { get; set; }
@@ -53,7 +53,7 @@ public class Program
         {
             var inputFormat = options.InputFormat ?? ThreadCompositionRequestInputReader.DetectFormat(options.InputPath);
             if (inputFormat == null) { throw new ArgumentException("Please specify the input format."); }
-            var request = ThreadCompositionRequestInputReader.Decode(inputFormat!.Value, options.InputPath);
+            var request = ThreadCompositionRequestInputReader.Decode(inputFormat.Value, options.InputPath);
             var composers = options.Network.Select(ComposerFactory.ForNetwork);
             var response = new ThreadBuilder(composers).WithRequest(request).Build();
             System.Console.WriteLine(ThreadCompositionResponseOutputWriter.Encode(options.OutputFormat, response));

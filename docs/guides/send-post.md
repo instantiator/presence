@@ -13,7 +13,7 @@ var env = new Dictionary<NetworkCredentialType, string>
 
 var connection = ConnectionFactory.CreateConnection("TEST1", SocialNetwork.AT, env);
 await connection.ConnectAsync();
-var post = new CommonPost(0, ATThreadComposer.AT_POST_RENDER_RULES)
+var post = new CommonPost(0, ATThreadComposer.AtPostRenderRules)
 {
     Message = [new SocialSnippet($"ATConnection_Posts: {DateTime.Now:O}")]
 };

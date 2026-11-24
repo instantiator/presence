@@ -9,9 +9,8 @@ public class HumanReadableWriter : IFormatWriter
         var separator = "---";
         var lines = new List<string>();
 
-        foreach (var network in response.Threads!.Keys)
+        foreach (var (network, thread) in response.Threads)
         {
-            var thread = response.Threads![network];
             lines.Add($"Network: {network} {(thread.Success ? "✅" : "❌")}");
             lines.Add(separator);
             lines.Add(string.Join($"\n   {separator}\n", thread.Posts.Select(p => " ⏩ " + p.ComposeText())));

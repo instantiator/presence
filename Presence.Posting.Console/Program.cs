@@ -8,18 +8,20 @@ using Presence.SocialFormat.Lib.IO;
 
 namespace Presence.Posting.Console;
 
-public class Program
+internal sealed class Program
 {
-    public class Options
+    private static readonly JsonSerializerOptions Indented = new() { WriteIndented = true };
+
+    public sealed class Options
     {
         [Option('f', "input-file", Required = false, HelpText = "Path to input file containing a thread composition response (leave blank to use stdin).")]
-        public string? InputPath { get; set; } = null;
+        public string? InputPath { get; set; }
 
         [Option('e', "env-file", Required = false, HelpText = "Path to a file containing environment variables to use for connections.", SetName = "config")]
-        public string? EnvPath { get; set; } = null;
+        public string? EnvPath { get; set; }
 
         [Option('j', "json-config", Required = false, HelpText = "JSON configuration string, defining accounts and account credentials.", SetName = "config")]
-        public string? JsonConfig { get; set; } = null;
+        public string? JsonConfig { get; set; }
     }
 
     public static async Task Main(string[] args)
@@ -45,7 +47,7 @@ public class Program
         }
         if (options.JsonConfig != null)
         {
-            Environment.SetEnvironmentVariable(ConfigKeys.JSON_DATA_ENV_KEY, options.JsonConfig);
+            Environment.SetEnvironmentVariable(ConfigKeys.JsonDataEnvKey, options.JsonConfig);
         }
         var env = Environment.GetEnvironmentVariables();
         var connections = ConnectionFactory.CreateConnections(env);
@@ -56,9 +58,10 @@ public class Program
         {
             try
             {
-                var threads = threadCompositionResponse.Threads.Where(t => t.Key == connection.Network);
-                if (threads.Count() != 1) { throw new KeyNotFoundException($"{threads.Count()} threads found for network {connection.Network}"); }
-                var thread = threads.Single().Value;
+                if (!threadCompositionResponse.Threads.TryGetValue(connection.Network, out var thread))
+                {
+                    throw new KeyNotFoundException($"No thread found for network {connection.Network}");
+                }
                 await connection.ConnectAsync();
                 var references = await connection.PostAsync(thread.Posts);
                 var result = new ThreadPostSummary
@@ -93,7 +96,7 @@ public class Program
                     p => summaries.Where(s => s.AccountPrefix == p).ToDictionary(s => s.Network, s => s))
         };
 
-        System.Console.WriteLine(JsonSerializer.Serialize(response, new JsonSerializerOptions { WriteIndented = true }));
+        System.Console.WriteLine(JsonSerializer.Serialize(response, Indented));
         return response;
     }
 

@@ -22,20 +22,20 @@ public class SlackWebhookConnection : AbstractNetworkConnection
     [MemberNotNull(nameof(Webhook))]
     private void RequireAuthenticated()
     {
-        if (!Connected || Webhook == null) throw new NullReferenceException("Webhook is not a valid URL");
+        if (!Connected || Webhook == null) throw new InvalidOperationException("Not connected: call ConnectAsync first");
     }
 
     public override async Task<INetworkPostReference> PostAsync(CommonPost post, INetworkPostReference? replyTo = null)
     {
         RequireAuthenticated();
 
-        // TODO: upload local images (when implemented)
+        // Local images can't be uploaded yet (see #35): ComposeBlocks reports them as notifications
         var (blocks, notifications) = ComposeBlocks(post);
 
         var slackPost = new SlackWebhookPost
         {
-            text = post.ComposeText(),
-            blocks = blocks
+            Text = post.ComposeText(),
+            Blocks = blocks
         };
 
         var json = JsonSerializer.Serialize(slackPost);
@@ -47,14 +47,14 @@ public class SlackWebhookConnection : AbstractNetworkConnection
 
         if (!response.IsSuccessful)
         {
-            throw new Exception($"{response.ErrorMessage}, posting to Slack webhook: {Webhook}");
+            throw new HttpRequestException($"{response.ErrorMessage}, posting to Slack webhook: {Webhook}", response.ErrorException, response.StatusCode);
         }
 
-        // TODO: search for and get the ts value for the slack post reference
+        // Incoming webhooks don't return the post's ts, so the reference can't identify it (see #37)
         return new SlackWebhookPostReference(null, post);
     }
 
-    protected (IEnumerable<SlackWebhookPostBlock>, IEnumerable<NetworkPostNotification>) ComposeBlocks(CommonPost post)
+    protected static (IEnumerable<SlackWebhookPostBlock>, IEnumerable<NetworkPostNotification>) ComposeBlocks(CommonPost post)
     {
         var blocks = new List<SlackWebhookPostBlock>();
         var notifications = new List<NetworkPostNotification>();
@@ -73,10 +73,10 @@ public class SlackWebhookConnection : AbstractNetworkConnection
                     text.RequireText("Text");
                     blocks.Add(new SlackWebhookPostBlock()
                     {
-                        text = new SlackWebhookPostBlockText()
+                        Text = new SlackWebhookPostBlockText()
                         {
-                            text = text!,
-                            type = "mrkdwn" // support basic formatting if used
+                            Text = text,
+                            Type = "mrkdwn" // support basic formatting if used
                         },
                     });
                     break;
@@ -86,10 +86,10 @@ public class SlackWebhookConnection : AbstractNetworkConnection
                     reference.RequireText("Link");
                     blocks.Add(new SlackWebhookPostBlock()
                     {
-                        text = new SlackWebhookPostBlockText()
+                        Text = new SlackWebhookPostBlockText()
                         {
-                            text = $"<{reference!}|{text!}>",
-                            type = "mrkdwn"
+                            Text = $"<{reference}|{text}>",
+                            Type = "mrkdwn"
                         },
                     });
                     break;
@@ -97,29 +97,28 @@ public class SlackWebhookConnection : AbstractNetworkConnection
                 case SnippetType.Break:
                     blocks.Add(new SlackWebhookPostBlock()
                     {
-                        type = "divider"
+                        Type = "divider"
                     });
                     break;
 
                 case SnippetType.Image:
                     text.RequireText("Image alt text");
                     reference.RequireText("Image url");
-                    var refUrl = new Uri(reference!);
+                    var refUrl = new Uri(reference);
                     if (refUrl.UriIsHttp())
                     {
                         blocks.Add(new SlackWebhookPostBlock()
                         {
-                            accessory = new SlackWebhookPostBlockAccessory()
+                            Accessory = new SlackWebhookPostBlockAccessory()
                             {
-                                alt_text = text,
-                                image_url = reference,
-                                type = "image"
+                                AltText = text,
+                                ImageUrl = reference,
+                                Type = "image"
                             }
                         });
                     }
                     else
                     {
-                        // TODO: generate warning - the image could not be included because no upload facility is available yet
                         notifications.Add(new NetworkPostNotification()
                         {
                             Message = $"Image upload to Slack not supported: {reference}",
@@ -129,7 +128,7 @@ public class SlackWebhookConnection : AbstractNetworkConnection
                     }
                     break;
                 default:
-                    throw new NotImplementedException($"{type} not supported yet.");
+                    throw new NotSupportedException($"{type} not supported yet.");
             }
         } // all items
         return (blocks, notifications);
@@ -137,20 +136,22 @@ public class SlackWebhookConnection : AbstractNetworkConnection
 
     protected override async Task<bool> ConnectImplementationAsync(INetworkAccount account)
     {
-        Webhook = new Uri(account[NetworkCredentialType.IncomingWebhookUrl]!);
+        Webhook = account.TryGetValue(NetworkCredentialType.IncomingWebhookUrl, out var url) && Uri.TryCreate(url, UriKind.Absolute, out var webhook)
+            ? webhook
+            : throw new ArgumentException($"Missing or invalid credential: {NetworkCredentialType.IncomingWebhookUrl}", nameof(account));
         return Connected;
     }
 
-    public override Task<bool> DeletePostAsync(INetworkPostReference uri)
+    public override Task<bool> DeletePostAsync(INetworkPostReference reference)
     {
-        throw new NotImplementedException("Incoming webhooks do not support post deletion");
+        throw new NotSupportedException("Incoming webhooks do not support post deletion");
     }
 
     protected override async Task RateLimitImplementationAsync(DateTime? lastAction)
     {
         if (lastAction == null) { return; }
         var now = DateTime.Now;
-        var elapsed = (TimeSpan)(now - lastAction!);
+        var elapsed = now - lastAction.Value;
         if (elapsed.TotalMilliseconds < RATE_ms)
         {
             var delay = RATE_ms - elapsed.TotalMilliseconds;

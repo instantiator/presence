@@ -4,5 +4,5 @@ namespace Presence.SocialFormat.Lib.IO;
 
 public interface IFormatParser
 {
-    ThreadCompositionRequest ToRequest(string str);
+    ThreadCompositionRequest ToRequest(string text);
 }

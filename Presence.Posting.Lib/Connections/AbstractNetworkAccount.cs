@@ -23,7 +23,7 @@ public abstract class AbstractNetworkAccount : Dictionary<NetworkCredentialType,
         var errors = new List<string>();
         errors.AddRange(unexpected.Select(k => $"Unexpected credential: {k}"));
         errors.AddRange(missing.Select(k => $"Missing credential: {k}"));
-        return (errors.Count() == 0, errors);
+        return (errors.Count == 0, errors);
     }
 
     private void SetCredentials(IDictionary<NetworkCredentialType, string?> credentials)

@@ -5,7 +5,7 @@ namespace Presence.SocialFormat.Lib.Thread.Composition;
 
 public class SimpleThreadComposer : AbstractThreadComposer
 {
-    public static ThreadCompositionRules SIMPLE_THREAD_COMPOSITION_RULES = new ThreadCompositionRules
+    public static readonly ThreadCompositionRules SimpleThreadCompositionRules = new ThreadCompositionRules
     {
         OnlyCountThreads = true,
         TagsOnAllPosts = true,
@@ -17,7 +17,7 @@ public class SimpleThreadComposer : AbstractThreadComposer
         ImageOverflowText = "(continued...)",
     };
 
-    public static PostRenderRules SIMPLE_POST_RENDER_RULES = new PostRenderRules
+    public static readonly PostRenderRules SimplePostRenderRules = new PostRenderRules
     {
         MaxLength = 100,
         WordSpace = " ",
@@ -32,7 +32,7 @@ public class SimpleThreadComposer : AbstractThreadComposer
     public ICounterCreator? CounterCreator { get; protected set; }
 
     public SimpleThreadComposer(SocialNetwork network = SocialNetwork.Console, ThreadCompositionRules? threadRules = null, PostRenderRules? postRules = null, ICounterCreator? counterCreator = null)
-        : base(network, threadRules ?? SIMPLE_THREAD_COMPOSITION_RULES, postRules ?? SIMPLE_POST_RENDER_RULES)
+        : base(network, threadRules ?? SimpleThreadCompositionRules, postRules ?? SimplePostRenderRules)
     {
         CounterCreator = counterCreator;
     }

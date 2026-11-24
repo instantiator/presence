@@ -1,7 +1,8 @@
-namespace Presence.SocialFormat.Lib.Constants
+namespace Presence.SocialFormat.Lib.Constants;
+
+/// <summary>Constants for recognising kinds of URI.</summary>
+public static class UriConstants
 {
-    public class UriConstants
-    {
-        public static string[] IMAGE_EXTENSIONS = [".png", ".jpg", ".jpeg", ".gif"];
-    }
+    /// <summary>File extensions treated as images.</summary>
+    public static readonly IReadOnlyList<string> ImageExtensions = [".png", ".jpg", ".jpeg", ".gif"];
 }

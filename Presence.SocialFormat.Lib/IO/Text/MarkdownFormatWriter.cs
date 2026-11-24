@@ -17,10 +17,10 @@ public class MarkdownFormatWriter : IFormatWriter
                 lines.Add($"{post.ComposeText()}");
                 lines.Add(string.Empty);
 
-                if (post.Images.Count() > 0)
+                if (post.Images.Count > 0)
                 {
-                    lines.Add("| " + string.Join(" | ", new string[post.Images.Count()].Select((_, i) => $"Image {i + 1}")) + " |");
-                    lines.Add("|" + string.Join("|", new string[post.Images.Count()].Select((_, i) => $"-")) + "|");
+                    lines.Add("| " + string.Join(" | ", new string[post.Images.Count].Select((_, i) => $"Image {i + 1}")) + " |");
+                    lines.Add("|" + string.Join("|", new string[post.Images.Count].Select((_, i) => $"-")) + "|");
                     lines.Add("|" + string.Join(" | ", post.Images.Select(img => $"![{img.AltText}]({img.SourceUrl})")) + " |");
                     lines.Add(string.Empty);
                 }

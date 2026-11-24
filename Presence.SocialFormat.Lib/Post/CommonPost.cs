@@ -24,8 +24,8 @@ public class CommonPost
         MarkedComplete ? 0 :
             Rules.MaxLength -
             Length -
-            (Prefix.Count() > 0 && Message.Count() == 0 ? Rules.PrefixToMainJoin.Length : 0) -
-            (Suffix.Count() > 0 && Message.Count() == 0 ? Rules.MainToSuffixJoin.Length : 0);
+            (Prefix.Any() && !Message.Any() ? Rules.PrefixToMainJoin.Length : 0) -
+            (Suffix.Any() && !Message.Any() ? Rules.MainToSuffixJoin.Length : 0);
 
     public bool Fits(SocialSnippet snippet) =>
         !MarkedComplete && ComposeText(Rules, Prefix, Message.Append(snippet), Suffix).Length <= Rules.MaxLength;
@@ -55,9 +55,9 @@ public class CommonPost
 
         var all = new List<Tuple<SocialSnippet?, string>>()
             .Concat(prefixInterspersed)
-            .Append(new Tuple<SocialSnippet?, string>(null, prefix.Count() > 0 && message.Count() > 0 ? rules.PrefixToMainJoin : string.Empty))
+            .Append(new Tuple<SocialSnippet?, string>(null, prefix.Any() && message.Any() ? rules.PrefixToMainJoin : string.Empty))
             .Concat(messageInterspersed)
-            .Append(new Tuple<SocialSnippet?, string>(null, message.Count() > 0 && suffix.Count() > 0 ? rules.MainToSuffixJoin : string.Empty))
+            .Append(new Tuple<SocialSnippet?, string>(null, message.Any() && suffix.Any() ? rules.MainToSuffixJoin : string.Empty))
             .Concat(suffixInterspersed);
 
         return all;

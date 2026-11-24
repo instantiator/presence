@@ -1,0 +1,10 @@
+root = true
+
+[*.cs]
+# CA1716: 'Lib' is a reserved keyword in VB.NET only. The Presence.*.Lib namespaces
+# are the public API of C#-first NuGet packages; renaming them would break every consumer.
+dotnet_diagnostic.CA1716.severity = none
+
+[*.Tests/**.cs]
+# CA1707: test names use the Subject_Condition_Outcome convention, which needs underscores.
+dotnet_diagnostic.CA1707.severity = none

@@ -14,7 +14,8 @@ public class InputReader
         }
 
         var input = File.ReadAllText(path);
-        return JsonSerializer.Deserialize<T>(input, opts)!;
+        return JsonSerializer.Deserialize<T>(input, opts)
+            ?? throw new InvalidDataException($"Input file contains no data: {path}");
     }
 
     public static T ReadStdInJson<T>()
@@ -22,11 +23,12 @@ public class InputReader
         var input = new StringBuilder();
         string? line;
         while ((line = Console.ReadLine()) != null) input.AppendLine(line);
-        return JsonSerializer.Deserialize<T>(input.ToString(), opts)!;
+        return JsonSerializer.Deserialize<T>(input.ToString(), opts)
+            ?? throw new InvalidDataException("Standard input contains no data");
     }
 
     // strict on unknown properties, relaxed on case sensitivity
-    private static JsonSerializerOptions opts = new JsonSerializerOptions()
+    private static readonly JsonSerializerOptions opts = new JsonSerializerOptions()
     {
         PropertyNameCaseInsensitive = true,
         UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow,

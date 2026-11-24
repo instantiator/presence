@@ -1,8 +1,12 @@
 namespace Presence.SocialFormat.Lib.Constants;
 
-public class RegexConstants
+/// <summary>Regular expression patterns for the markdown and tag syntax Presence understands.</summary>
+public static class RegexConstants
 {
-    public static string MD_LINK_REGEX = @"\[(?<text>.+?)\]\((?<uri>[\S]+)\)";
-    public static string MD_IMAGE_REGEX = @"\!\[(?<text>.+?)\]\((?<uri>[\S]+)\)";
-    public static string TAG_REGEX = @"#(?<tag>[a-zA-Z0-9_-]+)";
+    /// <summary>A markdown link: <c>[text](uri)</c>.</summary>
+    public const string MdLinkRegex = @"\[(?<text>.+?)\]\((?<uri>[\S]+)\)";
+    /// <summary>A markdown image: <c>![alt](uri)</c>.</summary>
+    public const string MdImageRegex = @"\!\[(?<text>.+?)\]\((?<uri>[\S]+)\)";
+    /// <summary>A hashtag: <c>#tag</c>.</summary>
+    public const string TagRegex = @"#(?<tag>[a-zA-Z0-9_-]+)";
 }

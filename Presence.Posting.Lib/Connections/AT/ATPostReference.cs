@@ -13,18 +13,21 @@ public class ATPostReference : INetworkPostReference
         Server = server;
         Handle = handle;
         Output = output;
+        Uri = output.Uri ?? throw new ArgumentException("Post reference did not contain a Uri", nameof(output));
+        Did = Uri.Did ?? throw new ArgumentException("Post reference Uri did not contain a Did", nameof(output));
+        Cid = string.IsNullOrWhiteSpace(output.Cid) ? throw new ArgumentException("Post reference did not contain a Cid", nameof(output)) : output.Cid;
         Origin = origin;
         AtOrigin = atOrigin;
         Notifications = notifications ?? new List<NetworkPostNotification>();
     }
 
-    public string Server;
-    public string Handle;
+    public string Server { get; }
+    public string Handle { get; }
 
     public CreateRecordOutput Output { get; private set; }
-    public ATUri Uri => Output.Uri!;
-    public ATDid Did => Uri.Did!;
-    public string Cid => Output.Cid!;
+    public ATUri Uri { get; }
+    public ATDid Did { get; }
+    public string Cid { get; }
     public string RKey => Uri.Rkey;
     public CommonPost? Origin { get; private set; }
     public Post? AtOrigin { get; private set; }

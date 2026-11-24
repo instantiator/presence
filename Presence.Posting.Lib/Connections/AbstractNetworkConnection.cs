@@ -20,7 +20,7 @@ public abstract class AbstractNetworkConnection : INetworkConnection
 
     public async Task<bool> ConnectAsync()
     {
-        var (valid, errors) = Account!.Validate();
+        var (valid, errors) = Account.Validate();
         if (!valid) { throw new ArgumentException(string.Join(", ", errors)); }
         await RateLimitAsync();
         return await ConnectImplementationAsync(Account);
@@ -38,16 +38,14 @@ public abstract class AbstractNetworkConnection : INetworkConnection
 
     protected abstract Task<bool> ConnectImplementationAsync(INetworkAccount account);
 
-    public void Disconnect()
-    {
-        DisconnectImplementationAsync().Wait();
-    }
+    public Task DisconnectAsync() => DisconnectImplementationAsync();
 
     protected abstract Task DisconnectImplementationAsync();
 
-    public void Dispose()
+    public async ValueTask DisposeAsync()
     {
-        Disconnect();
+        await DisconnectAsync();
+        GC.SuppressFinalize(this);
     }
 
     public abstract Task<INetworkPostReference> PostAsync(CommonPost post, INetworkPostReference? replyTo = default);
@@ -63,5 +61,5 @@ public abstract class AbstractNetworkConnection : INetworkConnection
         return references;
     }
 
-    public abstract Task<bool> DeletePostAsync(INetworkPostReference uri);
+    public abstract Task<bool> DeletePostAsync(INetworkPostReference reference);
 }
