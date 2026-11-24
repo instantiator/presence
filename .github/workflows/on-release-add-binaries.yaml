@@ -21,6 +21,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # for MinVer
+          submodules: true # dev-qual provides the C# build baseline
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
       - name: Build project
