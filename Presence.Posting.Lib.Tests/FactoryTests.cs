@@ -9,13 +9,13 @@ namespace Presence.Posting.Lib.Tests;
 [TestCategory("Unit")]
 public class FactoryTests
 {
-    private static readonly Dictionary<string,string> config = new()
+    private static readonly Dictionary<string, string> config = new()
     {
-        ["PRESENCE_ACCOUNTS"]="TEST0,TEST1,TEST2",
-        ["TEST0_Console_PrintPrefix"]="Console>",
-        ["TEST1_AT_AccountName"]="presence-lib-test.bsky.social",
-        ["TEST1_AT_AppPassword"]="app-password-goes-here",
-        ["TEST2_SlackWebhook_IncomingWebhookUrl"]="https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX"
+        ["PRESENCE_ACCOUNTS"] = "TEST0,TEST1,TEST2",
+        ["TEST0_Console_PrintPrefix"] = "Console>",
+        ["TEST1_AT_AccountName"] = "presence-lib-test.bsky.social",
+        ["TEST1_AT_AppPassword"] = "app-password-goes-here",
+        ["TEST2_SlackWebhook_IncomingWebhookUrl"] = "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX"
     };
 
     [TestMethod]

@@ -4,7 +4,7 @@ public class CommonPostImage
 {
     public string? SourceUrl { get; set; }
     public bool Uploaded { get; set; }
-    public string AltText { get; set; } = null!;
+    public required string AltText { get; set; }
 
     public static CommonPostImage From(SocialSnippet snippet)
     {

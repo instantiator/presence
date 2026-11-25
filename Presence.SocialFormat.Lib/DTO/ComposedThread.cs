@@ -22,7 +22,7 @@ public class ComposedThread
     public required ThreadComposerIdentity Identity { get; init; }
     public required IEnumerable<CommonPost> Posts { get; init; }
     public required bool Success { get; init; }
-    private Exception? exception = null;
+    private Exception? exception;
     public string? ExceptionType => exception?.GetType().Name;
     public string? ExceptionMessage => exception?.Message;
 }

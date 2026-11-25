@@ -18,14 +18,14 @@ public class EnvironmentConfigReaderTests
         {
             new Dictionary<string,string>()
             {
-                { ConfigKeys.ACCOUNTS_ENV_KEY, "TEST0,TEST1" },
+                { ConfigKeys.AccountsEnvKey, "TEST0,TEST1" },
                 { "TEST0_CONSOLE_PRINTPREFIX", "printprefix:test0" },
                 { "TEST1_AT_ACCOUNTNAME", "account:test1" },
                 { "TEST1_AT_APPPASSWORD", "password:test1" }
             },
             new Dictionary<string,string>()
             {
-                { ConfigKeys.ACCOUNTS_ENV_KEY, "TEST0,TEST1" },
+                { ConfigKeys.AccountsEnvKey, "TEST0,TEST1" },
                 { "TEST0_console_printprefix", "printprefix:test0" },
                 { "TEST1_at_accountname", "account:test1" },
                 { "TEST1_at_apppassword", "password:test1" }
@@ -50,7 +50,7 @@ public class EnvironmentConfigReaderTests
     {
         var env = new Dictionary<string, string>()
         {
-            { ConfigKeys.ACCOUNTS_ENV_KEY, "TEST0,TEST1" },
+            { ConfigKeys.AccountsEnvKey, "TEST0,TEST1" },
             { "TEST0_CONSOLE_PRINTPREFIX", "printprefix:test0" },
             { "TEST1_AT_ACCOUNTNAME", "account:test1" },
             { "TEST1_AT_APPPASSWORD", "password:test1" },
@@ -70,7 +70,7 @@ public class EnvironmentConfigReaderTests
     {
         var env = new Dictionary<string, string>()
         {
-            { ConfigKeys.JSON_DATA_ENV_KEY, @"
+            { ConfigKeys.JsonDataEnvKey, @"
                 {
                     ""PRESENCE_ACCOUNTS"": ""TEST0,TEST1"",
                     ""TEST0_CONSOLE_PRINTPREFIX"": ""printprefix:test0"",
@@ -93,14 +93,14 @@ public class EnvironmentConfigReaderTests
     {
         var env = new Dictionary<string, string>()
         {
-            { 
-                ConfigKeys.JSON_DATA_ENV_KEY, @"
+            {
+                ConfigKeys.JsonDataEnvKey, @"
                 {
                     ""PRESENCE_ACCOUNTS"": ""TEST0,TEST1"",
                     ""TEST0_CONSOLE_PRINTPREFIX"": ""json:printprefix:test0"",
                     ""TEST1_AT_ACCOUNTNAME"": ""json:account:test1"",
                     ""TEST1_AT_APPPASSWORD"": ""json:password:test1""
-                }" 
+                }"
             },
             { "PRESENCE_ACCOUNTS", "TEST0" },
             { "TEST0_CONSOLE_PRINTPREFIX", "ignored:printprefix:test0" },

@@ -123,10 +123,10 @@ All code in this project is distributed under the [MIT](https://github.com/insta
 | Project                         | Purpose                                                                            | Project README                                                                                       |
 | ------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | `Presence.SocialFormat.Lib`     | A library for composing threads, formatted to the requirements of social networks. | [README](https://github.com/instantiator/presence/blob/main/Presence.SocialFormat.Lib/README.md)     |
-| `Presence.SocialFormat.Tests`   | Unit tests for the composition and formatting library.                             | [README](https://github.com/instantiator/presence/blob/main/Presence.SocialFormat.Tests/README.md)   |
+| `Presence.SocialFormat.Lib.Tests`   | Unit tests for the composition and formatting library.                             | [README](https://github.com/instantiator/presence/blob/main/Presence.SocialFormat.Lib.Tests/README.md)   |
 | `Presence.SocialFormat.Console` | A command line tool to reformat messages for social networks.                      | [README](https://github.com/instantiator/presence/blob/main/Presence.SocialFormat.Console/README.md) |
 | `Presence.Posting.Lib`          | A library for posting to social networks.                                          | [README](https://github.com/instantiator/presence/blob/main/Presence.Posting.Lib/README.md)          |
-| `Presence.Posting.Tests`        | Unit and integration tests for the posting library.                                | [README](https://github.com/instantiator/presence/blob/main/Presence.Posting.Tests/README.md)        |
+| `Presence.Posting.Lib.Tests`        | Unit and integration tests for the posting library.                                | [README](https://github.com/instantiator/presence/blob/main/Presence.Posting.Lib.Tests/README.md)        |
 | `Presence.Posting.Console`      | A command line tool to post formatted threads to social networks.                  | [README](https://github.com/instantiator/presence/blob/main/Presence.Posting.Console/README.md)      |
 
 _Dependencies for each project are listed in each project's `README`._

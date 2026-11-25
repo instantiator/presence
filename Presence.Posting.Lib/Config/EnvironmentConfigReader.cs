@@ -11,25 +11,23 @@ public class EnvironmentConfigReader : Dictionary<string, Dictionary<SocialNetwo
     {
         // If the JSON data key is present use that in preference to other environment variables.
         // Otherwise, convert the the environment dictionary to a simple string dictionary.
-        var strings = (env.Contains(ConfigKeys.JSON_DATA_ENV_KEY)
-            ? JsonConfigReader.ReadJsonConfig(env[ConfigKeys.JSON_DATA_ENV_KEY] as string)
+        var strings = (env.Contains(ConfigKeys.JsonDataEnvKey)
+            ? JsonConfigReader.ReadJsonConfig(env[ConfigKeys.JsonDataEnvKey] as string)
             : null) ?? env.ToStringDictionary();
 
-        // extract prefixes
-        var prefixes = strings.ContainsKey(ConfigKeys.ACCOUNTS_ENV_KEY) && !string.IsNullOrWhiteSpace(strings[ConfigKeys.ACCOUNTS_ENV_KEY])
-            ? strings[ConfigKeys.ACCOUNTS_ENV_KEY]!.Split(',')
-            : throw new ArgumentException($"Please provide a comma separated list of account prefixes in config key: {ConfigKeys.ACCOUNTS_ENV_KEY}");
+        var prefixes = strings.TryGetValue(ConfigKeys.AccountsEnvKey, out var accounts) && !string.IsNullOrWhiteSpace(accounts)
+            ? accounts.Split(',')
+            : throw new ArgumentException($"Please provide a comma separated list of account prefixes in config key: {ConfigKeys.AccountsEnvKey}");
 
-        // extract credentials per network per prefix
         var credentials = prefixes
             .ToDictionary(
-                prefix => prefix, 
-                prefix => 
+                prefix => prefix,
+                prefix =>
                     strings.Keys
                         .Where(k => k.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
                         .Select(k => k.Substring($"{prefix}_".Length))
                         .Select(k => Enum.GetValues<SocialNetwork>().Where(n => k.StartsWith(n.ToString(), StringComparison.OrdinalIgnoreCase)))
-                        .Where(nn => nn.Count() != 0)
+                        .Where(nn => nn.Any())
                         .Select(nn => nn.Single())
                         .Distinct()
                         .ToDictionary(
@@ -43,7 +41,7 @@ public class EnvironmentConfigReader : Dictionary<string, Dictionary<SocialNetwo
         }
     }
 
-    private Dictionary<NetworkCredentialType,string?> ExtractCredentials(string prefix, SocialNetwork network, IDictionary<string,string?> env)
+    private static Dictionary<NetworkCredentialType, string?> ExtractCredentials(string prefix, SocialNetwork network, IDictionary<string, string?> env)
     => env
         .ToDictionary(kv => kv.Key.Trim(), kv => kv.Value?.Trim())
         .Where(kv => kv.Key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))

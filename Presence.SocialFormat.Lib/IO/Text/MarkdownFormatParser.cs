@@ -15,9 +15,9 @@ public class MarkdownFormatParser : IFormatParser
 
     private ThreadCompositionRequestParserRules rules { get; }
 
-    public static Regex LinkRegex = new Regex($"^{RegexConstants.MD_LINK_REGEX}");
-    public static Regex ImageRegex = new Regex($"^{RegexConstants.MD_IMAGE_REGEX}");
-    public static Regex TagRegex = new Regex($"^{RegexConstants.TAG_REGEX}");
+    public static readonly Regex LinkRegex = new Regex($"^{RegexConstants.MdLinkRegex}");
+    public static readonly Regex ImageRegex = new Regex($"^{RegexConstants.MdImageRegex}");
+    public static readonly Regex TagRegex = new Regex($"^{RegexConstants.TagRegex}");
 
     public ThreadCompositionRequest ToRequest(string text)
     {
@@ -83,7 +83,7 @@ public class MarkdownFormatParser : IFormatParser
             var metadata = uri.GetMetadata();
             if (rules.CheckLinks)
             {
-                if (!metadata.Exists) { throw new Exception($"Link not found: {uri}"); }
+                if (!metadata.Exists) { throw new InvalidDataException($"Link not found: {uri}"); }
             }
             return (new SocialSnippet
             {
@@ -114,7 +114,7 @@ public class MarkdownFormatParser : IFormatParser
             if (rules.CheckLinks)
             {
                 var metadata = uri.GetMetadata();
-                if (!metadata.Exists) { throw new Exception($"Link not found: {uri}"); }
+                if (!metadata.Exists) { throw new InvalidDataException($"Link not found: {uri}"); }
             }
             return (new SocialSnippet
             {
@@ -134,7 +134,7 @@ public class MarkdownFormatParser : IFormatParser
         str.Substring(match.Index + match.Length).Trim());
     }
 
-    private (SocialSnippet?, string?) GenTagSnippet(string str)
+    private static (SocialSnippet?, string?) GenTagSnippet(string str)
     {
         var match = TagRegex.Match(str);
         var tag = match.Groups["tag"].Value;
@@ -146,7 +146,7 @@ public class MarkdownFormatParser : IFormatParser
         str.Substring(match.Index + match.Length).Trim());
     }
 
-    private (SocialSnippet?, string?) GenTextOrLinkSnippet(string str)
+    private static (SocialSnippet?, string?) GenTextOrLinkSnippet(string str)
     {
         var word = str.Split(" ").First();
         var wordAsUri = word.ToUri();

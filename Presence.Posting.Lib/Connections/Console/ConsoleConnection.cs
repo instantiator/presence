@@ -11,7 +11,7 @@ public class ConsoleConnection : AbstractNetworkConnection
     {
     }
 
-    private bool connected = false;
+    private bool connected;
     public override bool Connected => connected;
 
     public override async Task<INetworkPostReference> PostAsync(CommonPost post, INetworkPostReference? replyTo = default)
@@ -28,9 +28,9 @@ public class ConsoleConnection : AbstractNetworkConnection
         };
     }
 
-    public override async Task<bool> DeletePostAsync(INetworkPostReference uri)
+    public override async Task<bool> DeletePostAsync(INetworkPostReference reference)
     {
-        System.Console.Error.WriteLine($"{Account[NetworkCredentialType.PrintPrefix]} Deletion ({uri.NetworkReferences["guid"]})");
+        System.Console.Error.WriteLine($"{Account[NetworkCredentialType.PrintPrefix]} Deletion ({reference.NetworkReferences["guid"]})");
         return true;
     }
 

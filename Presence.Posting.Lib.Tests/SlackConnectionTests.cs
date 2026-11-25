@@ -24,7 +24,8 @@ public class SlackConnectionTests
         }
         catch (Exception e)
         {
-            Assert.Fail(string.Join('\n', e.Message, JsonSerializer.Serialize(env, new JsonSerializerOptions { WriteIndented = true })));
+            // Report only the message: the environment holds credentials
+            Assert.Fail(e.Message);
         }
     }
 
@@ -48,7 +49,7 @@ public class SlackConnectionTests
         var environment = new EnvironmentConfigReader(env)["TEST2"][SocialNetwork.SlackWebhook];
         var connection = ConnectionFactory.CreateConnection("TEST2", SocialNetwork.SlackWebhook, environment);
         await connection.ConnectAsync();
-        var post = new CommonPost(0, SlackThreadComposer.SLACK_POST_RENDER_RULES)
+        var post = new CommonPost(0, SlackThreadComposer.SlackPostRenderRules)
         {
             Message = [new SocialSnippet($"SlackWebhookConnection_Posts_Post: {DateTime.Now:O}")]
         };

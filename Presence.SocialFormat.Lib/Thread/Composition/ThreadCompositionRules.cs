@@ -13,6 +13,6 @@ public readonly record struct ThreadCompositionRules
     public required bool PostCounterSuffix { get; init; }
     public required bool OnlyCountThreads { get; init; }
     public required int MaxImagesPerPost { get; init; }
-    public required ImageOverflowRule ImageOverflowRule { get; init; } 
+    public required ImageOverflowRule ImageOverflowRule { get; init; }
     public required string ImageOverflowText { get; init; }
 }

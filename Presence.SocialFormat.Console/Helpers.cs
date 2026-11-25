@@ -1,6 +1,6 @@
 namespace Presence.SocialFormat.Console;
 
-public static class Helpers
+internal static class Helpers
 {
     public static string EnumAsCSV(Type t) => string.Join(", ", Enum.GetNames(t));
 }

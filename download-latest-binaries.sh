@@ -66,32 +66,32 @@ if [ "$SYSTEM" != "linux-x64" ] && [ "$SYSTEM" != "osx-x64" ] && [ "$SYSTEM" != 
 fi
 
 # remove the trailing slash from DOWNLOAD_DIRECTORY
-TARGET_DIRECTORY=$(echo $TARGET_DIRECTORY | sed 's:/*$::')
+while [[ "$TARGET_DIRECTORY" == */ ]]; do TARGET_DIRECTORY="${TARGET_DIRECTORY%/}"; done
 
 # get the latest release tag
 RELEASE_DATA=$( wget -q -O - https://api.github.com/repos/${GH_ACCOUNT}/${GH_REPO}/releases )
-LATEST_RELEASE=$( echo $RELEASE_DATA | jq -r '.[].tag_name' | sort -V | tail -1 )
+LATEST_RELEASE=$( echo "$RELEASE_DATA" | jq -r '.[].tag_name' | sort -V | tail -1 )
 
 # get the latest release download URL
-LATEST_RELEASE_DOWNLOAD_URL=$( echo $RELEASE_DATA | jq -r ".[] | select(.tag_name==\"${LATEST_RELEASE}\") | .assets[] | select(.name==\"${GH_FILENAME}\") | .browser_download_url" )
+LATEST_RELEASE_DOWNLOAD_URL=$( echo "$RELEASE_DATA" | jq -r ".[] | select(.tag_name==\"${LATEST_RELEASE}\") | .assets[] | select(.name==\"${GH_FILENAME}\") | .browser_download_url" )
 echo "Downloading latest release from: ${LATEST_RELEASE_DOWNLOAD_URL}"
 
 # retrieve and unzip into the target (temp) directory
-wget -O $ZIP_PATH $LATEST_RELEASE_DOWNLOAD_URL
-unzip -o $ZIP_PATH -d $TMP_DIR
+wget -O "$ZIP_PATH" "$LATEST_RELEASE_DOWNLOAD_URL"
+unzip -o "$ZIP_PATH" -d "$TMP_DIR"
 
 # copy the binaries into the target directory
-mkdir -p ${TARGET_DIRECTORY}
+mkdir -p "${TARGET_DIRECTORY}"
 for BINARY in "${BINARIES[@]}"; do
   # establish binary file names (suffix .exe for Windows)
   if [ "$SYSTEM" == "win-x64" ]; then
-    BINARY_FILE=("${BINARY}.exe")
+    BINARY_FILE="${BINARY}.exe"
   else
-    BINARY_FILE=$BINARY
+    BINARY_FILE="$BINARY"
   fi
 
   echo "Copying from: ${TMP_DIR}/release/${SYSTEM}/${BINARY_FILE}"
   echo "Copying to:   ${TARGET_DIRECTORY}/${BINARY_FILE}"
-  cp -rf ${TMP_DIR}/release/${SYSTEM}/${BINARY_FILE} ${TARGET_DIRECTORY}/${BINARY_FILE}
-  chmod +x ${TARGET_DIRECTORY}/${BINARY_FILE}
+  cp -rf "${TMP_DIR}/release/${SYSTEM}/${BINARY_FILE}" "${TARGET_DIRECTORY}/${BINARY_FILE}"
+  chmod +x "${TARGET_DIRECTORY}/${BINARY_FILE}"
 done

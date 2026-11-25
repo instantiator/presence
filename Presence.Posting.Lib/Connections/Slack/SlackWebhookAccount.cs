@@ -11,13 +11,13 @@ public class SlackWebhookAccount : AbstractNetworkAccount
 
     public override SocialNetwork SocialNetwork => SocialNetwork.SlackWebhook;
 
-    public override IEnumerable<NetworkCredentialType> AcceptedCredentials => 
+    public override IEnumerable<NetworkCredentialType> AcceptedCredentials =>
     [
         NetworkCredentialType.IncomingWebhookUrl,
 
     ];
 
-    public override IEnumerable<NetworkCredentialType> RequiredCredentials => 
+    public override IEnumerable<NetworkCredentialType> RequiredCredentials =>
     [
         NetworkCredentialType.IncomingWebhookUrl,
     ];

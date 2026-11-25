@@ -17,7 +17,7 @@ public class ATThreadComposerTests
             // form a long snippet
             var snippet = new SocialSnippet()
             {
-                Text = string.Join(' ', Enumerable.Repeat("0123456789", i*100)),
+                Text = string.Join(' ', Enumerable.Repeat("0123456789", i * 100)),
                 SnippetType = SnippetType.Text
             };
 
@@ -27,7 +27,7 @@ public class ATThreadComposerTests
                 Tags = []
             });
 
-            Assert.IsTrue(thread.Posts.Count() > 0);
+            Assert.IsTrue(thread.Posts.Any());
             Assert.IsTrue(thread.Posts.All(p => p.ComposeText().Length <= 300));
             if (thread.Posts.Count() > 1)
             {
@@ -36,7 +36,7 @@ public class ATThreadComposerTests
             }
             else
             {
-                Assert.IsTrue(thread.Posts.All(p => p.Prefix.Count() == 0));
+                Assert.IsTrue(thread.Posts.All(p => !p.Prefix.Any()));
             }
         }
     }

@@ -6,7 +6,7 @@ namespace Presence.SocialFormat.Lib.Tests;
 [TestCategory("Unit")]
 public class CommonPostTests
 {
-    public static PostRenderRules SimpleRules = new PostRenderRules()
+    public static readonly PostRenderRules SimpleRules = new PostRenderRules()
     {
         MinAcceptableSpace = 10,
         MaxLength = 100,
@@ -18,7 +18,7 @@ public class CommonPostTests
         TruncationMark = "…",
     };
 
-    public static PostRenderRules SimpleRulesShowLinks = new PostRenderRules()
+    public static readonly PostRenderRules SimpleRulesShowLinks = new PostRenderRules()
     {
         MinAcceptableSpace = 10,
         MaxLength = 100,

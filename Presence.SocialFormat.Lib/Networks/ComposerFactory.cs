@@ -17,7 +17,7 @@ public class ComposerFactory
             case SocialNetwork.SlackWebhook:
                 return new SlackThreadComposer();
             default:
-                throw new NotImplementedException($"No composer implemented for network: {network}");
+                throw new NotSupportedException($"No composer implemented for network: {network}");
         }
     }
 }

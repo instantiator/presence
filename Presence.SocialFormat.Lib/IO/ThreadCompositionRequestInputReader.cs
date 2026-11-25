@@ -8,7 +8,7 @@ public class ThreadCompositionRequestInputReader
 {
     public static ThreadCompositionRequestInputFormat? DetectFormat(string? path)
     {
-        var ext = path?.Split('.').LastOrDefault()?.Trim().ToLower();
+        var ext = path?.Split('.').LastOrDefault()?.Trim().ToLowerInvariant();
         return ext switch
         {
             null => null,

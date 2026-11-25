@@ -1,6 +1,6 @@
 # Testing
 
-A number of unit tests and integration tests are provided in the `Presence.SocialFormat.Tests` and `Presence.Posting.Tests` projects.
+A number of unit tests and integration tests are provided in the `Presence.SocialFormat.Lib.Tests` and `Presence.Posting.Lib.Tests` projects.
 
 Tests are categorised across all projects using the `TestCategory` attribute - with these values:
 
@@ -11,18 +11,20 @@ Tests are categorised across all projects using the `TestCategory` attribute - w
 
 Use the test scripts to run tests locally.
 
-| Script                     | Purpose                                        |
-| -------------------------- | ---------------------------------------------- |
-| `run-unit-tests.sh`        | Run all unit tests across the solution.        |
-| `run-integration-tests.sh` | Run all integration tests across the solution. |
+| Script                             | Purpose                                        |
+| ---------------------------------- | ---------------------------------------------- |
+| `scripts/run-unit-tests.sh`        | Run all unit tests across the solution.        |
+| `scripts/run-integration-tests.sh` | Run all integration tests across the solution. |
 
 Both scripts accept an `-f` / `--filter` parameter to allow you to filter the tests that will run by name.
+
+A plain `dotnet test` runs the unit tests only. `test.runsettings` (wired in through `Directory.Build.props`) excludes `Integration` tests, because they post to real accounts. `scripts/run-integration-tests.sh` clears that setting to run them.
 
 ## Dependencies
 
 Please note that both the unit tests and integration tests assume internet access.
 
-_(This is, perhaps, unusual. Unit tests are often assumed to be able to run independently and in full isolation. However, some of the unit tests establish that code to access internet services works and this is considered more 'primitive' than integrations with third party services, such as social networks. You may disagree.)_
+This is, perhaps, unusual. Unit tests are often assumed to be able to run independently and in full isolation. However, some of the unit tests establish that code to access internet services works and this is considered more 'primitive' than integrations with third party services, such as social networks. You may disagree.
 
 The integration tests also assume access to the supported social networks (and sufficient configuration to run against a test account). See [Network specifics](../guides/network-specifics.md) for more information about configuration per network.
 
@@ -38,13 +40,11 @@ Configuration can be provided through a `.env` file or through environment varia
 
 For information about configuration variables, see: [Network specifics](../guides/network-specifics.md)
 
-Provide the path to a configuration file with the `-e` / `--env-file` parameter to `run-integration-tests.sh`. (If not provided, the environment is assumed to contain these variables.)
+Provide the path to a configuration file with the `-e` / `--env-file` parameter to `scripts/run-integration-tests.sh`. Without it, the script uses `.env.accounts.integration` if that file exists, and otherwise expects the variables to be in the environment.
 
 ```bash
-./run-integration-tests.sh -e .env.accounts.integration
+./scripts/run-integration-tests.sh -e .env.accounts.integration
 ```
-
-If this path is not provided, configuration is expected to be made available through environment variables.
 
 Configuration parameters are stored in GitHub Secrets and provided to the GitHub Actions integration tests as environment variables.
 

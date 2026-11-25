@@ -18,7 +18,7 @@ public static class UriExtension
     public static Uri? ToUri(this string? str)
     {
         if (string.IsNullOrWhiteSpace(str)) { return null; }
-        if (str.ToLower().StartsWith("file:"))
+        if (str.StartsWith("file:", StringComparison.OrdinalIgnoreCase))
         {
             // detect and adjust for relative paths
             var path = str.Substring("file:".Length).TrimStart('/');
@@ -40,7 +40,7 @@ public static class UriExtension
         var exists = false;
         string? mimeType = null;
 
-        if (UriConstants.IMAGE_EXTENSIONS.Any(uri.AbsolutePath.EndsWith)) { isImage = true; }
+        if (UriConstants.ImageExtensions.Any(uri.AbsolutePath.EndsWith)) { isImage = true; }
         if (isHttp)
         {
             // get headers
@@ -51,7 +51,7 @@ public static class UriExtension
                 exists = true;
                 mimeType = response.Content.Headers.ContentType?.MediaType
                     ?? MimeTypeMap.GetMimeType(Path.GetExtension(uri.AbsolutePath));
-                if (mimeType?.StartsWith("image/") == true)
+                if (mimeType?.StartsWith("image/", StringComparison.OrdinalIgnoreCase) == true)
                 {
                     isImage = true;
                 }
@@ -85,6 +85,6 @@ public static class UriExtension
     {
         httpClient ??= new HttpClient();
         metadata ??= uri.GetMetadata();
-        return metadata!.Value.IsFile ? File.OpenRead(uri.LocalPath) : await httpClient!.GetStreamAsync(uri);
+        return metadata.Value.IsFile ? File.OpenRead(uri.LocalPath) : await httpClient.GetStreamAsync(uri);
     }
 }

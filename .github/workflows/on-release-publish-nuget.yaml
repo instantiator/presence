@@ -22,12 +22,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # for MinVer
+          submodules: true # dev-qual provides the C# build baseline
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
       - name: Build project
         run: ./build-sln.sh
       - name: Run tests
-        run: ./run-unit-tests.sh
+        run: ./scripts/run-unit-tests.sh
       - name: Create NuGet packages
         run: ./prepare-nuget-packages.sh
       - uses: actions/upload-artifact@v4

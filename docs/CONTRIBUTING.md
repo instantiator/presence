@@ -10,6 +10,16 @@ Welcome! 👋
 
 If you wish to contribute, but aren't sure where to start - take a look at the [issues](https://github.com/instantiator/presence/issues) for any that are marked as `good first issue` or `help wanted` - these will be especially welcome. (This project is just getting started, but there are bound to be some in the future!)
 
+## Building
+
+The build imports [dev-qual](https://github.com/instantiator/dev-qual)'s C# baseline (analyzers, warnings as errors) from the `dev-qual` submodule, so clone with submodules:
+
+```bash
+git clone --recurse-submodules https://github.com/instantiator/presence.git
+```
+
+In an existing clone, run `git submodule update --init` instead. Then build with `./build-sln.sh`, and see [Testing](dev-notes/testing.md) to run the tests.
+
 ## Bugs
 
 If you'd like to report a bug, [create a new issue](https://github.com/instantiator/presence/issues/new), and share what you've found. It's really helpful to add code or steps that will help to reproduce the issue.

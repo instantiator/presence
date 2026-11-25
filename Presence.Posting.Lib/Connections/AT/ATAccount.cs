@@ -9,16 +9,16 @@ public class ATAccount : AbstractNetworkAccount
     {
     }
 
-    public override IEnumerable<NetworkCredentialType> AcceptedCredentials => 
-    [ 
-        NetworkCredentialType.AccountName, 
-        NetworkCredentialType.AppPassword, 
-        NetworkCredentialType.Server 
+    public override IEnumerable<NetworkCredentialType> AcceptedCredentials =>
+    [
+        NetworkCredentialType.AccountName,
+        NetworkCredentialType.AppPassword,
+        NetworkCredentialType.Server
     ];
 
-    public override IEnumerable<NetworkCredentialType> RequiredCredentials => 
-    [ 
-        NetworkCredentialType.AccountName, 
+    public override IEnumerable<NetworkCredentialType> RequiredCredentials =>
+    [
+        NetworkCredentialType.AccountName,
         NetworkCredentialType.AppPassword
     ];
 
